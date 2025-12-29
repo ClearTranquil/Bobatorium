@@ -737,6 +737,37 @@ Transform:
   - {fileID: 3469444674890644925}
   m_Father: {fileID: 2940498192744457937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8028573768020702837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9050633935972336542}
+  m_Layer: 0
+  m_Name: Snap Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9050633935972336542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028573768020702837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.18, z: -1.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2940498192744457937}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8336517500321258250
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,9 +889,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2940498192744457937}
   - component: {fileID: 5042832836342984519}
-  m_Layer: 0
+  - component: {fileID: 2876601594553558886}
+  m_Layer: 6
   m_Name: Tea Dispenser
-  m_TagString: Untagged
+  m_TagString: Machine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -880,6 +912,7 @@ Transform:
   m_Children:
   - {fileID: 8856596639540335258}
   - {fileID: 1132370560473441877}
+  - {fileID: 9050633935972336542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5042832836342984519
@@ -901,5 +934,18 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.7293615, y: 4.4770393, z: 4.4758058}
-  m_Center: {x: -0.01616788, y: 1.7385197, z: -0.019348383}
+  m_Size: {x: 4.1256456, y: 5.177846, z: 4.4758058}
+  m_Center: {x: -0.20036757, y: 2.088923, z: -0.019348383}
+--- !u!114 &2876601594553558886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486542058355081851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee2abee37780674fa049265d05a4e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Machine
+  snapPoint: {fileID: 9050633935972336542}

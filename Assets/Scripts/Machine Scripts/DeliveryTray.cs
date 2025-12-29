@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class DeliveryTray : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public void Deliver(GameObject m_cup)
     {
-        Cup cup = other.GetComponent<Cup>();
+        // Check if cup meets delivery requirements here!
+        
+        // Successful cup delivery
+        if(m_cup != null && m_cup.GetComponent<Cup>() != null)
+        {
+            Debug.Log("Tea delivered!");
+            Destroy(m_cup);
+        }
 
-        if (cup == null)
-            return;
-
-        //Deliver(cup);
+        // Unsuccessful cup delivery logic here
+        Debug.Log("Delivery unsuccessful");
     }
-
-    //private void Deliver(Cup m_cup)
-    //{
-    //    Debug.Log("Tea delivered!");
-    //    Destroy(m_cup.transform.root.gameObject);
-    //}
 }
