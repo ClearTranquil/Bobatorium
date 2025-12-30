@@ -5,6 +5,11 @@ public class Machine : MonoBehaviour
     [Header("Snap Points")]
     [SerializeField] protected SnapPoints[] snapPoints;
 
+    public virtual void TriggerAction()
+    {
+        // The machine's payload when triggered
+    }
+
     public SnapPoints GetAvailableSnapPoint()
     {
         foreach(var snap in snapPoints)

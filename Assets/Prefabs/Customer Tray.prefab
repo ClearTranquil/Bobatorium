@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8683050860833977027}
   - component: {fileID: 2092173152430052526}
   - component: {fileID: 5543369206149123352}
-  m_Layer: 0
+  - component: {fileID: 6316690347563290167}
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +114,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &6316690347563290167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124860621689775956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383d70d69ccd9b748951599d49fa1663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MachineButton
+  machine: {fileID: 1922457819857885397}
 --- !u!1 &2101600315690537973
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8603870619020045296}
   - component: {fileID: 3212848052032276529}
-  - component: {fileID: 2715003446090223057}
+  - component: {fileID: 1922457819857885397}
   m_Layer: 6
   m_Name: Customer Tray
   m_TagString: Tray
@@ -402,7 +416,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.8690968, y: 5.206336, z: 5.0354886}
   m_Center: {x: 2.495637, y: 2.103168, z: 1.327007}
---- !u!114 &2715003446090223057
+--- !u!114 &1922457819857885397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,9 +425,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7785758168431120861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee2abee37780674fa049265d05a4e00, type: 3}
+  m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Machine
+  m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
   snapPoints:
   - {fileID: 1775030895289602201}
   - {fileID: 8322320527647532337}

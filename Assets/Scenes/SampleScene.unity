@@ -988,6 +988,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2432908099048593960, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3953797676247165191, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_Name
       value: Boba Dispenser

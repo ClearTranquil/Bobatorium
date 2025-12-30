@@ -18,6 +18,12 @@ public class PlayerControls : MonoBehaviour
         HandleInteraction();
         HandleDrag();
         HandleRelease();
+
+        if (heldObj)
+        {
+            var interactable = heldObj.GetComponent<IInteractable>();
+            interactable?.OnHold();
+        }
     }
 
     private void HandleInteraction()

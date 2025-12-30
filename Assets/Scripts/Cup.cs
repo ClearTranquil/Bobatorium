@@ -6,8 +6,6 @@ public class Cup : MonoBehaviour, IInteractable
     private float teaFill;
     private bool isSealed;
 
-    private SnapPoints pendingSnapPoint;
-
     private int GetBobaCount()
         { return bobaCount; }
 
@@ -28,7 +26,7 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void OnRelease(Vector3 releasePos)
     {
-        Debug.Log("Cup released");
+        //Debug.Log("Cup released");
 
         // Check if the cup should be snapping to a nearby snap point 
         Collider[] hits = Physics.OverlapSphere(releasePos, 0.2f);
@@ -44,5 +42,10 @@ public class Cup : MonoBehaviour, IInteractable
         }
 
         // Logic for cups not dropped in machine here
+    }
+
+    public void OnHold()
+    {
+        // What the cup should do while held 
     }
 }
