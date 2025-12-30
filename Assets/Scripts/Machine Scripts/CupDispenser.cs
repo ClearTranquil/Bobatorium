@@ -16,5 +16,6 @@ public class CupDispenser : MonoBehaviour, IInteractable
         player.PickUp(cup.gameObject);
     }
 
-    public void OnRelease() { }
+    // Doesn't need an OnRelease case just yet
+    public void OnRelease(Vector3 releasePos) { }
 }

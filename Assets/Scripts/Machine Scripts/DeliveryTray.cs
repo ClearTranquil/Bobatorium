@@ -1,19 +1,26 @@
 using UnityEngine;
 
-public class DeliveryTray : MonoBehaviour
+public class DeliveryTray : Machine
 {
-    public void Deliver(GameObject m_cup)
+    /* Called when player presses the delivery tray button.
+     * Iterates through all "slots" on the tray to check if a cup is there. 
+     * If a cup is there, check if it meets the requirements to be sold. */
+    public void DeliverAll()
     {
-        // Check if cup meets delivery requirements here!
-        
-        // Successful cup delivery
-        if(m_cup != null && m_cup.GetComponent<Cup>() != null)
+        foreach(var snap in snapPoints)
         {
-            Debug.Log("Tea delivered!");
-            Destroy(m_cup);
+            if(snap.OccupiedCup != null)
+            {
+                Cup cup = snap.OccupiedCup;
+
+                // Insert cup validation logic here!! 
+
+                Debug.Log("Sold!");
+                Destroy(cup.gameObject);
+                snap.Clear();
+            }
         }
 
-        // Unsuccessful cup delivery logic here
-        Debug.Log("Delivery unsuccessful");
+        Debug.Log("Cup sold!");
     }
 }

@@ -51,9 +51,13 @@ public class PlayerControls : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, rayCastMask))
         {
             Machine machine = hit.collider.GetComponent<Machine>();
-            if (machine != null && machine.snapPoint != null)
+            if (machine != null)
             {
-                targetPos = machine.snapPoint.position;
+                SnapPoints snap = machine.GetAvailableSnapPoint();
+                if (snap != null)
+                {
+                    targetPos = snap.transform.position;
+                }
             }
         }
 
@@ -62,20 +66,14 @@ public class PlayerControls : MonoBehaviour
 
     private void HandleRelease()
     {
-        if (heldObj == null)
+        if (heldObj == null || !Mouse.current.leftButton.wasReleasedThisFrame) 
             return;
 
-        // If object is interactable, tell it that the player just let go of it 
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            IInteractable interactable = heldObj.GetComponent<IInteractable>();
-            interactable?.OnRelease();
+        // Tell the held object it was released
+        var interactable = heldObj.GetComponent<IInteractable>();
+        interactable?.OnRelease(heldObj.transform.position);
 
-            // Reset object's layer so it can be targeted again
-            heldObj.layer = originalLayer;
-
-            heldObj = null;
-        }
+        heldObj = null;
     }
 
     // Called by interactables

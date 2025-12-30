@@ -6,6 +6,8 @@ public class Cup : MonoBehaviour, IInteractable
     private float teaFill;
     private bool isSealed;
 
+    private SnapPoints pendingSnapPoint;
+
     private int GetBobaCount()
         { return bobaCount; }
 
@@ -18,28 +20,29 @@ public class Cup : MonoBehaviour, IInteractable
     public void Interact(PlayerControls player)
     {
         player.PickUp(gameObject);
+        
+        // detatch from machine when cup is held
+        transform.SetParent(null);
     }
 
-    public void OnRelease()
+
+    public void OnRelease(Vector3 releasePos)
     {
         Debug.Log("Cup released");
-        
-        Collider[] hits = Physics.OverlapSphere(transform.position, 0.8f);
-        
+
+        // Check if the cup should be snapping to a nearby snap point 
+        Collider[] hits = Physics.OverlapSphere(releasePos, 0.2f);
         foreach (var hit in hits)
         {
-            // Check if its being placed on the delivery tray
-            DeliveryTray tray = hit.GetComponent<DeliveryTray>();
-            if (tray != null)
+            SnapPoints snap = hit.GetComponent<SnapPoints>();
+            if (snap != null)
             {
-                Debug.Log("Tray sensed");
-                tray.Deliver(gameObject);
-                return;
+                // cup tells the snap point that it was just placed there
+                snap.TrySnapCup(this);
+                break;
             }
-
-            // Check if cup is on conveyor belt here
         }
 
-        // Behavior for dropping the cup elsewhere goes here 
+        // Logic for cups not dropped in machine here
     }
 }
