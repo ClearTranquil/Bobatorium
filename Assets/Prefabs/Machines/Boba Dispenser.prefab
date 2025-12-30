@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1654373496468174749}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 1.0999999}
-  m_LocalScale: {x: 2.647343, y: 3.26054, z: 2.0565157}
+  m_LocalPosition: {x: 0, y: 2.02, z: 1.0999999}
+  m_LocalScale: {x: 2.647343, y: 4.521717, z: 2.0565157}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4755888057588494560}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 8365018151830857991}
   - component: {fileID: 4754520009068517732}
   - component: {fileID: 8459332685493540003}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 2432908099048593960}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: 0.00000002283, y: 3.34, z: -1.92}
+  m_LocalPosition: {x: 0.00000002283, y: 4.790001, z: -1.92}
   m_LocalScale: {x: 0.61698, y: 0.20285687, z: 0.61698}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383d70d69ccd9b748951599d49fa1663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineButton
+  machine: {fileID: 7771216306209374641}
 --- !u!1 &2700160567919435462
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +332,7 @@ Transform:
   m_GameObject: {fileID: 2707656016958093029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.36, z: 0.17}
+  m_LocalPosition: {x: 0, y: 4.81, z: 0.17}
   m_LocalScale: {x: 2.6362705, y: 1.068487, z: 3.9588563}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -424,7 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 772452983688327612}
   - component: {fileID: 279459675425664672}
-  - component: {fileID: 1918179855234412967}
+  - component: {fileID: 7771216306209374641}
   m_Layer: 6
   m_Name: Boba Dispenser
   m_TagString: Machine
@@ -448,6 +449,8 @@ Transform:
   - {fileID: 7992196599547626246}
   - {fileID: 4755888057588494560}
   - {fileID: 5971482129378039406}
+  - {fileID: 8665896228354284075}
+  - {fileID: 9179485979509510982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &279459675425664672
@@ -469,9 +472,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.8344245, y: 5.1175413, z: 4.4927063}
-  m_Center: {x: 0.08790755, y: 2.0587707, z: -0.06614256}
---- !u!114 &1918179855234412967
+  m_Size: {x: 3.8344245, y: 6.0103655, z: 4.4927063}
+  m_Center: {x: 0.08790755, y: 2.5051827, z: -0.06614256}
+--- !u!114 &7771216306209374641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -480,11 +483,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3953797676247165191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee2abee37780674fa049265d05a4e00, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e265c1af0d5436409337a6777badbad, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Machine
+  m_EditorClassIdentifier: Assembly-CSharp::BobaMachine
   snapPoints:
   - {fileID: 3206891035055331338}
+  emitter: {fileID: 8665896228354284075}
+  bobaToSpawn: {fileID: 5005044355976999624, guid: 5f434a889fbef0d499bba854ac989a38, type: 3}
+  timeBetweenEmit: 0.1
+  poolParent: {fileID: 9179485979509510982}
+  poolSize: 30
 --- !u!1 &4201593020547027528
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +526,37 @@ Transform:
   - {fileID: 7387259081196703154}
   - {fileID: 7021596647657099240}
   - {fileID: 4798780877983467727}
+  m_Father: {fileID: 772452983688327612}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4371655878429084819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8665896228354284075}
+  m_Layer: 6
+  m_Name: Emitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8665896228354284075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371655878429084819}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.72, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 772452983688327612}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5475487932885934071
@@ -580,8 +619,8 @@ Transform:
   m_GameObject: {fileID: 5933552656467979359}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.72, z: -1.03}
-  m_LocalScale: {x: 0.43465, y: 0.43272054, z: 0.34872}
+  m_LocalPosition: {x: 0.01, y: 4.170001, z: -1.03}
+  m_LocalScale: {x: 0.657582, y: 0.43272054, z: 0.42627534}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4755888057588494560}
@@ -776,3 +815,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6750346485395848009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9179485979509510982}
+  m_Layer: 6
+  m_Name: Boba Obj Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9179485979509510982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6750346485395848009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 772452983688327612}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
