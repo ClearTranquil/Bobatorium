@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 630746850032923558}
   - component: {fileID: 1775030895289602201}
   - component: {fileID: 4916519986719350510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snap Point 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,8 +191,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 8.441553, y: 4.0911884, z: 4.7778726}
+  m_Center: {x: 3.7207766, y: 1.5455942, z: 1.8889363}
 --- !u!1 &2228257120407105210
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 862940711809976338}
   - component: {fileID: 2438712016532872535}
   - component: {fileID: 545756806663839838}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snap Point 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 8889125398573000418}
   - component: {fileID: 8322320527647532337}
   - component: {fileID: 2579115279482933618}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snap Point 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -334,7 +334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113207348585167834}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Snap Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 8603870619020045296}
   - component: {fileID: 3212848052032276529}
   - component: {fileID: 1922457819857885397}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Customer Tray
   m_TagString: Tray
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 1492275041636979633}
   - component: {fileID: 4291222789783123567}
   - component: {fileID: 907638756459308826}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

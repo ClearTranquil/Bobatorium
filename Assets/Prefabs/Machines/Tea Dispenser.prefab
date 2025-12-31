@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4105672326198925233}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Snap Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8896488185043168082}
   - component: {fileID: 1829469476303287835}
   - component: {fileID: 8693192300320487339}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 8993725857771211045}
   - component: {fileID: 5634684701578806371}
   - component: {fileID: 2869669518197719814}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lever Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 7823434974066454736}
   - component: {fileID: 6944100614547182883}
   - component: {fileID: 5845913601154379318}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lever Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 3877147919391201109}
   - component: {fileID: 461190162105050586}
   - component: {fileID: 904735819635733780}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 7873054051721632312}
   - component: {fileID: 9036312604291101611}
   - component: {fileID: 1349442962271119308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lever Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8856596639540335258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 904678977687763486}
   - component: {fileID: 4550437794832857106}
   - component: {fileID: 5868708108211556756}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1132370560473441877}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 9050633935972336542}
   - component: {fileID: 2314859031511743040}
   - component: {fileID: 4149761505714248266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snap Point 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -833,8 +833,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.0737195, y: 4.920293, z: 4.604869}
+  m_Center: {x: -0.053513527, y: 1.9601464, z: 1.1774029}
 --- !u!1 &8336517500321258250
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 2940498192744457937}
   - component: {fileID: 5042832836342984519}
   - component: {fileID: 2876601594553558886}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Tea Dispenser
   m_TagString: Machine
   m_Icon: {fileID: 0}

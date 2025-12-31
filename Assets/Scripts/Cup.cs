@@ -1,10 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Cup : MonoBehaviour, IInteractable
 {
     private int bobaCount = 0;
     private float teaFill;
     private bool isSealed;
+
+    private SnapPoints heldSnapPoint;
+    private SnapPoints currentSnapPoint;
+    [SerializeField] private LayerMask snapMask;
+    [SerializeField] private float snapMaxDistance = 100f;
 
     private int GetBobaCount()
         { return bobaCount; }
@@ -17,10 +23,15 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void Interact(PlayerControls player)
     {
-        player.PickUp(gameObject);
+        // If picked back up while it was snapped to a point, tell the snapPoint its been removed
+        if(currentSnapPoint != null)
+        {
+            currentSnapPoint.Clear();
+            ClearSnapPoint();
+        }
         
-        // detatch from machine when cup is held
         transform.SetParent(null);
+        player.PickUp(gameObject);
     }
 
 
@@ -29,16 +40,12 @@ public class Cup : MonoBehaviour, IInteractable
         //Debug.Log("Cup released");
 
         // Check if the cup should be snapping to a nearby snap point 
-        Collider[] hits = Physics.OverlapSphere(releasePos, 0.2f);
-        foreach (var hit in hits)
+        if (heldSnapPoint != null)
         {
-            SnapPoints snap = hit.GetComponent<SnapPoints>();
-            if (snap != null)
-            {
-                // cup tells the snap point that it was just placed there
-                snap.TrySnapCup(this);
-                break;
-            }
+            heldSnapPoint.TrySnapCup(this);
+            currentSnapPoint = heldSnapPoint;
+            heldSnapPoint = null;
+            return;
         }
 
         // Logic for cups not dropped in machine here
@@ -46,6 +53,48 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void OnHold()
     {
-        // What the cup should do while held 
+        // While being held, the cup looks for snap points. If one is nearby, snap to it to "preview" where it will be placed if the player lets go. 
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        // First, check if the obj being hovered over is a machine. Machine snap point behavior checks all available snap points and puts the cup in the first available one.
+        if (Physics.Raycast(ray, out RaycastHit hit, snapMaxDistance))
+        {
+            Machine machine = hit.collider.GetComponent<Machine>();
+            if (machine != null)
+            {
+                SnapPoints snap = machine.GetAvailableSnapPoint();
+                if (snap != null)
+                {
+                    heldSnapPoint = snap;
+                    transform.position = snap.transform.position;
+                    return;
+                }
+            }
+        }
+
+        // Second, check for direct snap points that arent tied to a machine. 
+        if (Physics.Raycast(ray, out RaycastHit snapHit, snapMaxDistance, snapMask))
+        {
+            SnapPoints snap = snapHit.collider.GetComponent<SnapPoints>();
+            if (snap != null && !snap.IsOccupied)
+            {
+                heldSnapPoint = snap;
+                transform.position = snap.transform.position;
+                return;
+            }
+        }
+        
+        // Third, if theres no snap points nearby, just keep the object glued to the cursor.
+        heldSnapPoint = null;
+    }
+
+    public void RegisterSnapPoint(SnapPoints snapPoint)
+    {
+        currentSnapPoint = snapPoint;
+    }
+
+    public void ClearSnapPoint()
+    {
+        currentSnapPoint = null;
     }
 }

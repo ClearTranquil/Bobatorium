@@ -36,6 +36,8 @@ public class PlayerControls : MonoBehaviour
         // If object is Interactable, tell it that its being interacted with
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, rayCastMask))
         {
+            Debug.Log("Clicked on " + hit.collider.gameObject);
+            
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             interactable?.Interact(this);
         }
@@ -53,19 +55,9 @@ public class PlayerControls : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         Vector3 targetPos = ray.GetPoint(heldZDistance);
 
-        // Machines/delivery trays have a set position that held cups will "snap" to if held near the machine.
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, rayCastMask))
-        {
-            Machine machine = hit.collider.GetComponent<Machine>();
-            if (machine != null)
-            {
-                SnapPoints snap = machine.GetAvailableSnapPoint();
-                if (snap != null)
-                {
-                    targetPos = snap.transform.position;
-                }
-            }
-        }
+        // Tell object its being held
+        IInteractable interactable = heldObj.GetComponent<IInteractable>();
+        interactable?.OnHold();
 
         heldObj.transform.position = targetPos;
     }
@@ -76,6 +68,7 @@ public class PlayerControls : MonoBehaviour
             return;
 
         // Tell the held object it was released
+        heldObj.layer = originalLayer;
         var interactable = heldObj.GetComponent<IInteractable>();
         interactable?.OnRelease(heldObj.transform.position);
 
@@ -87,7 +80,7 @@ public class PlayerControls : MonoBehaviour
     {
         heldObj = obj;
 
-        // Update's held objects layer so it doesn't block raycasts d
+        // Update's held objects layer so it doesn't block raycasts
         originalLayer = heldObj.layer;
         heldObj.layer = heldObjLayer;
     }

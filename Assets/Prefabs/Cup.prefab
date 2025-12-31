@@ -186,3 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50f9759b8c28ca428e3d26af6a3c1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cup
+  snapMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  snapRadius: 0.25

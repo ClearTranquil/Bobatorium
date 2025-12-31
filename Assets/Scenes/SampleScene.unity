@@ -996,6 +996,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boba Dispenser
       objectReference: {fileID: 0}
+    - target: {fileID: 3953797676247165191, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4475486537323040523, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1151,6 +1155,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3954421640995398498, guid: 801c946c2b9f8dc42bf67d1c66d068b2, type: 3}
+      propertyPath: heldZDistance
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3954421640995398498, guid: 801c946c2b9f8dc42bf67d1c66d068b2, type: 3}
       propertyPath: rayCastMask.m_Bits
       value: 64

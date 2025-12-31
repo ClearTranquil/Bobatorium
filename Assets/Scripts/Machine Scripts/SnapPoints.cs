@@ -13,9 +13,12 @@ public class SnapPoints : MonoBehaviour
         if (IsOccupied)
             return false;
 
+        OccupiedCup = m_cup;
+
         m_cup.transform.SetParent(transform);
         m_cup.transform.localPosition = Vector3.zero;
-        OccupiedCup = m_cup;
+        m_cup.RegisterSnapPoint(this); 
+
         return true;
     }
 
