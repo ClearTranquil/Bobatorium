@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class PlayerControls : MonoBehaviour
 {
     private GameObject heldObj;
-    [SerializeField] private float heldZDistance = 8f;
 
     [SerializeField] private LayerMask rayCastMask;
     private int originalLayer;
@@ -45,21 +44,11 @@ public class PlayerControls : MonoBehaviour
 
     private void HandleDrag()
     {
-        if (heldObj == null)
+        if (heldObj == null || !Mouse.current.leftButton.isPressed)
             return;
 
-        if (!Mouse.current.leftButton.isPressed)
-            return;
-
-        // Holds an object a fixed distance from the camera. This may change later. 
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Vector3 targetPos = ray.GetPoint(heldZDistance);
-
-        // Tell object its being held
         IInteractable interactable = heldObj.GetComponent<IInteractable>();
         interactable?.OnHold();
-
-        heldObj.transform.position = targetPos;
     }
 
     private void HandleRelease()

@@ -7,10 +7,19 @@ public class Cup : MonoBehaviour, IInteractable
     private float teaFill;
     private bool isSealed;
 
+    [SerializeField] private float heldZDistance = 15f;
+
     private SnapPoints heldSnapPoint;
     private SnapPoints currentSnapPoint;
     [SerializeField] private LayerMask snapMask;
     [SerializeField] private float snapMaxDistance = 100f;
+
+    private Camera mainCam;
+
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
 
     private int GetBobaCount()
         { return bobaCount; }
@@ -53,7 +62,12 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void OnHold()
     {
-        // While being held, the cup looks for snap points. If one is nearby, snap to it to "preview" where it will be placed if the player lets go. 
+        // While held, cup follows the player's cursor by default
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        Vector3 targetPos = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
+        transform.position = targetPos;
+
+        // While held, the cup looks for snap points. If one is nearby, snap to it to "preview" where it will be placed if the player lets go. 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         // First, check if the obj being hovered over is a machine. Machine snap point behavior checks all available snap points and puts the cup in the first available one.
