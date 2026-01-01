@@ -768,10 +768,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineLever
   machine: {fileID: 2876601594553558886}
-  handle: {fileID: 3050461527333776954}
-  minRotation: 0
-  maxRotation: -60
-  pullSpeed: 200
+  activationDistanceY: 1
+  handle: {fileID: 1411539090527601934}
 --- !u!65 &8657488392679348855
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -6,8 +6,6 @@ public class PlayerControls : MonoBehaviour
     private GameObject heldObj;
 
     [SerializeField] private LayerMask rayCastMask;
-    private int originalLayer;
-    private int heldObjLayer = 7;
 
     /* The player controls script only handles the act of clicking and dragging things. It has no idea what it's actually clicking on or interacting with. 
      This is by design! Interactable objects use an interface that decides what happens when they're clicked/dragged by player controls. */
@@ -57,7 +55,6 @@ public class PlayerControls : MonoBehaviour
             return;
 
         // Tell the held object it was released
-        heldObj.layer = originalLayer;
         var interactable = heldObj.GetComponent<IInteractable>();
         interactable?.OnRelease(heldObj.transform.position);
 
@@ -68,9 +65,5 @@ public class PlayerControls : MonoBehaviour
     public void PickUp(GameObject obj)
     {
         heldObj = obj;
-
-        // Update's held objects layer so it doesn't block raycasts
-        originalLayer = heldObj.layer;
-        heldObj.layer = heldObjLayer;
     }
 }

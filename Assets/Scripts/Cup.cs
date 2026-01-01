@@ -14,11 +14,15 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private LayerMask snapMask;
     [SerializeField] private float snapMaxDistance = 100f;
 
+    private int originalLayer;
+    private int heldLayer = 7;
+
     private Camera mainCam;
 
     private void Awake()
     {
         mainCam = Camera.main;
+        originalLayer = gameObject.layer;
     }
 
     private int GetBobaCount()
@@ -38,7 +42,9 @@ public class Cup : MonoBehaviour, IInteractable
             currentSnapPoint.Clear();
             ClearSnapPoint();
         }
-        
+
+        // When picked up, change obj's layer so the player can ray cast through the cup
+        gameObject.layer = heldLayer;
         transform.SetParent(null);
         player.PickUp(gameObject);
     }
@@ -47,6 +53,7 @@ public class Cup : MonoBehaviour, IInteractable
     public void OnRelease(Vector3 releasePos)
     {
         //Debug.Log("Cup released");
+        gameObject.layer = originalLayer;
 
         // Check if the cup should be snapping to a nearby snap point 
         if (heldSnapPoint != null)
