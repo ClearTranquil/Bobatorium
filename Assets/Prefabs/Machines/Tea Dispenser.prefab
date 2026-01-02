@@ -60,8 +60,8 @@ Transform:
   m_GameObject: {fileID: 1006112936883030515}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 1.0999999}
-  m_LocalScale: {x: 2.647343, y: 3.26054, z: 2.0565157}
+  m_LocalPosition: {x: 0, y: 2.16, z: 1.0999999}
+  m_LocalScale: {x: 2.647343, y: 4.909857, z: 2.0565157}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8856596639540335258}
@@ -170,7 +170,7 @@ Transform:
   m_GameObject: {fileID: 1411539090527601934}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.57000005, y: 0.9699997, z: 0}
+  m_LocalPosition: {x: -0.57000005, y: 2.01, z: 0}
   m_LocalScale: {x: 0.94163513, y: 0.2653032, z: 0.12390334}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -261,8 +261,8 @@ Transform:
   m_GameObject: {fileID: 1490768744069832404}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 0.16, z: 0}
-  m_LocalScale: {x: 0.64741, y: 2.4102, z: 1}
+  m_LocalPosition: {x: 0.01, y: 0.57, z: 0}
+  m_LocalScale: {x: 0.64741, y: 4.0104213, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1132370560473441877}
@@ -372,7 +372,7 @@ Transform:
   m_GameObject: {fileID: 2407792697904553591}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.36, z: 0.17}
+  m_LocalPosition: {x: 0, y: 4.78, z: 0.17}
   m_LocalScale: {x: 2.6362705, y: 1.068487, z: 3.9588563}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -607,7 +607,7 @@ Transform:
   m_GameObject: {fileID: 3856040829641444081}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.72, z: -1.03}
+  m_LocalPosition: {x: 0, y: 4.1400003, z: -1.03}
   m_LocalScale: {x: 0.43465, y: 0.43272054, z: 0.34872}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -720,7 +720,7 @@ Transform:
   m_GameObject: {fileID: 5509415752516470619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.38, y: 1.758, z: 1.02}
+  m_LocalPosition: {x: -1.38, y: 2.37, z: 1.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -767,8 +767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc2d6aeed63ccf44965b92380dac7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineLever
-  machine: {fileID: 2876601594553558886}
-  activationDistanceY: 1
+  machine: {fileID: 595119168228571322}
+  maxPullDistance: 2.5
+  pullSensitivity: 0.5
+  returnSpeed: 0.1
+  triggerThreshold: 0.9
   handle: {fileID: 1411539090527601934}
 --- !u!65 &8657488392679348855
 BoxCollider:
@@ -790,7 +793,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.2, y: 1.4, z: 1}
-  m_Center: {x: -1.06, y: 0.88, z: 0}
+  m_Center: {x: -1.06, y: 1.99, z: 0}
 --- !u!1 &8028573768020702837
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2940498192744457937}
   - component: {fileID: 5042832836342984519}
-  - component: {fileID: 2876601594553558886}
+  - component: {fileID: 595119168228571322}
   m_Layer: 9
   m_Name: Tea Dispenser
   m_TagString: Machine
@@ -1025,7 +1028,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.1256456, y: 5.177846, z: 4.4758058}
   m_Center: {x: -0.20036757, y: 2.088923, z: -0.019348383}
---- !u!114 &2876601594553558886
+--- !u!114 &595119168228571322
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1034,8 +1037,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8486542058355081851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee2abee37780674fa049265d05a4e00, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bfaa21b9867c7741bd145c06d7a43ed, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Machine
+  m_EditorClassIdentifier: Assembly-CSharp::TeaMachine
   snapPoints:
   - {fileID: 2314859031511743040}
+  amountToDispense: 1

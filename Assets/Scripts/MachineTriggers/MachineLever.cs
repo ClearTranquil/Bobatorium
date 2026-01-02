@@ -19,6 +19,13 @@ public class MachineLever : MachineTriggerBase
         startPos = handle.gameObject.transform.localPosition;
     }
 
+    public override void Interact(PlayerControls player)
+    {
+        base.Interact(player);
+        player.PickUp(gameObject);
+        isHeld = true;
+    }
+
     private void Update()
     {
         LeverMovement();
