@@ -5,18 +5,23 @@ using UnityEngine.InputSystem;
 public class MachineLever : MachineTriggerBase
 {
     [Header("Lever options")]
-    [SerializeField] private float maxPullDistance = 1.0f;
+    [SerializeField] private float maxPullAngle = 60f;
     [SerializeField] private float pullSensitivity = 4f;
     [SerializeField] private float returnSpeed = 6f;
-    [SerializeField] private float triggerThreshold = 0.9f;
+    [SerializeField] private float triggerThreshold = 45f;
 
     [SerializeField] private GameObject handle;
-    private Vector3 startPos;
-    private float currentPullAmount;
+    private float currentAngle;
+    private float startAngle;
 
     private void Awake()
     {
-        startPos = handle.gameObject.transform.localPosition;
+        startAngle = handle.transform.localEulerAngles.z;
+
+        if (startAngle > 180f)
+            startAngle -= 360f;
+
+        currentAngle = 0f;
     }
 
     public override void Interact(PlayerControls player)
@@ -34,27 +39,41 @@ public class MachineLever : MachineTriggerBase
     
     private void LeverMovement()
     {
-        if (isHeld && Mouse.current.leftButton.isPressed)
+        // Returns to neutral position when not held
+        if (!isHeld && currentAngle > 0f)
         {
-            // Checks how much the mouse has moved up or down while the lever is held and moves the lever accordingly
-            float mouseDeltaY = Mouse.current.delta.ReadValue().y;
-
-            currentPullAmount -= mouseDeltaY * Time.deltaTime * pullSensitivity;
-            currentPullAmount = Mathf.Clamp01(currentPullAmount);
-        }
-        else
-        {
-            // Returns to neutral position
-            currentPullAmount = Mathf.MoveTowards(currentPullAmount, 0, returnSpeed);
+            currentAngle = Mathf.MoveTowards(currentAngle, 0f, returnSpeed * Time.deltaTime);
         }
 
-        handle.transform.localPosition = startPos + Vector3.down * currentPullAmount * maxPullDistance;
+        ApplyRotation();
+    }
+
+    public override void OnHold()
+    {
+        float mouseDeltaY = Mouse.current.delta.ReadValue().y;
+
+        // Pull down when dragging mouse downward
+        currentAngle += -mouseDeltaY * pullSensitivity;
+        currentAngle = Mathf.Clamp(currentAngle, 0f, maxPullAngle);
+
+        ApplyRotation();
+    }
+
+    public override void OnRelease(Vector3 releasePos)
+    {
+        isHeld = false;
+    }
+
+    // Visually moves the handle, doesn't effect the logic
+    private void ApplyRotation()
+    {
+        handle.transform.localRotation = (Quaternion.Euler(0f, 0f, startAngle + currentAngle));
     }
 
     private void HandleMachineTrigger()
     {
         // When lever is pulled down long enough, trigger the machine
-        if (currentPullAmount >= triggerThreshold && isHeld)
+        if (currentAngle >= triggerThreshold && isHeld)
         {
             TriggerMachine();
         }
