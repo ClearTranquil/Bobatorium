@@ -14,8 +14,7 @@ public class Boba : MonoBehaviour
         Cup cup = collision.gameObject.GetComponent<Cup>();
         if (cup)
         {
-            // Add boba to cup
-            Debug.Log("Boba in cup :)");
+            cup.AddBoba();
         }
 
         Despawn();

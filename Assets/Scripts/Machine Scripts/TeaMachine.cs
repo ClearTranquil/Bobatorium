@@ -2,15 +2,28 @@ using UnityEngine;
 
 public class TeaMachine : Machine
 {
-    [SerializeField] private float amountToDispense = 1f;
-    
+    [Header("Pour Settings")]
+    [SerializeField] private float pourRate = .25f;
+    [SerializeField] private Transform spout;
+
+    private bool isPouring;
+
+
     public override void TriggerAction()
     {
-        PourTea();
+        isPouring = true;
     }
 
-    private void PourTea()
+    public override void StopTrigger()
     {
-        Debug.Log("Tea unit poured" + amountToDispense);
+        isPouring = false;
+    }
+
+    public bool IsPouring => isPouring;
+    public float PourRate => pourRate;
+
+    public void SetPourRate(float m_pourRate)
+    {
+        pourRate = m_pourRate;
     }
 }

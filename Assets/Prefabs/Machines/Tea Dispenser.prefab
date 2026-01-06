@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 904678977687763486}
   - component: {fileID: 4550437794832857106}
   - component: {fileID: 5868708108211556756}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Stem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,14 +716,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5000001
-  m_Height: 2
+  m_Height: 11.135105
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.00000006856625, y: -4.5675535, z: -0.000000085462034}
 --- !u!1 &5509415752516470619
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,10 +800,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineLever
   machine: {fileID: 595119168228571322}
-  maxPullAngle: 60
+  maxPullAngle: 80
   pullSensitivity: 0.5
-  returnSpeed: 0.1
-  triggerThreshold: 0.9
+  returnSpeed: 100
+  triggerThreshold: 75
   handle: {fileID: 3640382448860084787}
 --- !u!65 &8657488392679348855
 BoxCollider:
@@ -1074,4 +1074,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeaMachine
   snapPoints:
   - {fileID: 2314859031511743040}
-  amountToDispense: 1
+  pourRate: 0.25
+  spout: {fileID: 699001592231627404}

@@ -30,10 +30,18 @@ public abstract class MachineTriggerBase : MonoBehaviour, IInteractable
         if (machine)
         {
             machine.TriggerAction();
-            Debug.Log("Machine triggered");
+            //Debug.Log("Machine triggered");
         } else
         {
             Debug.Log("Machine not found");
         }
+    }
+
+    protected void StopTriggerMachine()
+    {
+        if (machine)
+        {
+            machine.StopTrigger();
+        } 
     }
 }

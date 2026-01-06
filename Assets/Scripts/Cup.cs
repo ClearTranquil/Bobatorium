@@ -3,10 +3,6 @@ using UnityEngine.InputSystem;
 
 public class Cup : MonoBehaviour, IInteractable
 {
-    private int bobaCount = 0;
-    private float teaFill;
-    private bool isSealed;
-
     [SerializeField] private float heldZDistance = 15f;
 
     private SnapPoints heldSnapPoint;
@@ -19,20 +15,42 @@ public class Cup : MonoBehaviour, IInteractable
 
     private Camera mainCam;
 
+    [Header("Cup fill settings")]
+    [SerializeField] private float maxTeaFill;
+    private float teaFillAmount;
+    [SerializeField] private int maxBoba;
+    private int bobaCount = 0;
+    private bool isSealed = false;
+
+    [Header("Placeholder visuals")]
+    [SerializeField] private GameObject emptyCup;
+    [SerializeField] private GameObject cupWithBoba;
+    [SerializeField] private GameObject cupWithTea;
+
     private void Awake()
     {
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
     }
 
-    private int GetBobaCount()
-        { return bobaCount; }
+    public bool isBobaFull()
+    {
+        if(bobaCount >= maxBoba)
+        {
+            return true;
+        } else { return false; }
+    }
 
-    private float GetTeaFill()
-        { return teaFill; }
-
-    private bool GetIsSealed()
+    public bool GetIsSealed()
         { return isSealed; }
+
+    public bool isTeaFull()
+    {
+        if(teaFillAmount >= maxTeaFill)
+        {
+            return true;
+        } else { return false; }
+    }
 
     public void Interact(PlayerControls player)
     {
@@ -109,6 +127,44 @@ public class Cup : MonoBehaviour, IInteractable
         heldSnapPoint = null;
     }
 
+    /*-----------------BOBA------------------*/
+    public void AddBoba()
+    {
+        bobaCount++;
+
+        if(bobaCount >= maxBoba)
+        {
+            UpdateVisuals();
+        }
+    }
+
+    /*-----------------TEA-------------------*/
+
+    // Checks if we're currently touching the tea machine's spout
+    public void OnTriggerStay(Collider other)
+    {
+        //Debug.Log("Cup is touching a spout");
+
+        TeaMachine machine = other.GetComponentInParent<TeaMachine>();
+        if (machine && machine.IsPouring)
+        {
+            AddTea(machine.PourRate * Time.deltaTime);
+        }
+    }
+
+    private void AddTea(float amount)
+    {
+        if (teaFillAmount < maxTeaFill)
+        {
+            teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
+            Debug.Log("Cup is " + teaFillAmount + " full");
+        } else
+        {
+            Debug.Log("Cup is filled");
+            UpdateVisuals();
+        }
+    }
+
     public void RegisterSnapPoint(SnapPoints snapPoint)
     {
         currentSnapPoint = snapPoint;
@@ -117,5 +173,25 @@ public class Cup : MonoBehaviour, IInteractable
     public void ClearSnapPoint()
     {
         currentSnapPoint = null;
+    }
+
+    private void UpdateVisuals()
+    {
+        // This is where we'll make it look like liquid is being added to the cup
+        if (isTeaFull())
+        {
+            cupWithTea.SetActive(true);
+            emptyCup.SetActive(false);
+            cupWithBoba.SetActive(false);
+
+        } else if (isBobaFull())
+        {
+            cupWithBoba.SetActive(true);
+            emptyCup.SetActive(false);
+        }
+        else
+        {
+            emptyCup.SetActive(true);
+        }
     }
 }

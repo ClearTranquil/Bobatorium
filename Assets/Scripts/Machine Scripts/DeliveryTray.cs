@@ -4,7 +4,7 @@ public class DeliveryTray : Machine
 {
     public override void TriggerAction()
     {
-        Debug.Log("Action received");
+        //Debug.Log("Action received");
         DeliverAll();
     }
 
@@ -18,15 +18,28 @@ public class DeliveryTray : Machine
             if(snap.OccupiedCup != null)
             {
                 Cup cup = snap.OccupiedCup;
+                bool cupValid = false;
 
                 // Insert cup validation logic here!! 
+                if(cup.isBobaFull() && cup.isTeaFull())
+                {
+                    cupValid = true;
+                }
 
-                Debug.Log("Sold!");
-                Destroy(cup.gameObject);
-                snap.Clear();
+                if (cupValid)
+                {
+                    Debug.Log("Sold!");
+                    Destroy(cup.gameObject);
+                    snap.Clear();
+                } else
+                {
+                    Debug.Log("Cup rejected");
+                    //Destroy(cup.gameObject);
+                }
+
             } else
             {
-                Debug.Log("No cup to sell!");
+                //Debug.Log("No cup to sell!");
             }
         }
     }

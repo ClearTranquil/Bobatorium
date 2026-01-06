@@ -10,6 +10,11 @@ public class Machine : MonoBehaviour
         // The machine's payload when triggered
     }
 
+    public virtual void StopTrigger()
+    {
+        // Stops the payload, if necessary
+    }
+
     public SnapPoints GetAvailableSnapPoint()
     {
         foreach(var snap in snapPoints)

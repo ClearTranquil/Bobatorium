@@ -76,9 +76,6 @@ public class MachineLever : MachineTriggerBase
         if (currentAngle >= triggerThreshold && isHeld)
         {
             TriggerMachine();
-        } else
-        {
-            StopTriggerMachine();
         }
     }
 }
