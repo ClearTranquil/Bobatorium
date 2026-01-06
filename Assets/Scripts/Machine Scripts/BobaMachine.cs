@@ -31,7 +31,7 @@ public class BobaMachine : Machine
 
     public override void TriggerAction()
     {
-        Debug.Log("Action received");
+        //Debug.Log("Action received");
         EmitBoba();
     }
 

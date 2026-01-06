@@ -883,6 +883,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
+--- !u!1001 &1223228586312416251
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008795696637006703, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5853161097640078528, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
+      propertyPath: m_Name
+      value: Tea Drop (PLACEHOLDER)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 78f6d2d8d6dbd3c478f632d2f8d00911, type: 3}
 --- !u!1001 &2124675328270841315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -891,10 +948,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1606134916205729267, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
-      propertyPath: returnSpeed
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 2940498192744457937, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4300001
@@ -1290,3 +1343,4 @@ SceneRoots:
   - {fileID: 2071369071}
   - {fileID: 5760411723810063145}
   - {fileID: 4961011178485458023}
+  - {fileID: 1223228586312416251}
