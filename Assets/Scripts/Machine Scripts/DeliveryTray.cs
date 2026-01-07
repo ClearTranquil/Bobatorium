@@ -21,7 +21,7 @@ public class DeliveryTray : Machine
                 bool cupValid = false;
 
                 // Insert cup validation logic here!! 
-                if(cup.isBobaFull() && cup.isTeaFull())
+                if(cup.isBobaFull() && cup.isTeaFull() && cup.GetIsSealed())
                 {
                     cupValid = true;
                 }

@@ -26,6 +26,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject emptyCup;
     [SerializeField] private GameObject cupWithBoba;
     [SerializeField] private GameObject cupWithTea;
+    [SerializeField] private GameObject cupLid;
 
     private void Awake()
     {
@@ -165,6 +166,15 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
+    /*-----------------LID-------------------*/
+    public void SealCup()
+    {
+        isSealed = true;
+
+        UpdateVisuals();
+    }
+
+
     public void RegisterSnapPoint(SnapPoints snapPoint)
     {
         currentSnapPoint = snapPoint;
@@ -192,6 +202,11 @@ public class Cup : MonoBehaviour, IInteractable
         else
         {
             emptyCup.SetActive(true);
+        }
+
+        if (isSealed)
+        {
+            cupLid.SetActive(true);
         }
     }
 }
