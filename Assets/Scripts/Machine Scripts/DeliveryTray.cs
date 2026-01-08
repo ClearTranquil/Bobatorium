@@ -1,7 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class DeliveryTray : Machine
 {
+    [SerializeField] private float timeBetweenCups = .5f;
+    
     public override void TriggerAction()
     {
         //Debug.Log("Action received");
@@ -13,15 +16,20 @@ public class DeliveryTray : Machine
      * If a cup is there, check if it meets the requirements to be sold. */
     public void DeliverAll()
     {
-        foreach(var snap in snapPoints)
+        StartCoroutine(ScanCups());
+    }
+
+    private IEnumerator ScanCups()
+    {
+        foreach (var snap in snapPoints)
         {
-            if(snap.OccupiedCup != null)
+            if (snap.OccupiedCup != null)
             {
                 Cup cup = snap.OccupiedCup;
                 bool cupValid = false;
 
                 // Insert cup validation logic here!! 
-                if(cup.isBobaFull() && cup.isTeaFull() && cup.GetIsSealed())
+                if (cup.isBobaFull() && cup.isTeaFull() && cup.GetIsSealed())
                 {
                     cupValid = true;
                 }
@@ -31,16 +39,15 @@ public class DeliveryTray : Machine
                     Debug.Log("Sold!");
                     Destroy(cup.gameObject);
                     snap.Clear();
-                } else
+                }
+                else
                 {
                     Debug.Log("Cup rejected");
                     //Destroy(cup.gameObject);
                 }
-
-            } else
-            {
-                //Debug.Log("No cup to sell!");
             }
+
+            yield return new WaitForSeconds(timeBetweenCups);
         }
     }
 }
