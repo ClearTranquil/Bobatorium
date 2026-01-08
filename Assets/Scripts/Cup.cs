@@ -155,14 +155,21 @@ public class Cup : MonoBehaviour, IInteractable
 
     private void AddTea(float amount)
     {
-        if (teaFillAmount < maxTeaFill)
+        if (!isSealed)
         {
-            teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
-            Debug.Log("Cup is " + teaFillAmount + " full");
+            if (teaFillAmount < maxTeaFill)
+            {
+                teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
+                Debug.Log("Cup is " + teaFillAmount + " full");
+            }
+            else
+            {
+                Debug.Log("Cup is filled");
+                UpdateVisuals();
+            }
         } else
         {
-            Debug.Log("Cup is filled");
-            UpdateVisuals();
+            Debug.Log("Can't fill, cup is sealed!");
         }
     }
 

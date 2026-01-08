@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,8 @@ public class PlayerControls : MonoBehaviour
     private GameObject heldObj;
 
     [SerializeField] private LayerMask rayCastMask;
+
+    public static event Action ForceRelease;
 
     /* The player controls script only handles the act of clicking and dragging things. It has no idea what it's actually clicking on or interacting with. 
      This is by design! Interactable objects use an interface that decides what happens when they're clicked/dragged by player controls. */
@@ -65,5 +68,23 @@ public class PlayerControls : MonoBehaviour
     public void PickUp(GameObject obj)
     {
         heldObj = obj;
+    }
+
+    public static void TryForceRelease()
+    {
+        ForceRelease?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        ForceRelease += HandleForceRelease;
+    }
+
+    private void HandleForceRelease()
+    {
+        var interactable = heldObj.GetComponent<IInteractable>();
+        interactable?.OnRelease(heldObj.transform.position);
+
+        heldObj = null;
     }
 }

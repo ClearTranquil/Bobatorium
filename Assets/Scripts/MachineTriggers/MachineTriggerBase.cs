@@ -1,9 +1,9 @@
 using UnityEngine;
+using System;
 
 public abstract class MachineTriggerBase : MonoBehaviour, IInteractable
 {
     [SerializeField] private Machine machine;
-
     protected bool isHeld = false;
     
     // Called when player clicks/taps on trigger
