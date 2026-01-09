@@ -4,6 +4,8 @@ using UnityEngine;
 public class DeliveryTray : Machine
 {
     [SerializeField] private float timeBetweenCups = .5f;
+
+    public NPCManager npcManager;
     
     public override void TriggerAction()
     {
@@ -37,6 +39,7 @@ public class DeliveryTray : Machine
                 if (cupValid)
                 {
                     Debug.Log("Sold!");
+                    ScoreCup(cup);
                     Destroy(cup.gameObject);
                     snap.Clear();
                 }
@@ -49,5 +52,10 @@ public class DeliveryTray : Machine
 
             yield return new WaitForSeconds(timeBetweenCups);
         }
+    }
+
+    private void ScoreCup(Cup m_cup)
+    {
+        npcManager.OnCupSold();
     }
 }

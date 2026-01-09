@@ -36,7 +36,7 @@ public class PlayerControls : MonoBehaviour
         // If object is Interactable, tell it that its being interacted with
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, rayCastMask))
         {
-            Debug.Log("Clicked on " + hit.collider.gameObject);
+            //Debug.Log("Clicked on " + hit.collider.gameObject);
             
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             interactable?.Interact(this);
