@@ -105,8 +105,6 @@ public class NPCManager : MonoBehaviour
         // Snap cleanly at the end
         cup.transform.position = target.position;
         cup.transform.rotation = target.rotation;
-
-        // Optional: parent it so it stays with the NPC
         cup.transform.SetParent(target);
     }
 
