@@ -4,6 +4,7 @@ public class NPCMover : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 2f;
     private Transform target;
+    [SerializeField] private GameObject cupSlot;
 
     public void MoveTo(Transform m_target)
     {
@@ -22,5 +23,10 @@ public class NPCMover : MonoBehaviour
             return;
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime); 
+    }
+
+    public GameObject GetCupSlot()
+    {
+        return cupSlot;
     }
 }

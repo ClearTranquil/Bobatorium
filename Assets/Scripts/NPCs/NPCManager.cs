@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.MPE;
+using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class NPCManager : MonoBehaviour
 
     public float offscreenWaitTime = 3f;
 
-    public void OnCupSold()
+    public void OnCupSold(Cup cup)
     {
-        StartCoroutine(moveNPCs());
+        StartCoroutine(moveNPCs(cup));
     }
 
-    private IEnumerator moveNPCs()
+    private IEnumerator moveNPCs(Cup cup)
     {
         // NPC in pos 1 takes cup, moves off screen
         NPCMover npcToMove = line[0];
@@ -74,4 +75,15 @@ public class NPCManager : MonoBehaviour
             line[i].MoveTo(linePositions[i]);
         }
     }
+
+    private void OnEnable()
+    {
+        SaleEvents.OnCupSold += OnCupSold;
+    }
+
+    private void OnDisable()
+    {
+        SaleEvents.OnCupSold -= OnCupSold;
+    }
+
 }

@@ -15,7 +15,7 @@ public class WalletUI : MonoBehaviour
             return;
         }
 
-        Debug.Log("Subscribing to wallet events");
+        //Debug.Log("Subscribing to wallet events");
         
         UpdateBalance(wallet.balance);
 
@@ -30,7 +30,7 @@ public class WalletUI : MonoBehaviour
 
     public void UpdateBalance(int amount)
     {
-        Debug.Log("Trying to update balance...");
+        //Debug.Log("Trying to update balance...");
         balanceText.text = $"${amount}";
     }
 }

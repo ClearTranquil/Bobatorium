@@ -7,14 +7,13 @@ using UnityEngine.InputSystem;
 public class SaleProcessor : MonoBehaviour
 {
     public Wallet wallet;
-    public List<SaleModifier> saleModifiers;
     
     // Checks all applied sale modifiers and deposits the final amount earned into the player's wallet.
-    public void ProcessSale(int baseValue)
+    public void ProcessSale(Cup cup)
     {
-        SaleData sale = new SaleData(baseValue);
+        SaleData sale = new SaleData(cup.GetBasePrice());
 
-        foreach(var mod in saleModifiers)
+        foreach(var mod in cup.saleModifiers)
         {
             mod.Apply(sale);
         }
@@ -22,13 +21,14 @@ public class SaleProcessor : MonoBehaviour
         wallet.Deposit(sale.finalValue);
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        // debug sale test
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            //Debug.Log("Input detected");
-            ProcessSale(5);
-        }
+        SaleEvents.OnCupSold += ProcessSale;
     }
+
+    private void OnDisable()
+    {
+        SaleEvents.OnCupSold -= ProcessSale;
+    }
+
 }

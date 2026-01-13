@@ -1,19 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Cup : MonoBehaviour, IInteractable
 {
-    [SerializeField] private float heldZDistance = 15f;
+    private Camera mainCam;
 
+    [Header("Pricing")]
+    [SerializeField] private int basePrice = 1;
+    public List<SaleModifier> saleModifiers;
+
+    [Header("Physics")]
+    [SerializeField] private float heldZDistance = 15f;
     private SnapPoints heldSnapPoint;
     private SnapPoints currentSnapPoint;
     [SerializeField] private LayerMask snapMask;
     [SerializeField] private float snapMaxDistance = 100f;
-
     private int originalLayer;
     private int heldLayer = 7;
-
-    private Camera mainCam;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -215,5 +219,10 @@ public class Cup : MonoBehaviour, IInteractable
         {
             cupLid.SetActive(true);
         }
+    }
+
+    public int GetBasePrice()
+    {
+        return basePrice;
     }
 }

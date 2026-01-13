@@ -1,12 +1,11 @@
 using System.Collections;
+using System;
 using UnityEngine;
 
 public class DeliveryTray : Machine
 {
     [SerializeField] private float timeBetweenCups = .5f;
 
-    public NPCManager npcManager;
-    
     public override void TriggerAction()
     {
         //Debug.Log("Action received");
@@ -56,6 +55,6 @@ public class DeliveryTray : Machine
 
     private void ScoreCup(Cup m_cup)
     {
-        npcManager.OnCupSold();
+        SaleEvents.OnCupSold?.Invoke(m_cup);
     }
 }
