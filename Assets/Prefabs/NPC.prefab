@@ -335,3 +335,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCMover
   moveSpeed: 30
+  cupSlot: {fileID: 5832174034923841599}

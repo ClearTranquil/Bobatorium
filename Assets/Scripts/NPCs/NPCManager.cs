@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
-    public List<NPCMover> line = new List<NPCMover>();
-    public Transform[] linePositions;
-    public Transform offScreenPosition;
-    public Transform hiddenPosition;
-    public Transform backOfLine;
+    [SerializeField] private List<NPCMover> line = new List<NPCMover>();
+    [SerializeField] private Transform[] linePositions;
+    [SerializeField] private Transform offScreenPosition;
+    [SerializeField] private Transform hiddenPosition;
+    [SerializeField] private Transform backOfLine;
+
+    [SerializeField] private float cupToHandTime = .5f;
+    [SerializeField] private float offscreenWaitTime = 3f;
 
     private Queue<NPCMover> returnQueue = new Queue<NPCMover>();
     private bool isProcessingReturn = false;
 
-    public float offscreenWaitTime = 3f;
 
     public void OnCupSold(Cup cup)
     {
@@ -23,16 +25,21 @@ public class NPCManager : MonoBehaviour
 
     private IEnumerator moveNPCs(Cup cup)
     {
-        // NPC in pos 1 takes cup, moves off screen
+        // NPC pos 1 takes cup
         NPCMover npcToMove = line[0];
+        StartCoroutine(MoveCupToSlot(npcToMove, cup));
+        yield return new WaitForSeconds(.2f);
+
+        // NPC moves off screen
         line.RemoveAt(0);
         npcToMove.MoveTo(offScreenPosition);
 
         // Move other NPCs
         UpdateLinePositions();
 
-        // Wait a sec, teleport offscreen NPC to a hidden position at the end of the line
+        // Wait a sec, teleport offscreen NPC to a hidden position at the end of the line. Remove cup while offscreen. 
         yield return new WaitForSeconds(1f);
+        Destroy(cup.gameObject);
         npcToMove.TeleportTo(hiddenPosition);
 
         // Queue for line return
@@ -74,6 +81,33 @@ public class NPCManager : MonoBehaviour
         {
             line[i].MoveTo(linePositions[i]);
         }
+    }
+
+    private IEnumerator MoveCupToSlot(NPCMover npc, Cup cup)
+    {
+        Transform target = npc.GetCupSlot().transform;
+        
+        Vector3 startPos = cup.transform.position;
+        Quaternion startRot = cup.transform.rotation;
+
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / cupToHandTime;
+
+            cup.transform.position = Vector3.Lerp(startPos, target.position, t);
+            cup.transform.rotation = Quaternion.Slerp(startRot, target.rotation, t);
+
+            yield return null;
+        }
+
+        // Snap cleanly at the end
+        cup.transform.position = target.position;
+        cup.transform.rotation = target.rotation;
+
+        // Optional: parent it so it stays with the NPC
+        cup.transform.SetParent(target);
     }
 
     private void OnEnable()

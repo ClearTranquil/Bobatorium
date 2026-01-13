@@ -21,10 +21,12 @@ public class Cup : MonoBehaviour, IInteractable
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
-    private float teaFillAmount;
+    [SerializeField] private float teaFillAmount;
+
+    [Header("Current fill (debug only)")]
     [SerializeField] private int maxBoba;
-    private int bobaCount = 0;
-    private bool isSealed = false;
+    [SerializeField] private int bobaCount = 0;
+    [SerializeField] private bool isSealed = false;
 
     [Header("Placeholder visuals")]
     [SerializeField] private GameObject emptyCup;

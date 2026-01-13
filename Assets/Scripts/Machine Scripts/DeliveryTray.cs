@@ -39,7 +39,7 @@ public class DeliveryTray : Machine
                 {
                     Debug.Log("Sold!");
                     ScoreCup(cup);
-                    Destroy(cup.gameObject);
+                    //Destroy(cup.gameObject); Cups are now destroyed by NPCs. Kinda like they're drinking it. That makes sense right? 
                     snap.Clear();
                 }
                 else

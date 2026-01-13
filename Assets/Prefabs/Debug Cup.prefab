@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5312430405992972538
 Transform:
   m_ObjectHideFlags: 0
@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &423876604298723132
 Transform:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8824197723477406583
 Transform:
   m_ObjectHideFlags: 0
@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 9009684327783031178}
   - component: {fileID: 713439645255764439}
   m_Layer: 6
-  m_Name: Cup
+  m_Name: Debug Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,11 +407,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   snapMaxDistance: 100
-  maxTeaFill: 1
+  maxTeaFill: 0
   teaFillAmount: 0
-  maxBoba: 5
+  maxBoba: 0
   bobaCount: 0
-  isSealed: 0
+  isSealed: 1
   emptyCup: {fileID: 2872798016871795820}
   cupWithBoba: {fileID: 7091770843393093153}
   cupWithTea: {fileID: 1723944475869222786}
