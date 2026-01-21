@@ -6,15 +6,25 @@ public class UpgradeState
     public Upgrade upgrade;
     public int level = 0;
 
-    public bool IsMaxed => level >= upgrade.maxStacks;
-
     // Returns the value of this upgrade after its current stack
     public float CurrentValue
     {
         get
         {
-            if (level == 0) return 0;
+            if (upgrade == null) return 0f;
+            if (level <= 0) return 0f;
+            if (upgrade.stackValues == null || upgrade.stackValues.Length == 0) return 0f;
+
             return upgrade.stackValues[level - 1];
+        }
+    }
+
+    public bool IsMaxed
+    {
+        get
+        {
+            if (upgrade == null) return true;
+            return level >= upgrade.maxStacks;
         }
     }
 

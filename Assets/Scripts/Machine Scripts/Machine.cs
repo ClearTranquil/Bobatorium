@@ -8,10 +8,12 @@ public abstract class Machine : MonoBehaviour
     [Header("Upgrades")]
     [SerializeField] private List<Upgrade> availableUpgrades = new();
     protected readonly List<UpgradeState> upgradeStates = new();
-    Dictionary<Upgrade, UpgradeState> upgradeStateDict;
+    Dictionary<Upgrade, UpgradeState> upgradeStateDict = new Dictionary<Upgrade, UpgradeState>();
 
     [Header("Snap Points")]
     [SerializeField] protected SnapPoints[] snapPoints;
+
+    /*----------Upgrade Events and Init--------------*/
 
     protected virtual void Awake()
     {
@@ -21,14 +23,27 @@ public abstract class Machine : MonoBehaviour
     private void InitializeUpgrades()
     {
         upgradeStates.Clear();
+        upgradeStateDict = upgradeStateDict ?? new Dictionary<Upgrade, UpgradeState>();
         upgradeStateDict.Clear();
+
+        if (availableUpgrades == null) return;
 
         foreach (var upgrade in availableUpgrades)
         {
+            if (upgrade == null || upgradeStateDict.ContainsKey(upgrade)) continue;
+
             UpgradeState state = new UpgradeState(upgrade);
             upgradeStates.Add(state);
             upgradeStateDict.Add(upgrade, state);
         }
+    }
+
+    protected virtual bool HandleUpgradeEvent(Machine machine, Upgrade upgrade, int newLevel)
+    {
+        // Only listen to upgrade event if it was meant for this machine. Ignore anything else. 
+        if (machine != this) return false;
+
+        return false;
     }
 
     /*--------------Upgrade Queries---------------*/
@@ -51,6 +66,7 @@ public abstract class Machine : MonoBehaviour
             Debug.LogWarning($"{name} cannot apply upgrade {m_upgrade.name}");
             return;
         }
+        Debug.Log($"{name} applying {m_upgrade.upgradeName}, old level: {state.level - 1}, new level: {state.level}");
 
         state.Apply();
         OnUpgradeApplied(m_upgrade, state);
@@ -58,7 +74,19 @@ public abstract class Machine : MonoBehaviour
 
     protected virtual void OnUpgradeApplied(Upgrade m_upgrade, UpgradeState m_state)
     {
-        // Optional, used by some machines
+        // 1. Let THIS machine apply the upgrade immediately
+        bool handled = HandleUpgradeEvent(this, m_upgrade, m_state.level);
+
+        if (!handled)
+        {
+            Debug.LogWarning(
+                $"{name} received upgrade '{m_upgrade.upgradeID}' but did not handle it.\n" +
+                $"Check upgradeID spelling or missing implementation."
+            );
+        }
+
+        // 2. Broadcast AFTER it was applied
+        UpgradeEvents.InvokeUpgradeApplied(this, m_upgrade, m_state.level);
     }
 
     protected UpgradeState GetUpgradeState(Upgrade m_upgrade)
@@ -104,4 +132,31 @@ public abstract class Machine : MonoBehaviour
 
         return null;
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("DEBUG / Apply First Upgrade")]
+    private void DebugApplyUpgrade()
+{
+    if (availableUpgrades.Count == 0)
+    {
+        Debug.LogWarning($"{name} has no available upgrades.");
+        return;
+    }
+
+    Upgrade upgrade = availableUpgrades[0];
+    var state = GetUpgradeState(upgrade);
+
+    if (state == null)
+    {
+        state = new UpgradeState(upgrade);
+        upgradeStates.Add(state);
+        upgradeStateDict.Add(upgrade, state);
+    }
+
+    int oldLevel = state.level;
+    ApplyUpgrade(upgrade); // increments level and fires event
+
+    Debug.Log($"{name} applying {upgrade.upgradeName}, old level: {oldLevel}, new level: {state.level}");
+}
+#endif
 }
