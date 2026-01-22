@@ -42,8 +42,9 @@ public abstract class Machine : MonoBehaviour
     {
         // Only listen to upgrade event if it was meant for this machine. Ignore anything else. 
         if (machine != this) return false;
+        if (newLevel <= 0) return false;
 
-        return false;
+        return true;
     }
 
     /*--------------Upgrade Queries---------------*/

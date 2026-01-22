@@ -72,14 +72,15 @@ public class BobaMachine : Machine
 
     /*-----------------Upgrade Interaction-------------*/
 
-    protected override bool HandleUpgradeEvent(Machine machine, Upgrade upgrade, int newLevel)
+    protected override bool HandleUpgradeEvent(Machine m_machine, Upgrade m_upgrade, int m_newLevel)
     {
-        if (machine != this) return false;
+        if (!base.HandleUpgradeEvent(m_machine, m_upgrade, m_newLevel))
+            return false;
 
-        if (upgrade.upgradeID == "BobaPerClick")
+        if (m_upgrade.upgradeID == "BobaPerClick")
         {
-            Debug.Log($"Upgrade event received. newLevel={newLevel}, stackValues={string.Join(",", upgrade.stackValues)}");
-            bobaToEmit = Mathf.RoundToInt(upgrade.stackValues[newLevel - 1]);
+            Debug.Log($"Upgrade event received. newLevel={m_newLevel}, stackValues={string.Join(",", m_upgrade.stackValues)}");
+            bobaToEmit = Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]);
             Debug.Log($"{name} bobaToEmit updated to {bobaToEmit}");
             return true;
         }
