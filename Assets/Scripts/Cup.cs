@@ -12,6 +12,7 @@ public class Cup : MonoBehaviour, IInteractable
 
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 15f;
+    private bool canBeGrabbed = true;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -58,6 +59,16 @@ public class Cup : MonoBehaviour, IInteractable
         gameObject.layer = heldLayer;
         transform.SetParent(null);
         player.PickUp(gameObject);
+    }
+
+    public void SetGrabEnabled(bool enabled)
+    {
+        canBeGrabbed = enabled;
+    }
+
+    public bool CanInteract(PlayerControls player)
+    {
+        return canBeGrabbed;
     }
 
 

@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 4521717029942085248}
   - component: {fileID: 6036981723830386112}
   m_Layer: 9
-  m_Name: Stem (3)
+  m_Name: Right Claw 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,11 +467,11 @@ Transform:
   m_GameObject: {fileID: 3005812930720513574}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
-  m_LocalPosition: {x: 0.88, y: 1.88, z: -1.0300002}
-  m_LocalScale: {x: 0.20067826, y: 0.16300406, z: 0.34872}
+  m_LocalPosition: {x: -0.58872414, y: -0.93118, z: 0}
+  m_LocalScale: {x: 0.19831915, y: 0.6397647, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4945007561260272174}
+  m_Father: {fileID: 7817837913671498523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &1249828702268914326
 MeshFilter:
@@ -621,8 +621,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362cf518d63cbdb4a8e81be823f152b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CupSealer
+  availableUpgrades: []
   snapPoints:
   - {fileID: 5252279675756626125}
+  baseClawSpeedMult: 1
+  baseRotationSpeedMult: 1
+  liftHeight: 0.5
+  armLowerDistance: 0.2
+  armGripDistance: 0.1
+  leftArm: {fileID: 3556704449400165541}
+  rightArm: {fileID: 7817837913671498523}
 --- !u!1 &3658273787307415329
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +644,7 @@ GameObject:
   - component: {fileID: 7599549899003161986}
   - component: {fileID: 6218889175180146243}
   m_Layer: 9
-  m_Name: Stem (2)
+  m_Name: Left Claw 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,11 +659,11 @@ Transform:
   m_GameObject: {fileID: 3658273787307415329}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
-  m_LocalPosition: {x: -0.71100044, y: 1.8889999, z: -1.0300002}
-  m_LocalScale: {x: 0.20067826, y: 0.16300406, z: 0.34872}
+  m_LocalPosition: {x: 0.6632961, y: -0.92453, z: 0}
+  m_LocalScale: {x: 0.21897201, y: 0.6397647, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4945007561260272174}
+  m_Father: {fileID: 3556704449400165541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &5755028635293123336
 MeshFilter:
@@ -1025,8 +1033,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3556704449400165541}
-  - {fileID: 837810428626640396}
-  - {fileID: 7304249921180666396}
   - {fileID: 7817837913671498523}
   m_Father: {fileID: 6009140628261873636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1043,7 +1049,7 @@ GameObject:
   - component: {fileID: 5085365714103714374}
   - component: {fileID: 3069438380827884166}
   m_Layer: 9
-  m_Name: Stem (1)
+  m_Name: 'Right Claw '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1058,10 +1064,11 @@ Transform:
   m_GameObject: {fileID: 4647278096762830855}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0299997, y: 2.43, z: -1.0300002}
-  m_LocalScale: {x: 0.25478747, y: 0.5886297, z: 0.34872}
+  m_LocalPosition: {x: 1.0299997, y: 2.8199997, z: -1.0300007}
+  m_LocalScale: {x: 0.25478747, y: 1.0040092, z: 0.34872}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7304249921180666396}
   m_Father: {fileID: 4945007561260272174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6387120943489433347
@@ -1267,7 +1274,7 @@ GameObject:
   - component: {fileID: 530014202202208297}
   - component: {fileID: 216443263620896730}
   m_Layer: 9
-  m_Name: Stem
+  m_Name: Left Claw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1282,10 +1289,11 @@ Transform:
   m_GameObject: {fileID: 7964147739979126312}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.88, y: 2.38, z: -1.0300002}
-  m_LocalScale: {x: 0.25478747, y: 0.5331117, z: 0.34872}
+  m_LocalPosition: {x: -0.88, y: 2.82, z: -1.0300002}
+  m_LocalScale: {x: 0.25478747, y: 1.0040092, z: 0.34872}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 837810428626640396}
   m_Father: {fileID: 4945007561260272174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7054697563151210188

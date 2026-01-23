@@ -44,4 +44,10 @@ public abstract class MachineTriggerBase : MonoBehaviour, IInteractable
             machine.StopTrigger();
         } 
     }
+
+    // There shouldnt be any reason triggers cant be interacted with
+    public bool CanInteract(PlayerControls player)
+    {
+        return true;
+    }
 }

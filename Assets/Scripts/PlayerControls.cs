@@ -39,7 +39,10 @@ public class PlayerControls : MonoBehaviour
             //Debug.Log("Clicked on " + hit.collider.gameObject);
             
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            interactable?.Interact(this);
+            if (!interactable.CanInteract(this))
+                return;
+
+            interactable.Interact(this);
         }
     }
 

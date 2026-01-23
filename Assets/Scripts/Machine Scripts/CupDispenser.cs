@@ -1,11 +1,14 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class CupDispenser : MonoBehaviour, IInteractable
 {
     [SerializeField] private Cup cupPrefab;
     [SerializeField] private float spawnOffsetY = 1f;
+
+    public bool CanInteract(PlayerControls player)
+    {
+        return true;
+    }
 
     // Spawns a cup at the player's hand 
     public void Interact(PlayerControls player)
@@ -19,7 +22,7 @@ public class CupDispenser : MonoBehaviour, IInteractable
     // Doesn't need an OnHold case just yet
     public void OnHold()
     {
-        throw new System.NotImplementedException();
+       
     }
 
     // Doesn't need an OnRelease case just yet

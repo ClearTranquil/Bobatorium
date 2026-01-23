@@ -5,6 +5,7 @@ public class SnapPoints : MonoBehaviour
     //This script tracks whether a cup is currently insterted into a snap point
 
     public Cup OccupiedCup { get; private set; }
+    public bool IsBusy { get; set; }
 
     public bool IsOccupied => OccupiedCup != null;
 
@@ -25,5 +26,10 @@ public class SnapPoints : MonoBehaviour
     public void Clear()
     {
         OccupiedCup = null;
+    }
+
+    public bool CanReleaseCup()
+    {
+        return !IsBusy;
     }
 }
