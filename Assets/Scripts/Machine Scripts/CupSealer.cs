@@ -4,10 +4,12 @@ using System.Collections;
 public class CupSealer : Machine
 {
     [Header("Base states")]
-    [SerializeField] private float baseClawSpeedMult = 1f;
-    [SerializeField] private float baseRotationSpeedMult = 1f;
+    private float baseClawSpeedMult = 1f;
+    private float baseRotationSpeedMult = 1f;
     private float clawSpeedMult = 1f;
     private float rotationSpeedMult = 1f;
+    [SerializeField] private float baseClawDuration = .5f;
+    [SerializeField] private float baseRotationDuration = 1.5f;
 
     [Header("Animation Variables")]
     [SerializeField] private float liftHeight = 0.5f;
@@ -37,8 +39,8 @@ public class CupSealer : Machine
     {
         base.HandleUpgradeEvent(m_machine, m_upgrade, m_newLevel);
 
-        if (m_upgrade.upgradeID == "clawSpeedUpgrade")
-            clawSpeedMult = 1f + m_upgrade.stackValues[m_newLevel - 1];
+        if (m_upgrade.upgradeID == "ClawArmSpeed")
+            clawSpeedMult = m_upgrade.stackValues[m_newLevel - 1];
 
         return true;
     }
@@ -55,6 +57,9 @@ public class CupSealer : Machine
             {
                 StartCoroutine(SealRoutine(snap));
                 foundCup = true;
+
+                // Prevent grabbing cup until process is done
+                snap.OccupiedCup.SetGrabEnabled(false);
             }
         }
 
@@ -104,10 +109,9 @@ public class CupSealer : Machine
 
     private IEnumerator ClampCup(Transform snapTransform, Cup cup)
     {
-        // Once the claws are in position, grip the cup
-
-        // ---- Step 1: Lower arms ----
-        float downDuration = 0.1f / clawSpeedMult;
+        // Lower the claw arms to meet the cup
+        
+        float downDuration = (baseClawDuration / 2) / clawSpeedMult;
         Vector3 leftDownTarget = leftArmRestPos + Vector3.down * armLowerDistance;
         Vector3 rightDownTarget = rightArmRestPos + Vector3.down * armLowerDistance;
 
@@ -126,8 +130,9 @@ public class CupSealer : Machine
         leftArm.localPosition = leftDownTarget;
         rightArm.localPosition = rightDownTarget;
 
-        // ---- Step 2: Move arms inward to grip ----
-        float inwardDuration = 0.1f / clawSpeedMult;
+        // Move the claw arms inwards to grip the cup
+
+        float inwardDuration = baseClawDuration / clawSpeedMult;
         Vector3 leftGripTarget = leftDownTarget + Vector3.right * armGripDistance;
         Vector3 rightGripTarget = rightDownTarget + Vector3.left * armGripDistance;
 
@@ -145,15 +150,13 @@ public class CupSealer : Machine
         }
         leftArm.localPosition = leftGripTarget;
         rightArm.localPosition = rightGripTarget;
-
-        cup.SetGrabEnabled(false);
     }
 
     private IEnumerator LiftCup(Transform snapTransform)
     {
         // Once cup is gripped, move cup upwards
 
-        float duration = 0.4f / clawSpeedMult;
+        float duration = baseClawDuration / clawSpeedMult;
         float elapsed = 0f;
 
         Vector3 cupStart = snapTransform.position;
@@ -188,7 +191,9 @@ public class CupSealer : Machine
 
     private IEnumerator RotateCup(Transform snapTransform)
     {
-        float duration = 0.6f / rotationSpeedMult;
+        // Play a spinning animation, like lid is being sealed on
+
+        float duration = baseRotationDuration / rotationSpeedMult;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -203,7 +208,7 @@ public class CupSealer : Machine
     {
         // Once cup is sealed, put it back down
 
-        float duration = 0.3f / clawSpeedMult;
+        float duration = baseClawDuration / clawSpeedMult;
         float elapsed = 0f;
 
         Vector3 cupStart = snapTransform.position;
@@ -238,10 +243,9 @@ public class CupSealer : Machine
 
     private IEnumerator ReleaseCup(Transform snapTransform, Cup cup)
     {
-        // Let cup go
+        // Move arms apart to "unclamp" the cup
 
-        // ---- Step 1: Move arms outward (ungrip) ----
-        float outwardDuration = 0.1f / clawSpeedMult;
+        float outwardDuration = (baseClawDuration / 2) / clawSpeedMult;
 
         Vector3 leftOutTarget = leftArm.localPosition + Vector3.left * armGripDistance;
         Vector3 rightOutTarget = rightArm.localPosition + Vector3.right * armGripDistance;
@@ -262,8 +266,12 @@ public class CupSealer : Machine
         leftArm.localPosition = leftOutTarget;
         rightArm.localPosition = rightOutTarget;
 
-        // ---- Step 2: Raise arms back to rest position ----
-        float upDuration = 0.15f / clawSpeedMult;
+        // Allow cup to be grabbed at this point
+        cup.SetGrabEnabled(true);
+
+        // Move arms back to their rest position
+
+        float upDuration = baseClawDuration / clawSpeedMult;
 
         leftStart = leftArm.localPosition;
         rightStart = rightArm.localPosition;
@@ -281,6 +289,5 @@ public class CupSealer : Machine
         leftArm.localPosition = leftArmRestPos;
         rightArm.localPosition = rightArmRestPos;
 
-        cup.SetGrabEnabled(true);
     }
 }

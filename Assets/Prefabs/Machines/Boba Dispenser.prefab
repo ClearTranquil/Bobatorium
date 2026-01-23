@@ -492,7 +492,7 @@ MonoBehaviour:
   - {fileID: 3206891035055331338}
   emitter: {fileID: 8665896228354284075}
   timeBetweenEmit: 0.3
-  timeBetweenTrigger: 0.6
+  timeBetweenTrigger: 0.3
   poolParent: {fileID: 9179485979509510982}
   poolSize: 30
   bobaToSpawn: {fileID: 5005044355976999624, guid: 5f434a889fbef0d499bba854ac989a38, type: 3}

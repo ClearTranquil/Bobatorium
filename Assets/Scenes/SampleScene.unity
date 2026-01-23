@@ -1690,53 +1690,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
-    - target: {fileID: 1077687792951773357, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: liftHeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: armGripDistance
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: armLowerDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: baseClawSpeedMult
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: baseRotationSpeedMult
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3093697639853108042, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_Name
       value: Cup Sealer
-      objectReference: {fileID: 0}
-    - target: {fileID: 3556704449400165541, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961065370612927006, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.7280642
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961065370612927006, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 6761808198274655117, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7817837913671498523, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.13
       objectReference: {fileID: 0}
     - target: {fileID: 8935905591170097521, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_LocalPosition.x
