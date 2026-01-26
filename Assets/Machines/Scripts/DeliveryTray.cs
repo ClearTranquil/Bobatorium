@@ -8,7 +8,7 @@ public class DeliveryTray : Machine
 
     public override void TriggerAction()
     {
-        //Debug.Log("Action received");
+        base.TriggerAction();
         DeliverAll();
     }
 

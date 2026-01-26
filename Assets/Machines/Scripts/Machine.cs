@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 
 public abstract class Machine : MonoBehaviour
 {
+    public event System.Action OnMachineTriggered;
+
     [Header("Upgrades")]
     [SerializeField] private List<Upgrade> availableUpgrades = new();
     protected readonly List<UpgradeState> upgradeStates = new();
@@ -115,6 +117,7 @@ public abstract class Machine : MonoBehaviour
 
     public virtual void TriggerAction()
     {
+        OnMachineTriggered?.Invoke();
         // The machine's payload when triggered
     }
 

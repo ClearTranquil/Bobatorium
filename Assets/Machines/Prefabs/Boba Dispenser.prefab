@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 8365018151830857991}
   - component: {fileID: 4754520009068517732}
   - component: {fileID: 8459332685493540003}
+  - component: {fileID: 4125266064404360981}
   m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
@@ -238,6 +239,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineButton
   machine: {fileID: 7771216306209374641}
+--- !u!95 &4125266064404360981
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432908099048593960}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14b3d0eb5f0abc44a8cee3788000e2f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2700160567919435462
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,8 +514,8 @@ MonoBehaviour:
   snapPoints:
   - {fileID: 3206891035055331338}
   emitter: {fileID: 8665896228354284075}
-  timeBetweenEmit: 0.3
-  timeBetweenTrigger: 0.3
+  timeBetweenEmit: 0.1
+  timeBetweenTrigger: 0.1
   poolParent: {fileID: 9179485979509510982}
   poolSize: 30
   bobaToSpawn: {fileID: 5005044355976999624, guid: 5f434a889fbef0d499bba854ac989a38, type: 3}

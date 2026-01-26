@@ -20,6 +20,7 @@ public class TeaMachine : Machine
 
     public override void TriggerAction()
     {
+        base.TriggerAction();
         isPouring = true;
     }
 

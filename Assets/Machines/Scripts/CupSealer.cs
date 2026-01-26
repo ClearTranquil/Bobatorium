@@ -47,6 +47,8 @@ public class CupSealer : Machine
 
     public override void TriggerAction()
     {
+        base.TriggerAction();
+
         // Ignore input if machine is already processing cups
         if (isProcessing) return;
 
