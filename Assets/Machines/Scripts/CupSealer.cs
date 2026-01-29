@@ -42,6 +42,9 @@ public class CupSealer : Machine
         if (m_upgrade.upgradeID == "ClawArmSpeed")
             clawSpeedMult = m_upgrade.stackValues[m_newLevel - 1];
 
+        if (m_upgrade.upgradeID == "RotSpeed")
+            rotationSpeedMult = m_upgrade.stackValues[m_newLevel - 1];
+
         return true;
     }
 

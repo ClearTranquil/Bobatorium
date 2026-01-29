@@ -13,6 +13,9 @@ public class UpgradeUIManager : MonoBehaviour
     public RectTransform panel;
     public GameObject upgradeButtonPrefab;
 
+    [Header("UI Anims and Offset")]
+    [SerializeField] private Vector3 buttonOffset;
+
     private Machine currentMachine;
     private List<GameObject> activeButtons = new();
 
@@ -61,7 +64,7 @@ public class UpgradeUIManager : MonoBehaviour
         Vector3 screenPos = Camera.main.WorldToScreenPoint(m_machine.transform.position);
 
         // Offset panel slightly so it doesn't overlap the machine
-        panel.position = screenPos + new Vector3(150f, 50f, 0f);
+        panel.position = screenPos + buttonOffset;
         BuildButtons();
     }
 

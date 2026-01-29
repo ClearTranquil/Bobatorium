@@ -623,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CupSealer
   availableUpgrades:
   - {fileID: 11400000, guid: 008f15f3ee28c9842be97dfa03543476, type: 2}
+  - {fileID: 11400000, guid: 67ad0b6b6fca7a444ba6bb6bf2ba5c3c, type: 2}
   snapPoints:
   - {fileID: 5252279675756626125}
   baseClawDuration: 1.5

@@ -423,10 +423,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 1
-  m_Spacing: 10
+  m_Spacing: 35
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1874,6 +1874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUIManager
   panel: {fileID: 182739174}
   upgradeButtonPrefab: {fileID: 876202801382858570, guid: 634772b83c0b81b4ebb49c40e59aa144, type: 3}
+  buttonOffset: {x: 200, y: 80, z: 0}
 --- !u!4 &1533005561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2940498192744457937, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
