@@ -24,7 +24,16 @@ public class UpgradeState
         get
         {
             if (upgrade == null) return true;
-            return level >= upgrade.maxStacks;
+            return level >= upgrade.maxLevel;
+        }
+    }
+
+    public int CurrentCost
+    {
+        get
+        {
+            if (upgrade == null) return int.MaxValue;
+            return upgrade.GetCost(level);
         }
     }
 

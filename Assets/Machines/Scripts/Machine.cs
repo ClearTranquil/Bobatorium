@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public abstract class Machine : MonoBehaviour
+public abstract class Machine : MonoBehaviour,  IInteractable
 {
     public event System.Action OnMachineTriggered;
 
@@ -137,30 +137,30 @@ public abstract class Machine : MonoBehaviour
         return null;
     }
 
-#if UNITY_EDITOR
-    [ContextMenu("DEBUG / Apply First Upgrade")]
-    private void DebugApplyUpgrade()
-{
-    if (availableUpgrades.Count == 0)
+    /*------------Interactions---------------*/
+
+    public bool CanInteract(PlayerControls player)
     {
-        Debug.LogWarning($"{name} has no available upgrades.");
-        return;
+        return true;
     }
 
-    Upgrade upgrade = availableUpgrades[0];
-    var state = GetUpgradeState(upgrade);
-
-    if (state == null)
+    public void Interact(PlayerControls player)
     {
-        state = new UpgradeState(upgrade);
-        upgradeStates.Add(state);
-        upgradeStateDict.Add(upgrade, state);
+        
     }
 
-    int oldLevel = state.level;
-    ApplyUpgrade(upgrade); // increments level and fires event
+    public void OnRightClick(PlayerControls player)
+    {
+        UpgradeUIManager.Instance.Open(this);
+    }
 
-    Debug.Log($"{name} applying {upgrade.upgradeName}, old level: {oldLevel}, new level: {state.level}");
-}
-#endif
+    public void OnRelease(Vector3 releasePos)
+    {
+        
+    }
+
+    public void OnHold()
+    {
+        
+    }
 }

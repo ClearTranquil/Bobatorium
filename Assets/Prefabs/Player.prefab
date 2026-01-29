@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7947be431e0e64249952e0c0ff763544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
-  heldZDistance: 8
+  leftClickMask:
+    serializedVersion: 2
+    m_Bits: 72
+  rightClickMask:
+    serializedVersion: 2
+    m_Bits: 512

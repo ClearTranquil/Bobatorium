@@ -6,7 +6,8 @@ public class PlayerControls : MonoBehaviour
 {
     private GameObject heldObj;
 
-    [SerializeField] private LayerMask rayCastMask;
+    [SerializeField] private LayerMask leftClickMask; // for things up, using triggers
+    [SerializeField] private LayerMask rightClickMask; // for upgrading things
 
     public static event Action ForceRelease;
 
@@ -16,6 +17,7 @@ public class PlayerControls : MonoBehaviour
     private void Update()
     {
         HandleInteraction();
+        HandleRightClick();
         HandleDrag();
         HandleRelease();
 
@@ -34,7 +36,7 @@ public class PlayerControls : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         // If object is Interactable, tell it that its being interacted with
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, rayCastMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, leftClickMask))
         {
             //Debug.Log("Clicked on " + hit.collider.gameObject);
             
@@ -43,6 +45,23 @@ public class PlayerControls : MonoBehaviour
                 return;
 
             interactable.Interact(this);
+        }
+    }
+
+    private void HandleRightClick()
+    {
+        if (!Mouse.current.rightButton.wasPressedThisFrame)
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, rightClickMask))
+        {
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            if (interactable != null && interactable.CanInteract(this))
+            {
+                interactable.OnRightClick(this);
+            }
         }
     }
 

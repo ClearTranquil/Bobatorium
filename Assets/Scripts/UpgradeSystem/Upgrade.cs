@@ -25,5 +25,10 @@ public class Upgrade : ScriptableObject
 
     [Tooltip("Each element is the value added to a stat, in order")]
     public float[] stackValues;
-    public int maxStacks => stackValues.Length;
+    public int maxLevel => stackValues != null ? stackValues.Length : 0;
+
+    public int GetCost(int currentLevel)
+    {
+        return baseCost * (currentLevel + 1);
+    }
 }
