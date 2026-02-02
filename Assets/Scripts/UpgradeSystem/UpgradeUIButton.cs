@@ -9,6 +9,7 @@ public class UpgradeUIButton : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private Button button;
     [SerializeField] private Sprite icon;
+    [SerializeField] private TMP_Text costText;
 
     private Machine machine;
     private Upgrade upgrade;
@@ -31,13 +32,17 @@ public class UpgradeUIButton : MonoBehaviour
         titleText.text = upgrade.upgradeName;
         levelText.text = $"Lv {state.level}/{upgrade.maxLevel}";
         icon = upgrade.icon;
+
+        if (!state.IsMaxed)
+            costText.text = $"${upgrade.GetCost(state.level)}";
+        else
+            costText.text = "Sold out!";
+
         button.interactable = !state.IsMaxed;
     }
 
     private void OnClicked()
     {
-        machine.ApplyUpgrade(upgrade);
-        
-        UpgradeUIManager.Instance.Close();
+        UpgradeUIManager.Instance.OnUpgradeButtonClicked(machine, state);
     }
 }

@@ -413,6 +413,7 @@ MonoBehaviour:
   levelText: {fileID: 8780378240697456237}
   button: {fileID: 4428936039789988227}
   icon: {fileID: 0}
+  costText: {fileID: 7945243864871979250}
 --- !u!1 &4954664499471628468
 GameObject:
   m_ObjectHideFlags: 0

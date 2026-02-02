@@ -57,6 +57,8 @@ public class PlayerControls : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, rightClickMask))
         {
+            Debug.Log("Right click hit: " + hit.collider.name);
+
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             if (interactable != null && interactable.CanInteract(this))
             {

@@ -54,6 +54,15 @@ public class BobaMachine : Machine
             GameObject boba = bobaPool.Dequeue();
             boba.transform.position = emitter.position;
             boba.transform.rotation = Quaternion.identity;
+
+            // Reset boba's physics
+            Rigidbody rb = boba.GetComponent<Rigidbody>();
+            if (rb)
+            {
+                rb.angularVelocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
+            }
+
             boba.SetActive(true);
             bobaPool.Enqueue(boba);
 

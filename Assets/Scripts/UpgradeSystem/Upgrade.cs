@@ -14,7 +14,8 @@ public class Upgrade : ScriptableObject
 {
     [Tooltip("Internal upgrade name.")]
     public string upgradeID;
-    [Tooltip("Name that is displayed to player.")]
+
+    [Tooltip("Information that is shown on upgrade buttons.")]
     public string upgradeName;
     public string description;
     public Sprite icon;
@@ -22,6 +23,9 @@ public class Upgrade : ScriptableObject
     public MachineType machineType;
 
     public int baseCost = 10;
+
+    [Tooltip("Manually assign price for each level. Overrides baseCost if set.")]
+    public int[] manualCosts;
 
     [Tooltip("Each element is the value added to a stat, in order")]
     public float[] stackValues;

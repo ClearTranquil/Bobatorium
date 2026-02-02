@@ -101,13 +101,13 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 
     /*--------------Upgrade Values---------------*/
-    protected float GetUpgradeValue(Upgrade m_upgrade)
+    public float GetUpgradeValue(Upgrade m_upgrade)
     {
         var state = GetUpgradeState(m_upgrade);
         return state != null ? state.CurrentValue : 0f;
     }
 
-    protected int GetUpgradeLevel(Upgrade m_upgrade)
+    public int GetUpgradeLevel(Upgrade m_upgrade)
     {
         var state = GetUpgradeState(m_upgrade);
         return state != null ? state.level : 0;
