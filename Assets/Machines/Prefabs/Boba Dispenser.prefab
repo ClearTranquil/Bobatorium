@@ -335,7 +335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2700160567919435462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e33c522f89eb640a92acc47f66eaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: f35284fde8e5d254fbacd752b67ce626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnapPoints
 --- !u!65 &8530948405533215484
@@ -479,6 +479,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6480663728990572481}
+  - component: {fileID: 556568490123565683}
+  - component: {fileID: 6251132213511348036}
   m_Layer: 11
   m_Name: Employee Snap Point
   m_TagString: Untagged
@@ -495,12 +497,45 @@ Transform:
   m_GameObject: {fileID: 3157022384270081673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6, y: 0, z: 6.05}
+  m_LocalPosition: {x: -1.7, y: 3.14, z: 3.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5971482129378039406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &556568490123565683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157022384270081673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5665f53145868dd4aa8aaf36896f7498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmployeeSnapPoint
+--- !u!65 &6251132213511348036
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157022384270081673}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0910287, y: 6.047147, z: 4.037696}
+  m_Center: {x: 1.89, y: 0, z: -4.17}
 --- !u!1 &3953797676247165191
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BobaMachine
   availableUpgrades:
   - {fileID: 11400000, guid: a8354f9ac4fa2ba4a9aa0a2e7496bb83, type: 2}
-  snapPoints:
+  cupSnapPoints:
   - {fileID: 3206891035055331338}
   emitter: {fileID: 8665896228354284075}
   timeBetweenEmit: 0.1

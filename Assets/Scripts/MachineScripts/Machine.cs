@@ -13,7 +13,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     Dictionary<Upgrade, UpgradeState> upgradeStateDict = new Dictionary<Upgrade, UpgradeState>();
 
     [Header("Snap Points")]
-    [SerializeField] protected SnapPoints[] snapPoints;
+    [SerializeField] protected CupSnapPoint[] cupSnapPoints;
 
     /*----------Upgrade Events and Init--------------*/
 
@@ -126,14 +126,13 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         // Stops the payload, if necessary
     }
 
-    public SnapPoints GetAvailableSnapPoint()
+    public CupSnapPoint GetAvailableSnapPoint()
     {
-        foreach(var snap in snapPoints)
+        foreach (var snap in cupSnapPoints)
         {
-            if (!snap.IsOccupied)
+            if (!snap.IsOccupied && !snap.IsBusy)
                 return snap;
         }
-
         return null;
     }
 

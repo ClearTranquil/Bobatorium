@@ -33,8 +33,8 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private float followSmoothTime = 0.05f;
     private Vector3 velocity;
     private Vector3 desiredPosition;
-    private SnapPoints heldSnapPoint;
-    private SnapPoints currentSnapPoint;
+    private CupSnapPoint heldSnapPoint;
+    private CupSnapPoint currentSnapPoint;
     [SerializeField] private LayerMask snapMask;
     [SerializeField] private float snapMaxDistance = 100f;
     private int originalLayer;
@@ -77,16 +77,17 @@ public class Cup : MonoBehaviour, IInteractable
         // Revert to original layer so it can be interacted with again
         gameObject.layer = originalLayer;
 
-        // If released near snap point, instantly snap to it. Only smooth snap while the cup is held. 
         if (heldSnapPoint != null)
         {
-            heldSnapPoint.TrySnapCup(this);
-            currentSnapPoint = heldSnapPoint;
-            heldSnapPoint = null;
+            if (heldSnapPoint.TrySnap(this))
+            {
+                currentSnapPoint = heldSnapPoint;
 
-            transform.position = currentSnapPoint.transform.position;
-            velocity = Vector3.zero;
-            return;
+                transform.position = currentSnapPoint.transform.position;
+                velocity = Vector3.zero;
+            }
+
+            heldSnapPoint = null;
         }
     }
 
@@ -112,30 +113,29 @@ public class Cup : MonoBehaviour, IInteractable
 
     /*-----------------SNAP LOGIC------------------*/
 
-    private SnapPoints FindBestSnapPoint(Ray ray)
+    private CupSnapPoint FindBestSnapPoint(Ray ray)
     {
         // Raycast ignores the currently held cup so it can find snapPoints
         if (!Physics.Raycast(ray, out RaycastHit hit, snapMaxDistance, snapMask))
             return null;
 
-        // Some machines have multiple snap points. Hovering a cup over a snap point asks the machine for the nearest unoccupied snap point.
+        // First, check if we hit a machine
         Machine machine = hit.collider.GetComponentInParent<Machine>();
         if (machine != null)
-        {
             return machine.GetAvailableSnapPoint();
-        }
 
-        // If hovering over a snap point not connected to a machine, just snap directly to it, no need to ask.
-        SnapPoints snap = hit.collider.GetComponent<SnapPoints>();
+        // Fallback: check if we hit a standalone snap point
+        CupSnapPoint snap = hit.collider.GetComponent<CupSnapPoint>();
+        if (snap == null)
+            snap = hit.collider.GetComponentInParent<CupSnapPoint>();
+
         if (snap != null && !snap.IsOccupied)
-        {
             return snap;
-        }
 
         return null;
     }
 
-    public void RegisterSnapPoint(SnapPoints snapPoint)
+    public void RegisterSnapPoint(CupSnapPoint snapPoint)
     {
         currentSnapPoint = snapPoint;
     }

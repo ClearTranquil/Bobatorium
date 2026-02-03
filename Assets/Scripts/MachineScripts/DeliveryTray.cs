@@ -22,11 +22,11 @@ public class DeliveryTray : Machine
 
     private IEnumerator ScanCups()
     {
-        foreach (var snap in snapPoints)
+        foreach (var snap in cupSnapPoints)
         {
-            if (snap.OccupiedCup != null)
+            if (snap.Occupant != null)
             {
-                Cup cup = snap.OccupiedCup;
+                Cup cup = snap.Occupant;
                 bool cupValid = false;
 
                 // Insert cup validation logic here!! 

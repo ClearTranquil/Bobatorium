@@ -169,7 +169,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101600315690537973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e33c522f89eb640a92acc47f66eaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: f35284fde8e5d254fbacd752b67ce626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnapPoints
 --- !u!65 &4916519986719350510
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2228257120407105210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e33c522f89eb640a92acc47f66eaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: f35284fde8e5d254fbacd752b67ce626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnapPoints
 --- !u!65 &545756806663839838
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5103847241462851325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e33c522f89eb640a92acc47f66eaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: f35284fde8e5d254fbacd752b67ce626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnapPoints
 --- !u!65 &2579115279482933618
@@ -428,10 +428,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
-  snapPoints:
+  availableUpgrades: []
+  cupSnapPoints:
   - {fileID: 1775030895289602201}
   - {fileID: 8322320527647532337}
   - {fileID: 2438712016532872535}
+  timeBetweenCups: 0.5
 --- !u!1 &9115578111866369822
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,4 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
-  snapPoints: []
+  availableUpgrades: []
+  cupSnapPoints: []
+  timeBetweenCups: 0.5

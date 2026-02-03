@@ -56,15 +56,15 @@ public class CupSealer : Machine
         if (isProcessing) return;
 
         bool foundCup = false;
-        foreach (SnapPoints snap in snapPoints)
+        foreach (CupSnapPoint snap in cupSnapPoints)
         {
-            if (snap.OccupiedCup != null && !snap.IsBusy)
+            if (snap.Occupant != null && !snap.IsBusy)
             {
                 StartCoroutine(SealRoutine(snap));
                 foundCup = true;
 
                 // Prevent grabbing cup until process is done
-                snap.OccupiedCup.SetGrabEnabled(false);
+                snap.Occupant.SetGrabEnabled(false);
             }
         }
 
@@ -72,11 +72,11 @@ public class CupSealer : Machine
             isProcessing = true;
     }
 
-    private IEnumerator SealRoutine(SnapPoints snap)
+    private IEnumerator SealRoutine(CupSnapPoint snap)
     {
         snap.IsBusy = true;
 
-        Cup cup = snap.OccupiedCup;
+        Cup cup = snap.Occupant;
         Transform snapTransform = snap.transform;
 
         if(leftArm && rightArm)
@@ -97,7 +97,7 @@ public class CupSealer : Machine
 
         // Wait til all cup slots are finished processing before accepting input again
         bool machineBusy = false;
-        foreach (var s in snapPoints)
+        foreach (var s in cupSnapPoints)
         {
             if (s.IsBusy)
             {

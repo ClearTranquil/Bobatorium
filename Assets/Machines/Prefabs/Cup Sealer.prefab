@@ -625,7 +625,7 @@ MonoBehaviour:
   availableUpgrades:
   - {fileID: 11400000, guid: 008f15f3ee28c9842be97dfa03543476, type: 2}
   - {fileID: 11400000, guid: 67ad0b6b6fca7a444ba6bb6bf2ba5c3c, type: 2}
-  snapPoints:
+  cupSnapPoints:
   - {fileID: 5252279675756626125}
   baseClawDuration: 1.5
   baseRotationDuration: 1.5
@@ -1452,7 +1452,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8743294242081731641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e33c522f89eb640a92acc47f66eaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: f35284fde8e5d254fbacd752b67ce626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SnapPoints
 --- !u!65 &2069758962202506794
@@ -1485,6 +1485,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3244347260113682685}
+  - component: {fileID: 2835020255321356909}
+  - component: {fileID: 8485239074434124366}
   m_Layer: 11
   m_Name: Employee Snap Point
   m_TagString: Untagged
@@ -1501,9 +1503,42 @@ Transform:
   m_GameObject: {fileID: 8853644010064264520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 1.65, z: 4.07}
+  m_LocalPosition: {x: -0.23, y: 2.76, z: 3.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1013465008331171361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2835020255321356909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853644010064264520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5665f53145868dd4aa8aaf36896f7498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmployeeSnapPoint
+--- !u!65 &8485239074434124366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853644010064264520}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.4083824, y: 5.6433544, z: 4.441763}
+  m_Center: {x: 0.17, y: 0.21, z: -4.201639}
