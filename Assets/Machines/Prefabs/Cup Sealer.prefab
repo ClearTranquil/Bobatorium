@@ -29,7 +29,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1077687792951773357}
+  - {fileID: 219663214169366229}
+  - {fileID: 3244347260113682685}
   m_Father: {fileID: 8935905591170097521}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &177803860597032204
@@ -607,8 +608,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.3309546, y: 4.515852, z: 4.996055}
-  m_Center: {x: 0.053690434, y: 1.757926, z: -0.06751037}
+  m_Size: {x: 4.3309546, y: 5.838784, z: 4.996055}
+  m_Center: {x: 0.053690434, y: 2.419392, z: -0.06751037}
 --- !u!114 &2640108781461284259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,6 +1378,38 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1 &8622028614059160160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 219663214169366229}
+  m_Layer: 9
+  m_Name: Cup Snap Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &219663214169366229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8622028614059160160}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1077687792951773357}
+  m_Father: {fileID: 1013465008331171361}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8743294242081731641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,11 +1437,11 @@ Transform:
   m_GameObject: {fileID: 8743294242081731641}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -0.17, z: -0.79}
+  m_LocalPosition: {x: 0.069999695, y: -0.17000008, z: -0.7900009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1013465008331171361}
+  m_Father: {fileID: 219663214169366229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5252279675756626125
 MonoBehaviour:
@@ -1443,3 +1476,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.6404994, y: 6.3368998, z: 4.056141}
   m_Center: {x: -0.13986838, y: 1.2140136, z: -0.6}
+--- !u!1 &8853644010064264520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3244347260113682685}
+  m_Layer: 11
+  m_Name: Employee Snap Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3244347260113682685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853644010064264520}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.85, y: 1.65, z: 4.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1013465008331171361}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

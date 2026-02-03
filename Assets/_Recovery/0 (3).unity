@@ -637,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392215441}
   m_Layer: 0
-  m_Name: Customer Line
+  m_Name: NPC Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1222,7 +1222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7068824270809336643, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
       propertyPath: m_Name
-      value: Customer 1
+      value: NPC (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1783,6 +1783,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cup Sealer
       objectReference: {fileID: 0}
+    - target: {fileID: 7948750313717342946, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
+      propertyPath: m_Size.y
+      value: 5.838784
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948750313717342946, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
+      propertyPath: m_Center.y
+      value: 2.419392
+      objectReference: {fileID: 0}
     - target: {fileID: 8935905591170097521, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.2374
@@ -2328,7 +2336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7068824270809336643, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
       propertyPath: m_Name
-      value: Customer 2
+      value: NPC (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2451,6 +2459,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5042832836342984519, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
+      propertyPath: m_Size.y
+      value: 6.5636244
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042832836342984519, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
+      propertyPath: m_Size.z
+      value: 5.009148
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042832836342984519, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
+      propertyPath: m_Center.x
+      value: -0.20036745
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042832836342984519, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
+      propertyPath: m_Center.y
+      value: 2.7818122
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042832836342984519, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
+      propertyPath: m_Center.z
+      value: -0.28601956
+      objectReference: {fileID: 0}
     - target: {fileID: 8486542058355081851, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
       propertyPath: m_Name
       value: Tea Dispenser
@@ -2468,6 +2496,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
+    - target: {fileID: 279459675425664672, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Size.x
+      value: 4.3127637
+      objectReference: {fileID: 0}
+    - target: {fileID: 279459675425664672, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Size.z
+      value: 5.196548
+      objectReference: {fileID: 0}
+    - target: {fileID: 279459675425664672, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Center.x
+      value: -0.02071166
+      objectReference: {fileID: 0}
+    - target: {fileID: 279459675425664672, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_Center.z
+      value: -0.4180634
+      objectReference: {fileID: 0}
     - target: {fileID: 772452983688327612, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.7974
@@ -2567,7 +2611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7068824270809336643, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
       propertyPath: m_Name
-      value: Customer 0
+      value: NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
