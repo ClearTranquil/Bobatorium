@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Employee : MonoBehaviour, IInteractable
 {
@@ -18,8 +19,11 @@ public class Employee : MonoBehaviour, IInteractable
     private EmployeeSnapPoint heldSnapPoint;
     private EmployeeSnapPoint currentSnapPoint;
 
-    [Header("Machine References")]
-    private Machine currentMachine;
+    [Header("Machine Interaction")]
+    public Machine CurrentMachine { get; private set; }
+    [SerializeField] private float reactionDelay = 0.5f;
+    private bool isWaitingToAct = false;
+    [SerializeField] private float workSpeed = 1;
 
     private void Awake()
     {
@@ -29,11 +33,13 @@ public class Employee : MonoBehaviour, IInteractable
 
     /*--------------------INTERACTABLE--------------------*/
 
+    // No current reason employees should be locked out of interaction
     public bool CanInteract(PlayerControls player) => true;
 
+    // Employees can be dragged onto machines to assign them to it
     public void Interact(PlayerControls player)
     {
-        // Pick up employee
+        // Pick up employee, tell machine they aren't assigned anymore
         if (currentSnapPoint != null)
         {
             currentSnapPoint.Clear();
@@ -70,7 +76,7 @@ public class Employee : MonoBehaviour, IInteractable
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPos = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
 
-        // Check for snap points
+        // Check for employee snap points
         Ray ray = mainCam.ScreenPointToRay(mousePos);
         heldSnapPoint = FindBestSnapPoint(ray);
 
@@ -89,7 +95,6 @@ public class Employee : MonoBehaviour, IInteractable
         if (!Physics.Raycast(ray, out RaycastHit hit, snapMaxDistance, snapMask))
             return null;
 
-        // Only standalone snap points exist
         var snapPoint = hit.collider.GetComponentInParent<EmployeeSnapPoint>();
         if (snapPoint != null && !snapPoint.IsOccupied)
             return snapPoint;
@@ -97,24 +102,66 @@ public class Employee : MonoBehaviour, IInteractable
         return null;
     }
 
+    // Tell machine an employee is assigned to it
     public void RegisterSnapPoint(EmployeeSnapPoint snapPoint)
     {
         currentSnapPoint = snapPoint;
-        currentMachine = snapPoint.GetComponentInParent<Machine>();
+        CurrentMachine = snapPoint.GetComponentInParent<Machine>();
     }
 
     public void ClearSnapPoint()
     {
         currentSnapPoint = null;
-        currentMachine = null;
+        CurrentMachine = null;
     }
 
+    /*--------------Machine Interaction------------*/
+    // Employees wait for a cup to be put in the machine before operating it
     public void OnMachineCupInserted()
     {
-        if (currentMachine == null)
+        if (CurrentMachine == null)
             return;
 
-        // This is where the employee starts working the machine
-        Debug.Log($"{name} detected cup in {currentMachine.name}");
+        if (isWaitingToAct)
+            return;
+
+        var trigger = CurrentMachine.GetTrigger();
+        if (trigger == null)
+            return;
+
+        StartCoroutine(OperateMachine(trigger));
+    }
+
+    public void AssignMachine(Machine m_machine)
+    {
+        CurrentMachine = m_machine;
+    }
+
+    IEnumerator OperateMachine(MachineTriggerBase trigger)
+    {
+        isWaitingToAct = true;
+
+        yield return new WaitForSeconds(reactionDelay);
+
+        yield return StartCoroutine(OperateTrigger(trigger));
+
+        isWaitingToAct = false;
+    }
+
+    IEnumerator OperateTrigger(MachineTriggerBase trigger)
+    {
+        trigger.BeginRemoteHold();
+
+        float duration = trigger.GetHoldDuration(workSpeed);
+        float t = 0f;
+
+        while (t < duration)
+        {
+            trigger.TickRemoteHold(Time.deltaTime, workSpeed);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        trigger.EndRemoteHold();
     }
 }

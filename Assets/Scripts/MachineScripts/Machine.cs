@@ -1,11 +1,15 @@
 using NUnit.Framework;
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public abstract class Machine : MonoBehaviour,  IInteractable
 {
     public event System.Action OnMachineTriggered;
+
+    [SerializeField] protected MachineTriggerBase trigger;
+    public MachineTriggerBase GetTrigger() => trigger;
 
     [Header("Upgrades")]
     [SerializeField] private List<Upgrade> availableUpgrades = new();
@@ -208,5 +212,32 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         {
             employee.OnMachineCupInserted();
         }
+    }
+
+    public void ActivateByEmployee(float workSpeed, float delayTime)
+    {
+        if (trigger == null)
+            return;
+
+        StartCoroutine(EmployeeOperateRoutine(workSpeed, delayTime));
+    }
+
+    private IEnumerator EmployeeOperateRoutine(float workSpeed, float delayTime)
+    {
+        yield return new WaitForSeconds(0.15f / workSpeed);
+
+        trigger.BeginHold();
+
+        float holdDuration = trigger.GetHoldDuration(workSpeed);
+        float elapsed = 0f;
+
+        while (elapsed < holdDuration)
+        {
+            trigger.OnHold();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        trigger.EndHold();
     }
 }

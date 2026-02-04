@@ -1266,17 +1266,6 @@ Transform:
   - {fileID: 966144751}
   m_Father: {fileID: 1542538021}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &829244591 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 556568490123565683, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
-  m_PrefabInstance: {fileID: 4349360468480387853}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5665f53145868dd4aa8aaf36896f7498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EmployeeSnapPoint
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,14 +1836,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: employeeSnapPoints.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640108781461284259, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-      propertyPath: 'employeeSnapPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1695631893}
     - target: {fileID: 3093697639853108042, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_Name
       value: Cup Sealer
@@ -1961,17 +1942,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
---- !u!114 &1426165837 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7628960684451846294, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
-  m_PrefabInstance: {fileID: 2124675328270841315}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5665f53145868dd4aa8aaf36896f7498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EmployeeSnapPoint
 --- !u!1 &1483851800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,17 +2111,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8603870619020045296, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
   m_PrefabInstance: {fileID: 5760411723810063145}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1695631893 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2835020255321356909, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
-  m_PrefabInstance: {fileID: 1197609697}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5665f53145868dd4aa8aaf36896f7498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EmployeeSnapPoint
 --- !u!4 &1786706662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772452983688327612, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
@@ -2566,14 +2525,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
-    - target: {fileID: 595119168228571322, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
-      propertyPath: employeeSnapPoints.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 595119168228571322, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
-      propertyPath: 'employeeSnapPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1426165837}
     - target: {fileID: 2940498192744457937, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.1574
@@ -2675,14 +2626,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boba Dispenser
       objectReference: {fileID: 0}
-    - target: {fileID: 7771216306209374641, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
-      propertyPath: employeeSnapPoints.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7771216306209374641, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
-      propertyPath: 'employeeSnapPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 829244591}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

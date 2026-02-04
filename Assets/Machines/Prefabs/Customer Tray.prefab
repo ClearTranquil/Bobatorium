@@ -428,11 +428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
+  trigger: {fileID: 6316690347563290167}
   availableUpgrades: []
-  cupSnapPoints:
-  - {fileID: 1775030895289602201}
-  - {fileID: 8322320527647532337}
-  - {fileID: 2438712016532872535}
   timeBetweenCups: 0.5
 --- !u!1 &9115578111866369822
 GameObject:
@@ -536,6 +533,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
+  trigger: {fileID: 0}
   availableUpgrades: []
-  cupSnapPoints: []
   timeBetweenCups: 0.5

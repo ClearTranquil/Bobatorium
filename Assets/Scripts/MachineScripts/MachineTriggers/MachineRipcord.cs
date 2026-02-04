@@ -85,4 +85,18 @@ public class MachineRipcord : MachineTriggerBase
             handle.transform.position = Vector3.MoveTowards(handle.transform.position, startPos, retractSpeed * Time.deltaTime);
         }
     }
+
+    // Employee interaction
+    public override void BeginRemoteHold()
+    {
+        isHeld = true;
+
+        handle.transform.position = startPos + Vector3.down * maxPullDistance;
+        TriggerMachine();
+    }
+
+    public override void EndRemoteHold()
+    {
+        isHeld = false;
+    }
 }

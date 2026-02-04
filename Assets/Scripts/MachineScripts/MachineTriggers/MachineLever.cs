@@ -81,4 +81,27 @@ public class MachineLever : MachineTriggerBase
             StopTriggerMachine();
         }
     }
+
+    // Employee interaction
+    public override void BeginRemoteHold()
+    {
+        isHeld = true;
+    }
+
+
+    public override void TickRemoteHold(float deltaTime, float workSpeed)
+    {
+        if (!isHeld)
+            return;
+
+        currentAngle += pullSensitivity * workSpeed * deltaTime;
+        currentAngle = Mathf.Clamp(currentAngle, 0f, maxPullAngle);
+
+        ApplyRotation();
+    }
+
+    public override void EndRemoteHold()
+    {
+        isHeld = false;
+    }
 }

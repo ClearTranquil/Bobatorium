@@ -607,10 +607,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e265c1af0d5436409337a6777badbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BobaMachine
+  trigger: {fileID: 8459332685493540003}
   availableUpgrades:
   - {fileID: 11400000, guid: a8354f9ac4fa2ba4a9aa0a2e7496bb83, type: 2}
-  cupSnapPoints:
-  - {fileID: 3206891035055331338}
   emitter: {fileID: 8665896228354284075}
   timeBetweenEmit: 0.1
   timeBetweenTrigger: 0.1
