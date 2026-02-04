@@ -13,12 +13,14 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     Dictionary<Upgrade, UpgradeState> upgradeStateDict = new Dictionary<Upgrade, UpgradeState>();
 
     [Header("Snap Points")]
-    [SerializeField] protected CupSnapPoint[] cupSnapPoints;
+    protected CupSnapPoint[] cupSnapPoints;
+    protected EmployeeSnapPoint[] employeeSnapPoints;
 
     /*----------Upgrade Events and Init--------------*/
 
     protected virtual void Awake()
     {
+        CacheSnapPoints();
         InitializeUpgrades();
     }
 
@@ -39,6 +41,19 @@ public abstract class Machine : MonoBehaviour,  IInteractable
             upgradeStateDict.Add(upgrade, state);
         }
     }
+
+    protected void CacheSnapPoints()
+    {
+        cupSnapPoints = GetComponentsInChildren<CupSnapPoint>(true);
+        employeeSnapPoints = GetComponentsInChildren<EmployeeSnapPoint>(true);
+    }
+
+#if UNITY_EDITOR
+    protected virtual void OnValidate()
+    {
+        CacheSnapPoints();
+    }
+#endif
 
     protected virtual bool HandleUpgradeEvent(Machine machine, Upgrade upgrade, int newLevel)
     {
@@ -161,5 +176,37 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     public void OnHold()
     {
         
+    }
+
+    /*----------Employee Interaction------------*/
+    public bool HasAnyCup()
+    {
+        foreach(var snap in cupSnapPoints)
+        {
+            if (snap.IsOccupied)
+                return true;
+        }
+
+        return false;
+    }
+
+    protected IEnumerable<Employee> GetAssignedEmployees()
+    {
+        foreach (var snap in employeeSnapPoints)
+        {
+            if (snap.IsOccupied)
+                yield return snap.Occupant;
+        }
+    }
+
+    public virtual void OnCupStateChanged()
+    {
+        if (!HasAnyCup())
+            return;
+
+        foreach (var employee in GetAssignedEmployees())
+        {
+            employee.OnMachineCupInserted();
+        }
     }
 }

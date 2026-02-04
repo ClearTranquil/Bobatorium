@@ -7,9 +7,6 @@ public class Employee : MonoBehaviour, IInteractable
     private Vector3 velocity;
     private Vector3 desiredPos;
 
-    private EmployeeSnapPoint heldSnapPoint;
-    private EmployeeSnapPoint currentSnapPoint;
-
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 40f;
 
@@ -18,6 +15,11 @@ public class Employee : MonoBehaviour, IInteractable
     [SerializeField] private float snapMaxDistance = 100f;
     private int originalLayer;
     private int heldLayer = 7;
+    private EmployeeSnapPoint heldSnapPoint;
+    private EmployeeSnapPoint currentSnapPoint;
+
+    [Header("Machine References")]
+    private Machine currentMachine;
 
     private void Awake()
     {
@@ -98,10 +100,21 @@ public class Employee : MonoBehaviour, IInteractable
     public void RegisterSnapPoint(EmployeeSnapPoint snapPoint)
     {
         currentSnapPoint = snapPoint;
+        currentMachine = snapPoint.GetComponentInParent<Machine>();
     }
 
     public void ClearSnapPoint()
     {
         currentSnapPoint = null;
+        currentMachine = null;
+    }
+
+    public void OnMachineCupInserted()
+    {
+        if (currentMachine == null)
+            return;
+
+        // This is where the employee starts working the machine
+        Debug.Log($"{name} detected cup in {currentMachine.name}");
     }
 }
