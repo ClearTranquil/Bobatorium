@@ -402,11 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cup
   basePrice: 1
   saleModifiers: []
-  heldZDistance: 15
-  snapMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  snapMaxDistance: 100
+  heldZDistance: 30
   maxTeaFill: 1
   teaFillAmount: 0
   maxBoba: 5
@@ -416,6 +412,11 @@ MonoBehaviour:
   cupWithBoba: {fileID: 7091770843393093153}
   cupWithTea: {fileID: 1723944475869222786}
   cupLid: {fileID: 1483044219101180075}
+  followSmoothTime: 0.05
+  snapMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  snapMaxDistance: 100
 --- !u!1 &6316835829023014718
 GameObject:
   m_ObjectHideFlags: 0

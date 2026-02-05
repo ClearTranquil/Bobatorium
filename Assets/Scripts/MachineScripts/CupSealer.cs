@@ -48,6 +48,21 @@ public class CupSealer : Machine
         return true;
     }
 
+    public override bool CheckCupCompletion()
+    {
+        foreach (var snap in cupSnapPoints)
+        {
+            ICupInfo cup = snap;
+            if (cup != null)
+            {
+                if (cup.IsSealed)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     public override void TriggerAction()
     {
         base.TriggerAction();

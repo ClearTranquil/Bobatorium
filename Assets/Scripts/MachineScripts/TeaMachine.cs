@@ -29,6 +29,21 @@ public class TeaMachine : Machine
         isPouring = false;
     }
 
+    public override bool CheckCupCompletion()
+    {
+        foreach (var snap in cupSnapPoints)
+        {
+            ICupInfo cup = snap;
+            if (cup != null)
+            {
+                if (cup.TeaFull)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsPouring => isPouring;
     public float PourRate => pourRate;
 

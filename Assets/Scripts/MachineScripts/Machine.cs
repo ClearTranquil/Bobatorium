@@ -224,6 +224,12 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         activeEmployee.OnMachineCupInserted();
     }
 
+    public virtual bool CheckCupCompletion()
+    {
+        // Each machine has different cup completion checks
+        return false;
+    }
+
     public void ActivateByEmployee(float workSpeed)
     {
         if (employeeWorkRoutine != null)
@@ -236,6 +242,9 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     {
         while (HasAnyCup() && activeEmployee == employee && employee.CurrentMachine == this)
         {
+            if (CheckCupCompletion())
+                break;
+            
             trigger.RemoteActivate(workSpeed);
 
             if (!trigger.CanRepeat)
@@ -244,7 +253,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
             yield return new WaitForSeconds(GetWorkInterval(workSpeed));
         }
 
-        employeeWorkRoutine = null;
+        StopEmployeeWork();
     }
 
     protected virtual float GetWorkInterval(float workSpeed)

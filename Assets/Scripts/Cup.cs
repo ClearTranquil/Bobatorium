@@ -40,6 +40,12 @@ public class Cup : MonoBehaviour, IInteractable
     private int originalLayer;
     private int heldLayer = 7;
 
+    [Header("Interface Variable Exposure")]
+    public float TeaFillAmount => teaFillAmount;
+    public bool TeaFill => IsTeaFull();
+    public int BobaCount => bobaCount;
+    public bool BobaFull => IsBobaFull();
+
     private void Awake()
     {
         mainCam = Camera.main;
@@ -156,7 +162,7 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
-    public bool isBobaFull()
+    public bool IsBobaFull()
     {
         if (bobaCount >= maxBoba)
         {
@@ -199,7 +205,7 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
-    public bool isTeaFull()
+    public bool IsTeaFull()
     {
         if (teaFillAmount >= maxTeaFill)
         {
@@ -225,13 +231,13 @@ public class Cup : MonoBehaviour, IInteractable
     private void UpdateVisuals()
     {
         // This is where we'll make it look like liquid is being added to the cup
-        if (isTeaFull())
+        if (IsTeaFull())
         {
             cupWithTea.SetActive(true);
             emptyCup.SetActive(false);
             cupWithBoba.SetActive(false);
 
-        } else if (isBobaFull())
+        } else if (IsBobaFull())
         {
             cupWithBoba.SetActive(true);
             emptyCup.SetActive(false);

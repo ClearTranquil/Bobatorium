@@ -45,6 +45,21 @@ public class BobaMachine : Machine
         }
     }
 
+    public override bool CheckCupCompletion()
+    {
+        foreach(var snap in cupSnapPoints)
+        {
+            ICupInfo cup = snap;
+            if(cup != null)
+            {
+                if (cup.BobaFull)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     private IEnumerator EmitBoba()
     {
         for (int i = 0; i < bobaToEmit; i++)
