@@ -10,6 +10,8 @@ public abstract class Machine : MonoBehaviour,  IInteractable
 
     [SerializeField] protected MachineTriggerBase trigger;
     public MachineTriggerBase GetTrigger() => trigger;
+    private Coroutine employeeWorkRoutine;
+    private Employee activeEmployee;
 
     [Header("Upgrades")]
     [SerializeField] private List<Upgrade> availableUpgrades = new();
@@ -183,6 +185,23 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 
     /*----------Employee Interaction------------*/
+    public void SetActiveEmployee(Employee employee)
+    {
+        Debug.Log(activeEmployee + " assigned to " + this);
+        activeEmployee = employee;
+    }
+
+    public void RemoveActiveEmployee(Employee employee)
+    {
+        if (activeEmployee == employee)
+        {
+            Debug.Log(activeEmployee + " removed from " + this);
+
+            StopEmployeeWork();
+            activeEmployee = null;
+        }
+    }
+
     public bool HasAnyCup()
     {
         foreach(var snap in cupSnapPoints)
@@ -194,50 +213,54 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return false;
     }
 
-    protected IEnumerable<Employee> GetAssignedEmployees()
-    {
-        foreach (var snap in employeeSnapPoints)
-        {
-            if (snap.IsOccupied)
-                yield return snap.Occupant;
-        }
-    }
-
     public virtual void OnCupStateChanged()
     {
-        if (!HasAnyCup())
-            return;
-
-        foreach (var employee in GetAssignedEmployees())
+        if (!HasAnyCup() || !activeEmployee)
         {
-            employee.OnMachineCupInserted();
-        }
-    }
-
-    public void ActivateByEmployee(float workSpeed, float delayTime)
-    {
-        if (trigger == null)
+            StopEmployeeWork();
             return;
-
-        StartCoroutine(EmployeeOperateRoutine(workSpeed, delayTime));
-    }
-
-    private IEnumerator EmployeeOperateRoutine(float workSpeed, float delayTime)
-    {
-        yield return new WaitForSeconds(0.15f / workSpeed);
-
-        trigger.BeginHold();
-
-        float holdDuration = trigger.GetHoldDuration(workSpeed);
-        float elapsed = 0f;
-
-        while (elapsed < holdDuration)
-        {
-            trigger.OnHold();
-            elapsed += Time.deltaTime;
-            yield return null;
         }
 
-        trigger.EndHold();
+        activeEmployee.OnMachineCupInserted();
+    }
+
+    public void ActivateByEmployee(float workSpeed)
+    {
+        if (employeeWorkRoutine != null)
+            return;
+
+        employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(activeEmployee, workSpeed));
+    }
+
+    private IEnumerator EmployeeWorkLoop(Employee employee, float workSpeed)
+    {
+        while (HasAnyCup() && activeEmployee == employee && employee.CurrentMachine == this)
+        {
+            trigger.RemoteActivate(workSpeed);
+
+            if (!trigger.CanRepeat)
+                break;
+
+            yield return new WaitForSeconds(GetWorkInterval(workSpeed));
+        }
+
+        employeeWorkRoutine = null;
+    }
+
+    protected virtual float GetWorkInterval(float workSpeed)
+    {
+        return 0.5f / workSpeed;
+    }
+
+    private void StopEmployeeWork()
+    {
+        if (employeeWorkRoutine != null)
+        {
+            StopCoroutine(employeeWorkRoutine);
+            employeeWorkRoutine = null;
+        }
+
+        // Stop the trigger if applicable
+        trigger?.StopOperating();
     }
 }

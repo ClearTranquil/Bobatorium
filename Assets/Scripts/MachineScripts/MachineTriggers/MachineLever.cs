@@ -1,6 +1,7 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class MachineLever : MachineTriggerBase
 {
@@ -9,6 +10,9 @@ public class MachineLever : MachineTriggerBase
     [SerializeField] private float pullSensitivity = 4f;
     [SerializeField] private float returnSpeed = 6f;
     [SerializeField] private float triggerThreshold = 45f;
+
+    [Header("Employee options")]
+    [SerializeField] private float baseEmployeePullSpeed = 120f;
 
     [SerializeField] private GameObject handle;
     private float currentAngle;
@@ -26,6 +30,9 @@ public class MachineLever : MachineTriggerBase
 
     public override void Interact(PlayerControls player)
     {
+        // Player can't mess with lever if the employee is using it
+        if (isOperating) return;
+
         base.Interact(player);
         player.PickUp(gameObject);
         isHeld = true;
@@ -40,7 +47,7 @@ public class MachineLever : MachineTriggerBase
     private void LeverMovement()
     {
         // Returns to neutral position when not held
-        if (!isHeld && currentAngle > 0f)
+        if (!isHeld && !isOperating && currentAngle > 0f)
         {
             currentAngle = Mathf.MoveTowards(currentAngle, 0f, returnSpeed * Time.deltaTime);
         }
@@ -50,6 +57,9 @@ public class MachineLever : MachineTriggerBase
 
     public override void OnHold()
     {
+        // Player can't mess with lever if the employee is using it
+        if (isOperating) return;
+
         float mouseDeltaY = Mouse.current.delta.ReadValue().y;
 
         // Pull down when dragging mouse downward
@@ -61,6 +71,9 @@ public class MachineLever : MachineTriggerBase
 
     public override void OnRelease(Vector3 releasePos)
     {
+        // Player can't mess with lever if the employee is using it
+        if (isOperating) return;
+
         isHeld = false;
     }
 
@@ -83,25 +96,52 @@ public class MachineLever : MachineTriggerBase
     }
 
     // Employee interaction
-    public override void BeginRemoteHold()
+    public override void RemoteActivate(float workSpeed)
     {
-        isHeld = true;
-    }
-
-
-    public override void TickRemoteHold(float deltaTime, float workSpeed)
-    {
-        if (!isHeld)
+        if (isOperating)
             return;
 
-        currentAngle += pullSensitivity * workSpeed * deltaTime;
-        currentAngle = Mathf.Clamp(currentAngle, 0f, maxPullAngle);
-
-        ApplyRotation();
+        StartCoroutine(PullLeverRoutine(workSpeed));
     }
 
-    public override void EndRemoteHold()
+    public override void StopOperating()
     {
+        base.StopOperating();
+        isHeld = false;
+    }
+
+    private IEnumerator PullLeverRoutine(float workSpeed)
+    {
+        isOperating = true;
+        isHeld = true;
+
+        // Pull lever down until threshold
+        while (currentAngle < triggerThreshold)
+        {
+            currentAngle += baseEmployeePullSpeed * workSpeed * Time.deltaTime; // use basePullSpeed
+            currentAngle = Mathf.Clamp(currentAngle, 0f, maxPullAngle);
+            ApplyRotation();
+            yield return null;
+        }
+
+        TriggerMachine();
+
+        // Hold at threshold until stopped
+        while (isOperating)
+        {
+            currentAngle = triggerThreshold;
+            ApplyRotation();
+            yield return null;
+        }
+
+        // Return to neutral
+        while (currentAngle > 0f)
+        {
+            currentAngle = Mathf.MoveTowards(currentAngle, 0f, returnSpeed * Time.deltaTime);
+            ApplyRotation();
+            yield return null;
+        }
+
         isHeld = false;
     }
 }

@@ -5,7 +5,9 @@ public abstract class MachineTriggerBase : MonoBehaviour, IInteractable
 {
     public Machine machine;
     protected bool isHeld = false;
-    
+    protected bool isOperating = false;
+    public virtual bool CanRepeat => true;
+
     // Called when player clicks/taps on trigger
     public virtual void Interact(PlayerControls player)
     {
@@ -63,26 +65,13 @@ public abstract class MachineTriggerBase : MonoBehaviour, IInteractable
     }
 
     // How employees interact with teiggers 
-    public virtual void BeginRemoteHold()
+    public virtual void RemoteActivate(float workSpeed)
     {
-        isHeld = true;
+        TriggerMachine();
     }
 
-    public virtual void EndRemoteHold()
+    public virtual void StopOperating()
     {
-        isHeld = false;
-        OnRelease(Vector3.zero);
-    }
-
-    public virtual void TickRemoteHold(float deltaTime, float workSpeed)
-    {
-        // Default: do nothing
-        // Lever / ripcord can override if needed
-    }
-
-    // Used by employee interactions
-    public virtual float GetHoldDuration(float workSpeed)
-    {
-        return 0.1f / workSpeed;
+        isOperating = false;
     }
 }

@@ -9,6 +9,13 @@ public class EmployeeSnapPoint : SnapPointBase<Employee>
         return IsBusy;
     }
 
+    public override void Clear()
+    {
+        OnEmployeeRemoved();
+
+        base.Clear();
+    }
+
     public override bool TrySnap(Employee m_employee)
     {
         if (!base.TrySnap(m_employee))
@@ -16,5 +23,21 @@ public class EmployeeSnapPoint : SnapPointBase<Employee>
 
         m_employee.RegisterSnapPoint(this);
         return true;
+    }
+
+    public void OnEmployeePlaced()
+    {
+        if (parentMachine)
+        {
+            parentMachine.SetActiveEmployee(Occupant);
+        }
+    }
+
+    public void OnEmployeeRemoved()
+    {
+        if (parentMachine)
+        {
+            parentMachine.RemoveActiveEmployee(Occupant);
+        }
     }
 }

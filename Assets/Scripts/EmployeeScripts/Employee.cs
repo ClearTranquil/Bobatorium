@@ -44,6 +44,7 @@ public class Employee : MonoBehaviour, IInteractable
         {
             currentSnapPoint.Clear();
             currentSnapPoint = null;
+            CurrentMachine = null;
         }
 
         transform.SetParent(null);
@@ -107,29 +108,32 @@ public class Employee : MonoBehaviour, IInteractable
     {
         currentSnapPoint = snapPoint;
         CurrentMachine = snapPoint.GetComponentInParent<Machine>();
-    }
 
-    public void ClearSnapPoint()
-    {
-        currentSnapPoint = null;
-        CurrentMachine = null;
+        snapPoint.OnEmployeePlaced();
     }
 
     /*--------------Machine Interaction------------*/
     // Employees wait for a cup to be put in the machine before operating it
     public void OnMachineCupInserted()
     {
-        if (CurrentMachine == null)
+        if (!CurrentMachine)
             return;
 
         if (isWaitingToAct)
             return;
 
-        var trigger = CurrentMachine.GetTrigger();
-        if (trigger == null)
-            return;
+        StartCoroutine(ActivateMachine());
+    }
 
-        StartCoroutine(OperateMachine(trigger));
+    IEnumerator ActivateMachine()
+    {
+        isWaitingToAct = true;
+
+        yield return new WaitForSeconds(reactionDelay);
+
+        CurrentMachine.ActivateByEmployee(workSpeed);
+
+        isWaitingToAct = false;
     }
 
     public void AssignMachine(Machine m_machine)
@@ -137,31 +141,5 @@ public class Employee : MonoBehaviour, IInteractable
         CurrentMachine = m_machine;
     }
 
-    IEnumerator OperateMachine(MachineTriggerBase trigger)
-    {
-        isWaitingToAct = true;
 
-        yield return new WaitForSeconds(reactionDelay);
-
-        yield return StartCoroutine(OperateTrigger(trigger));
-
-        isWaitingToAct = false;
-    }
-
-    IEnumerator OperateTrigger(MachineTriggerBase trigger)
-    {
-        trigger.BeginRemoteHold();
-
-        float duration = trigger.GetHoldDuration(workSpeed);
-        float t = 0f;
-
-        while (t < duration)
-        {
-            trigger.TickRemoteHold(Time.deltaTime, workSpeed);
-            t += Time.deltaTime;
-            yield return null;
-        }
-
-        trigger.EndRemoteHold();
-    }
 }

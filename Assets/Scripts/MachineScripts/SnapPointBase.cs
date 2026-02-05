@@ -4,6 +4,12 @@ public abstract class SnapPointBase<Obj> : MonoBehaviour where Obj : MonoBehavio
 {
     public Obj Occupant { get; private set; }
     public bool IsOccupied => Occupant != null;
+    protected Machine parentMachine;
+
+    protected void Awake()
+    {
+        parentMachine = GetComponentInParent<Machine>();
+    }
 
     public virtual bool TrySnap(Obj m_obj)
     {

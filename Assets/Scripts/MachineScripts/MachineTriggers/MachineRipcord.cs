@@ -6,7 +6,8 @@ public class MachineRipcord : MachineTriggerBase
     [SerializeField] private GameObject handle;
     private LineRenderer line;
     [SerializeField] private Transform lineStart;
-    
+    public override bool CanRepeat => false;
+
     [SerializeField] private float maxPullDistance = 1f;
     [SerializeField] private float minPullSpeed = 4f;
     [SerializeField] private float retractSpeed = 2f;
@@ -87,16 +88,9 @@ public class MachineRipcord : MachineTriggerBase
     }
 
     // Employee interaction
-    public override void BeginRemoteHold()
+    public override void RemoteActivate(float workSpeed)
     {
-        isHeld = true;
-
         handle.transform.position = startPos + Vector3.down * maxPullDistance;
         TriggerMachine();
-    }
-
-    public override void EndRemoteHold()
-    {
-        isHeld = false;
     }
 }
