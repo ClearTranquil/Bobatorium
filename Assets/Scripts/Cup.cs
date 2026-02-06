@@ -28,6 +28,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject cupWithBoba;
     [SerializeField] private GameObject cupWithTea;
     [SerializeField] private GameObject cupLid;
+    [SerializeField] private GameObject straw;
 
     [Header("Position Snapping")]
     [SerializeField] private float followSmoothTime = 0.05f;
@@ -251,6 +252,12 @@ public class Cup : MonoBehaviour, IInteractable
         {
             cupLid.SetActive(true);
         }
+    }
+
+    public void OnCupValiated()
+    {
+        if(straw)
+            straw.SetActive(true);
     }
 
     public int GetBasePrice()

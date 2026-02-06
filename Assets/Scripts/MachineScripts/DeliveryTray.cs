@@ -41,6 +41,10 @@ public class DeliveryTray : Machine
                 if (cupValid)
                 {
                     Debug.Log("Sold!");
+                    cup.OnCupValiated();
+
+                    yield return new WaitForSeconds(.5f);
+
                     ScoreCup(cup.GetComponent<Cup>());
                     //Destroy(cup.gameObject); Cups are now destroyed by NPCs. Kinda like they're drinking it. That makes sense right? 
                     snap.Clear();
