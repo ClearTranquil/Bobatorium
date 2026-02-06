@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -67,5 +68,23 @@ public class TeaMachine : Machine
         }
 
         return false;
+    }
+
+    protected override IEnumerator EmployeeWorkLoop(Employee employee)
+    {
+        // Get the lever trigger
+        MachineLever lever = trigger as MachineLever;
+        if (lever == null)
+            yield break;
+
+        // Start moving the lever using employee's effective work speed
+        lever.RemoteActivate(employee.GetEffectiveWorkSpeed());
+
+        while (!CheckCupCompletion())
+        {
+            yield return null;
+        }
+
+        lever.StopOperating();
     }
 }

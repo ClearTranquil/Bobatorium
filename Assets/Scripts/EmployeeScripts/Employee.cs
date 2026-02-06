@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Employee : MonoBehaviour, IInteractable
 {
@@ -25,10 +26,29 @@ public class Employee : MonoBehaviour, IInteractable
     private bool isWaitingToAct = false;
     [SerializeField] private float workSpeed = 1;
 
+    [Header("Fatigue levels")]
+    [SerializeField] private int fatigueLevel = 0;
+    [SerializeField] private int maxFatigue = 5;
+
+    // Each employee has random fatigue thresholds
+    [SerializeField] private int cupsUntilCheck;
+    [SerializeField] private int fatigueChanceDenominator;
+
+    private int cupsCompleted;
+    private bool isAsleep;
+
     private void Awake()
     {
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
+
+        InitializeFatigue();
+    }
+
+    private void InitializeFatigue()
+    {
+        cupsUntilCheck = Random.Range(1, 9);
+        fatigueChanceDenominator = 8;
     }
 
     /*--------------------INTERACTABLE--------------------*/
@@ -39,6 +59,13 @@ public class Employee : MonoBehaviour, IInteractable
     // Employees can be dragged onto machines to assign them to it
     public void Interact(PlayerControls player)
     {
+        // If the employee is asleep, wake them up instead of any other interaction stuff
+        if (isAsleep)
+        {
+            WakeUp();
+            return;
+        }
+
         // Pick up employee, tell machine they aren't assigned anymore
         if (currentSnapPoint != null)
         {
@@ -131,7 +158,10 @@ public class Employee : MonoBehaviour, IInteractable
 
         yield return new WaitForSeconds(reactionDelay);
 
-        CurrentMachine.ActivateByEmployee(workSpeed);
+        if (!isAsleep)
+        {
+            CurrentMachine.ActivateByEmployee(GetEffectiveWorkSpeed());
+        }
 
         isWaitingToAct = false;
     }
@@ -141,5 +171,112 @@ public class Employee : MonoBehaviour, IInteractable
         CurrentMachine = m_machine;
     }
 
+    public void OnCupCompleted()
+    {
+        cupsCompleted++;
 
+        if (cupsCompleted < cupsUntilCheck)
+            return;
+
+        cupsCompleted = 0;
+
+        TryIncreaseFatigue();
+    }
+
+    public float GetEffectiveWorkSpeed()
+    {
+        if (isAsleep)
+            return 0f;
+
+        float fatigueMultiplier = 1f - (fatigueLevel * 0.15f);
+        fatigueMultiplier = Mathf.Clamp(fatigueMultiplier, 0.25f, 1f);
+
+        return workSpeed * fatigueMultiplier;
+    }
+
+    /*---------Fatigue-----------*/
+    private void TryIncreaseFatigue()
+    {
+        if (isAsleep)
+            return;
+
+        int roll = Random.Range(1, fatigueChanceDenominator + 1);
+        if (roll == 1)
+        {
+            IncreaseFatigue(1);
+        }
+    }
+
+    private void IncreaseFatigue(int amount)
+    {
+        fatigueLevel = Mathf.Clamp(fatigueLevel + amount, 0, maxFatigue);
+
+        UpdateFatigueVisuals();
+
+        if (fatigueLevel >= maxFatigue)
+        {
+            PassOut();
+        }
+    }
+
+    public void ResetFatigue()
+    {
+        fatigueLevel = 0;
+        isAsleep = false;
+        cupsCompleted = 0;
+
+        UpdateFatigueVisuals();
+    }
+
+    public int GetFatigueLevel()
+    {
+        return fatigueLevel;
+    }
+
+    private void PassOut()
+    {
+        isAsleep = true;
+
+        // Stop machine immediately
+        if (CurrentMachine)
+            CurrentMachine.StopEmployeeWork();
+
+        // Play "head hitting machine" sound effect 
+        // Maybe play snoring sound effect
+        // Maybe display a "ZZZ..." vfx
+
+        UpdateFatigueVisuals();
+    }
+
+    private void WakeUp()
+    {
+        // Play slap sound
+        // Play "waking up" animation?
+
+        isAsleep = false;
+        fatigueLevel = 3; // NOT fully rested
+
+        UpdateFatigueVisuals();
+    }
+
+    private void UpdateFatigueVisuals()
+    {
+
+    }
+
+    /*-------Buffs---------*/
+    public void ModifyWorkSpeed(float multiplier, float duration)
+    {
+        StartCoroutine(TemporaryWorkSpeedModifier(multiplier, duration));
+    }
+
+    private IEnumerator TemporaryWorkSpeedModifier(float multiplier, float duration)
+    {
+        // Using a syringe on the employee makes then work much faster for a time, then increases fatigue when it wears off
+        workSpeed *= multiplier;
+        yield return new WaitForSeconds(duration);
+        workSpeed /= multiplier;
+
+        IncreaseFatigue(1);
+    }
 }

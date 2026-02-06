@@ -310,4 +310,42 @@ public class CupSealer : Machine
         rightArm.localPosition = rightArmRestPos;
 
     }
+
+    protected override IEnumerator EmployeeWorkLoop(Employee employee)
+    {
+        MachineRipcord ripcord = trigger as MachineRipcord;
+        if (ripcord == null)
+            yield break;
+
+        // Determine chance to activate based on fatigue
+        int fatigue = employee.GetFatigueLevel();
+        float activationChance = 1f;
+        switch (fatigue)
+        {
+            case 1: activationChance = 1f; break;  
+            case 2: activationChance = 0.85f; break; 
+            case 3: activationChance = 0.7f; break;  
+            case 4: activationChance = 0.5f; break; 
+            default: activationChance = 0f; break;  
+        }
+
+        // Roll to see if employee successfully activates the ripcord
+        bool success = Random.value <= activationChance;
+
+        if (success)
+        {
+            ripcord.RemoteActivate(1f); // workSpeed multiplier isn’t needed for ripcord
+        }
+        else
+        {
+            // Failed pull: play ripcord animation without sealing cups
+            ripcord.PlayFailedPullAnimation();
+        }
+
+        // Wait until all cups are sealed
+        while (!CheckCupCompletion())
+        {
+            yield return null;
+        }
+    }
 }

@@ -112,4 +112,23 @@ public class BobaMachine : Machine
 
         return false;
     }
+
+    /*----------Employee Interaction---------*/
+    protected override IEnumerator EmployeeWorkLoop(Employee employee)
+    {
+        while (HasAnyCup() && employee.CurrentMachine == this)
+        {
+            TriggerAction();
+
+            yield return new WaitForSeconds(timeBetweenTrigger / employee.GetEffectiveWorkSpeed());
+
+            if (CheckCupCompletion())
+            {
+                employee.OnCupCompleted();
+                break;
+            }
+        }
+
+        StopEmployeeWork();
+    }
 }

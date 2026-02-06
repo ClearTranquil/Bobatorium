@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -92,5 +93,31 @@ public class MachineRipcord : MachineTriggerBase
     {
         handle.transform.position = startPos + Vector3.down * maxPullDistance;
         TriggerMachine();
+    }
+
+    public void PlayFailedPullAnimation()
+    {
+        // Move handle down slowly and retract
+        StartCoroutine(FailedPullRoutine());
+    }
+
+    private IEnumerator FailedPullRoutine()
+    {
+        float failSpeed = 0.5f; // slow pull
+        Vector3 targetPos = startPos + Vector3.down * maxPullDistance;
+
+        // Pull down slowly
+        while ((handle.transform.position - targetPos).sqrMagnitude > 0.001f)
+        {
+            handle.transform.position = Vector3.MoveTowards(handle.transform.position, targetPos, failSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Retract back
+        while ((handle.transform.position - startPos).sqrMagnitude > 0.001f)
+        {
+            handle.transform.position = Vector3.MoveTowards(handle.transform.position, startPos, retractSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 }

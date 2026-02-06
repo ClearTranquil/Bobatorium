@@ -1668,6 +1668,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: cupsUntilCheck
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueChanceDenominator
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.3508415
@@ -1893,6 +1905,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: cupsUntilCheck
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueChanceDenominator
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5959845
@@ -2400,6 +2424,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: cupsUntilCheck
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueChanceDenominator
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3

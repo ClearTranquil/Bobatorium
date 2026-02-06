@@ -235,25 +235,20 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         if (employeeWorkRoutine != null)
             return;
 
-        employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(activeEmployee, workSpeed));
+        employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(activeEmployee));
     }
 
-    private IEnumerator EmployeeWorkLoop(Employee employee, float workSpeed)
+    public virtual void StartWork(Employee employee)
     {
-        while (HasAnyCup() && activeEmployee == employee && employee.CurrentMachine == this)
-        {
-            if (CheckCupCompletion())
-                break;
-            
-            trigger.RemoteActivate(workSpeed);
+        if (employeeWorkRoutine != null)
+            return;
 
-            if (!trigger.CanRepeat)
-                break;
+        employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(employee));
+    }
 
-            yield return new WaitForSeconds(GetWorkInterval(workSpeed));
-        }
-
-        StopEmployeeWork();
+    protected virtual IEnumerator EmployeeWorkLoop(Employee employee)
+    {
+        yield break;
     }
 
     protected virtual float GetWorkInterval(float workSpeed)
@@ -261,7 +256,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return 0.5f / workSpeed;
     }
 
-    private void StopEmployeeWork()
+    public void StopEmployeeWork()
     {
         if (employeeWorkRoutine != null)
         {
@@ -272,4 +267,6 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         // Stop the trigger if applicable
         trigger?.StopOperating();
     }
+
+
 }
