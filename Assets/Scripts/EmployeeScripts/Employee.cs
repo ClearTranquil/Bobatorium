@@ -28,11 +28,15 @@ public class Employee : MonoBehaviour, IInteractable
 
     [Header("Fatigue levels")]
     [SerializeField] private int fatigueLevel = 0;
-    [SerializeField] private int maxFatigue = 5;
+    [SerializeField] private int maxFatigue = 4;
+
+    [Header("Fatigue Visuals")]
+    [SerializeField] private SpriteRenderer faceRenderer;
+    [SerializeField] private Sprite[] fatigueFaceSprites;
 
     // Each employee has random fatigue thresholds
-    [SerializeField] private int cupsUntilCheck;
-    [SerializeField] private int fatigueChanceDenominator;
+    private int cupsUntilCheck;
+    [SerializeField] private int fatigueChanceDenominator = 8;
 
     private int cupsCompleted;
     private bool isAsleep;
@@ -47,8 +51,8 @@ public class Employee : MonoBehaviour, IInteractable
 
     private void InitializeFatigue()
     {
-        cupsUntilCheck = Random.Range(1, 9);
-        fatigueChanceDenominator = 8;
+        cupsUntilCheck = Random.Range(2, 9);
+        UpdateFatigueVisuals();
     }
 
     /*--------------------INTERACTABLE--------------------*/
@@ -173,6 +177,8 @@ public class Employee : MonoBehaviour, IInteractable
 
     public void OnCupCompleted()
     {
+        Debug.Log(this + " completed a cup for this machine");
+
         cupsCompleted++;
 
         if (cupsCompleted < cupsUntilCheck)
@@ -261,7 +267,11 @@ public class Employee : MonoBehaviour, IInteractable
 
     private void UpdateFatigueVisuals()
     {
+        if (!faceRenderer || fatigueFaceSprites == null || fatigueFaceSprites.Length == 0)
+            return;
 
+        int spriteIndex = Mathf.Clamp(fatigueLevel, 0, fatigueFaceSprites.Length - 1);
+        faceRenderer.sprite = fatigueFaceSprites[spriteIndex];
     }
 
     /*-------Buffs---------*/

@@ -33,7 +33,7 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
         NotifyMachineCupStateChanged();
     }
 
-    private void NotifyMachineCupStateChanged()
+    public void NotifyMachineCupStateChanged()
     {
         Machine machine = GetComponentInParent<Machine>();
         if (machine != null)

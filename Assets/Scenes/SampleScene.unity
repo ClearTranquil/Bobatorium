@@ -1655,12 +1655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaleProcessor
   wallet: {fileID: 70318010}
---- !u!4 &1010818462 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4034425888992826188, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
-  m_PrefabInstance: {fileID: 796637503}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1120960872
+--- !u!1001 &992831217
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1669,24 +1664,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: fatigueLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: cupsUntilCheck
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: fatigueChanceDenominator
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.3508415
+      value: -6.0372496
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.229145
+      value: 15.467464
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1729,6 +1716,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+--- !u!4 &1010818462 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4034425888992826188, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
+  m_PrefabInstance: {fileID: 796637503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1139732715
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,75 +1889,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
---- !u!1001 &1363346908
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: fatigueLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: cupsUntilCheck
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: fatigueChanceDenominator
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.5959845
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 17.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 24.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: m_Name
-      value: Employee
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
 --- !u!1 &1483851800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2058,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8603870619020045296, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
   m_PrefabInstance: {fileID: 5760411723810063145}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1677600190
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueChanceDenominator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.082127
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.947073
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 33.38999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_Name
+      value: Employee
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
 --- !u!4 &1786706662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772452983688327612, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
@@ -2416,7 +2400,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
   m_PrefabInstance: {fileID: 1981073628}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1983266890
+--- !u!1001 &1986187020
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2425,28 +2409,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: fatigueLevel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
-      propertyPath: cupsUntilCheck
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: fatigueChanceDenominator
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0.6484659
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.8
+      value: 10.918088
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.7
+      value: 33.38999
       objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2974,6 +2950,6 @@ SceneRoots:
   - {fileID: 1627778320}
   - {fileID: 2076410601}
   - {fileID: 1542538021}
-  - {fileID: 1363346908}
-  - {fileID: 1983266890}
-  - {fileID: 1120960872}
+  - {fileID: 1677600190}
+  - {fileID: 992831217}
+  - {fileID: 1986187020}

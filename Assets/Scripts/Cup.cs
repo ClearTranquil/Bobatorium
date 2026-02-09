@@ -46,6 +46,7 @@ public class Cup : MonoBehaviour, IInteractable
     public bool TeaFill => IsTeaFull();
     public int BobaCount => bobaCount;
     public bool BobaFull => IsBobaFull();
+    public bool IsSealed => GetIsSealed();
 
     private void Awake()
     {
@@ -192,9 +193,11 @@ public class Cup : MonoBehaviour, IInteractable
     {
         if (!isSealed)
         {
-            if (teaFillAmount < maxTeaFill)
+            if (!IsTeaFull())
             {
                 teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
+
+                UpdateVisuals();
             }
             else
             {

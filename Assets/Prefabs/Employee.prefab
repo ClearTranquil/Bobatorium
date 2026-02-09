@@ -450,3 +450,13 @@ MonoBehaviour:
   snapMaxDistance: 100
   reactionDelay: 0.5
   workSpeed: 1
+  fatigueLevel: 0
+  maxFatigue: 4
+  faceRenderer: {fileID: 3173114896437299716}
+  fatigueFaceSprites:
+  - {fileID: 21300000, guid: 2ab11af8ba04742408aa95edc059d2cb, type: 3}
+  - {fileID: 21300000, guid: bbe4b33799072474484ac02a308afe19, type: 3}
+  - {fileID: 21300000, guid: f6bbac64a1cc30544b62d4cf0c4fd703, type: 3}
+  - {fileID: 21300000, guid: 76f0a7348140b534b94ce920fa5849d7, type: 3}
+  - {fileID: 21300000, guid: c68e7533fa141434aa87796308cd09bd, type: 3}
+  fatigueChanceDenominator: 8

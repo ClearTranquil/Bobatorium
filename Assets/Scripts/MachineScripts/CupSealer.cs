@@ -22,6 +22,9 @@ public class CupSealer : Machine
     private Vector3 leftArmRestPos;
     private Vector3 rightArmRestPos;
 
+    [Header("Employee interaction")]
+    [SerializeField] private float timeBetweenEmployeeTrigger;
+
     private bool isProcessing = false;
 
     protected override void Awake()
@@ -311,41 +314,59 @@ public class CupSealer : Machine
 
     }
 
+    /*----------------Employee Interaction-------------------*/
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
         MachineRipcord ripcord = trigger as MachineRipcord;
         if (ripcord == null)
             yield break;
 
-        // Determine chance to activate based on fatigue
-        int fatigue = employee.GetFatigueLevel();
-        float activationChance = 1f;
-        switch (fatigue)
+        // Checks for any unsealed cups
+        while (HasUnsealedCup() && employee.CurrentMachine == this)
         {
-            case 1: activationChance = 1f; break;  
-            case 2: activationChance = 0.85f; break; 
-            case 3: activationChance = 0.7f; break;  
-            case 4: activationChance = 0.5f; break; 
-            default: activationChance = 0f; break;  
+            // Employees have a chance to fail at pulling the ripcord, which gets higher as fatigue grows
+            int fatigue = employee.GetFatigueLevel();
+            float activationChance = fatigue switch
+            {
+                0 => 1f,
+                1 => 0.85f,
+                2 => 0.65f,
+                3 => 0.5f,
+                4 => 0.3f,
+                _ => 1f
+            };
+
+            bool success = Random.value <= activationChance;
+
+            if (success)
+            {
+                ripcord.RemoteActivate(1f);
+
+                // Wait until the cup actually starts sealing
+                while (!CheckCupCompletion())
+                    yield return null;
+
+                employee.OnCupCompleted();
+                yield return null;
+            }
+            else
+            {
+                // Wait for the failed pull animation to finish + a short delay before trying again
+                yield return ripcord.PlayFailedPullAnimation();
+                yield return new WaitForSeconds(2f);
+            }
         }
 
-        // Roll to see if employee successfully activates the ripcord
-        bool success = Random.value <= activationChance;
+        StopEmployeeWork();
+    }
 
-        if (success)
+    private bool HasUnsealedCup()
+    {
+        foreach (var snap in cupSnapPoints)
         {
-            ripcord.RemoteActivate(1f); // workSpeed multiplier isn’t needed for ripcord
+            if (snap.Occupant != null && !snap.Occupant.IsSealed)
+                return true;
         }
-        else
-        {
-            // Failed pull: play ripcord animation without sealing cups
-            ripcord.PlayFailedPullAnimation();
-        }
-
-        // Wait until all cups are sealed
-        while (!CheckCupCompletion())
-        {
-            yield return null;
-        }
+        return false;
     }
 }

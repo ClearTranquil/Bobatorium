@@ -36,7 +36,7 @@ public class TeaMachine : Machine
         {
             ICupInfo cup = snap;
             if (cup != null)
-            {
+            {             
                 if (cup.TeaFull)
                     return true;
             }
@@ -72,19 +72,29 @@ public class TeaMachine : Machine
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
-        // Get the lever trigger
         MachineLever lever = trigger as MachineLever;
-        if (lever == null)
+        if (lever == null || !HasAnyIncompleteCup())
             yield break;
 
-        // Start moving the lever using employee's effective work speed
-        lever.RemoteActivate(employee.GetEffectiveWorkSpeed());
+        // Exaggerate the difference in workspeed for this specific machine
+        float effectiveSpeed = Mathf.Clamp(employee.GetEffectiveWorkSpeed(), 0.25f, 1f);
+        lever.RemoteActivate(effectiveSpeed / 0.5f);
 
         while (!CheckCupCompletion())
-        {
             yield return null;
-        }
 
+        employee.OnCupCompleted();
         lever.StopOperating();
+    }
+
+    private bool HasAnyIncompleteCup()
+    {
+        foreach (var snap in cupSnapPoints)
+        {
+            ICupInfo cup = snap;
+            if (cup != null && !cup.TeaFull)
+                return true;
+        }
+        return false;
     }
 }

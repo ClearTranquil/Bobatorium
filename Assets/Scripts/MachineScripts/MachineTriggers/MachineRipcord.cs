@@ -88,36 +88,33 @@ public class MachineRipcord : MachineTriggerBase
         }
     }
 
-    // Employee interaction
+/*------------Employee Interaction---------------*/
     public override void RemoteActivate(float workSpeed)
     {
         handle.transform.position = startPos + Vector3.down * maxPullDistance;
         TriggerMachine();
     }
 
-    public void PlayFailedPullAnimation()
+    public IEnumerator PlayFailedPullAnimation()
     {
-        // Move handle down slowly and retract
-        StartCoroutine(FailedPullRoutine());
+        isHeld = true;
+        handle.transform.position = startPos;
+        yield return FailedPullRoutine();
     }
 
+    // Plays an animation where the employee fails to pull the ripcord fast enough
     private IEnumerator FailedPullRoutine()
     {
-        float failSpeed = 0.5f; // slow pull
+        float failSpeed = 7f;
         Vector3 targetPos = startPos + Vector3.down * maxPullDistance;
 
-        // Pull down slowly
         while ((handle.transform.position - targetPos).sqrMagnitude > 0.001f)
         {
             handle.transform.position = Vector3.MoveTowards(handle.transform.position, targetPos, failSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // Retract back
-        while ((handle.transform.position - startPos).sqrMagnitude > 0.001f)
-        {
-            handle.transform.position = Vector3.MoveTowards(handle.transform.position, startPos, retractSpeed * Time.deltaTime);
-            yield return null;
-        }
+        // Allow the cord to retract
+        isHeld = false;
     }
 }

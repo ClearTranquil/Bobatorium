@@ -120,7 +120,9 @@ public class BobaMachine : Machine
         {
             TriggerAction();
 
-            yield return new WaitForSeconds(timeBetweenTrigger / employee.GetEffectiveWorkSpeed());
+            // 6 is just a random number that felt the most fitting for the delay
+            float fatigueDelayMultiplier = 1f / employee.GetEffectiveWorkSpeed();
+            yield return new WaitForSeconds((timeBetweenTrigger * fatigueDelayMultiplier) * 6);
 
             if (CheckCupCompletion())
             {

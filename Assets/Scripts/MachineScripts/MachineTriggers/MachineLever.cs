@@ -11,9 +11,6 @@ public class MachineLever : MachineTriggerBase
     [SerializeField] private float returnSpeed = 6f;
     [SerializeField] private float triggerThreshold = 45f;
 
-    [Header("Employee options")]
-    [SerializeField] private float baseEmployeePullSpeed = 120f;
-
     [SerializeField] private GameObject handle;
     private float currentAngle;
     private float startAngle;
@@ -95,7 +92,8 @@ public class MachineLever : MachineTriggerBase
         }
     }
 
-    // Employee interaction
+/*----------------Employee Interaction---------------*/
+    // Called by the machine's employee work loop, starts the lever movement
     public override void RemoteActivate(float workSpeed)
     {
         if (isOperating)
@@ -115,18 +113,27 @@ public class MachineLever : MachineTriggerBase
         isOperating = true;
         isHeld = true;
 
-        // Pull lever down until threshold
-        while (currentAngle < triggerThreshold)
+        float startAngle = currentAngle;
+        float endAngle = triggerThreshold;
+
+        // Duration is longer as employee's fatigue increases, with a minumim of .1 duration
+        float duration = Mathf.Max(0.1f, 1f / workSpeed);
+        float t = 0f;
+
+        // Pull lever down over time with lerp
+        while (t < duration)
         {
-            currentAngle += baseEmployeePullSpeed * workSpeed * Time.deltaTime; // use basePullSpeed
-            currentAngle = Mathf.Clamp(currentAngle, 0f, maxPullAngle);
+            t += Time.deltaTime;
+            currentAngle = Mathf.Lerp(startAngle, endAngle, t / duration);
             ApplyRotation();
             yield return null;
         }
 
+        currentAngle = endAngle;
+        ApplyRotation();
         TriggerMachine();
 
-        // Hold at threshold until stopped
+        // Hold at threshold until cup is full, then let go
         while (isOperating)
         {
             currentAngle = triggerThreshold;
@@ -134,14 +141,7 @@ public class MachineLever : MachineTriggerBase
             yield return null;
         }
 
-        // Return to neutral
-        while (currentAngle > 0f)
-        {
-            currentAngle = Mathf.MoveTowards(currentAngle, 0f, returnSpeed * Time.deltaTime);
-            ApplyRotation();
-            yield return null;
-        }
-
         isHeld = false;
+        isOperating = false;
     }
 }
