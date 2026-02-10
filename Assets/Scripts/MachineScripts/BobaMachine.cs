@@ -116,19 +116,29 @@ public class BobaMachine : Machine
     /*----------Employee Interaction---------*/
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
-        while (HasAnyCup() && employee.CurrentMachine == this)
+        if (employee == null)
+            yield break;
+
+        while (HasAnyCup() && !CheckCupCompletion() && employee.CurrentMachine == this)
         {
             TriggerAction();
 
-            // 6 is just a random number that felt the most fitting for the delay
-            float fatigueDelayMultiplier = 1f / employee.GetEffectiveWorkSpeed();
-            yield return new WaitForSeconds((timeBetweenTrigger * fatigueDelayMultiplier) * 6);
+            float waitTime = timeBetweenTrigger * (1f / employee.GetEffectiveWorkSpeed()) * 6f;
+            float elapsed = 0f;
 
-            if (CheckCupCompletion())
+            while (elapsed < waitTime)
             {
-                employee.OnCupCompleted();
-                break;
+                if (employee.CurrentMachine != this)
+                    yield break;
+
+                elapsed += Time.deltaTime;
+                yield return null;
             }
+        }
+
+        if (CheckCupCompletion() && employee.CurrentMachine == this)
+        {
+            employee.OnCupCompleted();
         }
 
         StopEmployeeWork();

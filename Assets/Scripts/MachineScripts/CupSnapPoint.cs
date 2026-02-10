@@ -11,6 +11,11 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
     public bool BobaFull => Occupant != null ? Occupant.IsBobaFull() : false;
     public bool IsSealed => Occupant != null && Occupant.GetIsSealed();
 
+    [Header("Cup Ejection")]
+    [SerializeField] private Transform ejectPoint;
+    [SerializeField] private Vector3 ejectDirection = Vector3.forward;
+    [SerializeField] private float ejectForce = 1.5f;
+
     public bool CanReleaseCup()
     {
         return !IsBusy;
@@ -21,7 +26,7 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
         if(!base.TrySnap(m_cup))
             return false;
 
-        NotifyMachineCupStateChanged();
+        NotifyMachineCupInserted();
 
         m_cup.RegisterSnapPoint(this);
         return true;
@@ -30,13 +35,46 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
     public override void Clear()
     {
         base.Clear();
-        NotifyMachineCupStateChanged();
+        NotifyMachineCupInserted();
     }
 
-    public void NotifyMachineCupStateChanged()
+    public void NotifyMachineCupInserted()
     {
         Machine machine = GetComponentInParent<Machine>();
         if (machine != null)
-            machine.OnCupStateChanged();
+            machine.OnCupInserted();
     }
+
+    /*----------Cup Ejection----------*/
+    public bool TryEject()
+    {
+        Debug.Log("Trying to eject cup");
+        
+        if (!Occupant || IsBusy)
+            return false;
+
+        Cup cup = Occupant;
+
+        // Clear snapPoint, clear parent, enable physics
+        Clear();
+        cup.transform.SetParent(null);
+        cup.TogglePhysics(true);
+
+        // Reset the cup's velocity, just to be safe
+        Rigidbody rb = cup.GetRb();
+
+        if (rb)
+        {
+            rb.Sleep();
+            rb.WakeUp();
+
+            rb.transform.position = ejectPoint.position;
+
+            Vector3 direction = ejectDirection.normalized;
+            rb.AddForce(direction * ejectForce, ForceMode.Impulse);
+        }
+
+        return true;
+    }
+    
 }

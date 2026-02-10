@@ -17,7 +17,8 @@ MonoBehaviour:
   description: Seals cups faster
   icon: {fileID: 21300000, guid: f87cca0674dba7242ad483cce2064972, type: 3}
   machineType: 2
-  baseCost: 10
+  baseCost: 5
+  manualCosts: 050000000a0000000f00000014000000
   stackValues:
   - 1.25
   - 1.5

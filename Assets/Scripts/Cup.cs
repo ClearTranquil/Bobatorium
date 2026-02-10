@@ -13,6 +13,8 @@ public class Cup : MonoBehaviour, IInteractable
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 15f;
     private bool canBeGrabbed = true;
+    private Rigidbody rb;
+    private Collider col;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -52,6 +54,8 @@ public class Cup : MonoBehaviour, IInteractable
     {
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     public void Interact(PlayerControls player)
@@ -79,6 +83,21 @@ public class Cup : MonoBehaviour, IInteractable
         return canBeGrabbed;
     }
 
+    public void TogglePhysics(bool toggle)
+    {
+        if(toggle == true)
+        {
+            rb.isKinematic = false;
+            //col.enabled = true;
+        } else 
+        { 
+            rb.isKinematic = true;
+            //col.enabled = false;
+        }
+    }
+
+    public Rigidbody GetRb() {  return rb; }
+    public Collider GetCollider() { return col; } 
 
     public void OnRelease(Vector3 releasePos)
     {
@@ -96,11 +115,17 @@ public class Cup : MonoBehaviour, IInteractable
             }
 
             heldSnapPoint = null;
+        } else
+        {
+            TogglePhysics(true);
         }
     }
 
     public void OnHold()
     {
+        // Disable physics while held
+        TogglePhysics(false);
+        
         // Follow the player's cursor while being held
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPosition = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
@@ -146,6 +171,7 @@ public class Cup : MonoBehaviour, IInteractable
     public void RegisterSnapPoint(CupSnapPoint snapPoint)
     {
         currentSnapPoint = snapPoint;
+        TogglePhysics(false);
     }
 
     public void ClearSnapPoint()

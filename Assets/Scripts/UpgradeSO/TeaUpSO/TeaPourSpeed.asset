@@ -17,7 +17,8 @@ MonoBehaviour:
   description: Fills cups with tea faster
   icon: {fileID: 0}
   machineType: 1
-  baseCost: 10
+  baseCost: 5
+  manualCosts: 050000000f0000001e00000032000000
   stackValues:
   - 0.5
   - 0.75

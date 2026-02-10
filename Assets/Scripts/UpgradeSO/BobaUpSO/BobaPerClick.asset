@@ -18,6 +18,7 @@ MonoBehaviour:
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   machineType: 0
   baseCost: 10
+  manualCosts: 0a0000001e0000003c000000
   stackValues:
   - 2
   - 4

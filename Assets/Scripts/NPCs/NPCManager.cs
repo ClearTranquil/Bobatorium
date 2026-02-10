@@ -25,6 +25,12 @@ public class NPCManager : MonoBehaviour
 
     private IEnumerator moveNPCs(Cup cup)
     {
+        if (line.Count == 0)
+        {
+            Debug.LogWarning("Cup sold but no NPCs in line.");
+            yield break;
+        }
+
         // NPC pos 1 takes cup
         NPCMover npcToMove = line[0];
         StartCoroutine(MoveCupToSlot(npcToMove, cup));
@@ -59,16 +65,26 @@ public class NPCManager : MonoBehaviour
         while (returnQueue.Count > 0)
         {
             NPCMover npc = returnQueue.Dequeue();
+
             npc.MoveTo(backOfLine);
 
-            // Wait til we've reached the back of the line
+            // Wait while they are offscreen
             yield return new WaitForSeconds(offscreenWaitTime);
 
-            // Get in line, move to first free pos in line
+            // Add NPC back into the line
             line.Add(npc);
-            npc.MoveTo(linePositions[line.Count - 1]);
 
-            // Small delay before next NPC
+            int index = line.Count - 1;
+
+            if (index < linePositions.Length)
+            {
+                npc.MoveTo(linePositions[index]);
+            }
+            else
+            {
+                npc.MoveTo(backOfLine);
+                Debug.LogWarning("NPC returned but no line position available.");
+            }
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -77,7 +93,9 @@ public class NPCManager : MonoBehaviour
 
     private void UpdateLinePositions()
     {
-        for(int i = 0; i< line.Count; i++)
+        int max = Mathf.Min(line.Count, linePositions.Length);
+
+        for (int i = 0; i < max; i++)
         {
             line[i].MoveTo(linePositions[i]);
         }

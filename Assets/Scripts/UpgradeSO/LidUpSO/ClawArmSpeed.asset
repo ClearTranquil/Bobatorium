@@ -17,7 +17,8 @@ MonoBehaviour:
   description: Grabs cups faster
   icon: {fileID: 0}
   machineType: 2
-  baseCost: 10
+  baseCost: 5
+  manualCosts: 050000000f0000001e00000032000000
   stackValues:
   - 1.25
   - 1.5

@@ -23,8 +23,8 @@ public class Employee : MonoBehaviour, IInteractable
     [Header("Machine Interaction")]
     public Machine CurrentMachine { get; private set; }
     [SerializeField] private float reactionDelay = 0.5f;
-    private bool isWaitingToAct = false;
     [SerializeField] private float workSpeed = 1;
+    private Coroutine workLoop;
 
     [Header("Fatigue levels")]
     [SerializeField] private int fatigueLevel = 0;
@@ -73,9 +73,12 @@ public class Employee : MonoBehaviour, IInteractable
         // Pick up employee, tell machine they aren't assigned anymore
         if (currentSnapPoint != null)
         {
+            CurrentMachine.RemoveActiveEmployee(this);
             currentSnapPoint.Clear();
             currentSnapPoint = null;
             CurrentMachine = null;
+
+            StopWorkLoop();
         }
 
         transform.SetParent(null);
@@ -140,34 +143,52 @@ public class Employee : MonoBehaviour, IInteractable
         currentSnapPoint = snapPoint;
         CurrentMachine = snapPoint.GetComponentInParent<Machine>();
 
+        CurrentMachine.SetActiveEmployee(this);
+
         snapPoint.OnEmployeePlaced();
+        StartWorkLoop();
     }
 
     /*--------------Machine Interaction------------*/
-    // Employees wait for a cup to be put in the machine before operating it
-    public void OnMachineCupInserted()
+
+    private void StartWorkLoop()
     {
-        if (!CurrentMachine)
+        if (workLoop != null)
             return;
 
-        if (isWaitingToAct)
-            return;
-
-        StartCoroutine(ActivateMachine());
+        workLoop = StartCoroutine(EmployeeWorkLoop());
     }
 
-    IEnumerator ActivateMachine()
+    private void StopWorkLoop()
     {
-        isWaitingToAct = true;
-
-        yield return new WaitForSeconds(reactionDelay);
-
-        if (!isAsleep)
+        if (workLoop != null)
         {
-            CurrentMachine.ActivateByEmployee(GetEffectiveWorkSpeed());
+            StopCoroutine(workLoop);
+            workLoop = null;
         }
+    }
 
-        isWaitingToAct = false;
+    private IEnumerator EmployeeWorkLoop()
+    {
+        while (true)
+        {
+            if (!CurrentMachine || isAsleep)
+            {
+                yield return null;
+                continue;
+            }
+            
+            if (!CurrentMachine.CanEmployeeWork())
+            {
+                CurrentMachine.StopEmployeeWork();
+                yield return null;
+                continue;
+            }
+
+            CurrentMachine.ActivateByEmployee(GetEffectiveWorkSpeed());
+
+            yield return new WaitForSeconds(reactionDelay);
+        }
     }
 
     public void AssignMachine(Machine m_machine)
@@ -177,8 +198,6 @@ public class Employee : MonoBehaviour, IInteractable
 
     public void OnCupCompleted()
     {
-        Debug.Log(this + " completed a cup for this machine");
-
         cupsCompleted++;
 
         if (cupsCompleted < cupsUntilCheck)

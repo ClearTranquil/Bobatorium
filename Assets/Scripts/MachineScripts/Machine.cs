@@ -22,6 +22,11 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     protected CupSnapPoint[] cupSnapPoints;
     protected EmployeeSnapPoint[] employeeSnapPoints;
 
+    [Header("Cup Ejection")]
+    [SerializeField] private bool hasEjectUpgrade = false;
+    [SerializeField] private float ejectCheckInterval = 0.1f;
+    private Coroutine cupEjectRoutine;
+
     /*----------Upgrade Events and Init--------------*/
 
     protected virtual void Awake()
@@ -98,18 +103,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
 
     protected virtual void OnUpgradeApplied(Upgrade m_upgrade, UpgradeState m_state)
     {
-        // 1. Let THIS machine apply the upgrade immediately
         bool handled = HandleUpgradeEvent(this, m_upgrade, m_state.level);
-
-        if (!handled)
-        {
-            Debug.LogWarning(
-                $"{name} received upgrade '{m_upgrade.upgradeID}' but did not handle it.\n" +
-                $"Check upgradeID spelling or missing implementation."
-            );
-        }
-
-        // 2. Broadcast AFTER it was applied
         UpgradeEvents.InvokeUpgradeApplied(this, m_upgrade, m_state.level);
     }
 
@@ -184,19 +178,22 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         
     }
 
+    public virtual void OnCupInserted()
+    {
+        // May be used later
+    }
+
     /*----------Employee Interaction------------*/
     public void SetActiveEmployee(Employee employee)
     {
-        Debug.Log(activeEmployee + " assigned to " + this);
         activeEmployee = employee;
+        Debug.Log(activeEmployee + " assigned to " + this);
     }
 
     public void RemoveActiveEmployee(Employee employee)
     {
         if (activeEmployee == employee)
         {
-            Debug.Log(activeEmployee + " removed from " + this);
-
             StopEmployeeWork();
             activeEmployee = null;
         }
@@ -213,27 +210,20 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return false;
     }
 
-    public virtual void OnCupStateChanged()
-    {
-        if (!HasAnyCup() || !activeEmployee)
-        {
-            StopEmployeeWork();
-            return;
-        }
-
-        activeEmployee.OnMachineCupInserted();
-    }
-
     public virtual bool CheckCupCompletion()
     {
         // Each machine has different cup completion checks
         return false;
     }
 
+    public virtual bool CanEmployeeWork()
+    {
+        return HasAnyCup() && !CheckCupCompletion();
+    }
+
     public void ActivateByEmployee(float workSpeed)
     {
-        if (employeeWorkRoutine != null)
-            return;
+        StopEmployeeWork();
 
         employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(activeEmployee));
     }
@@ -268,5 +258,48 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         trigger?.StopOperating();
     }
 
+    /*------------Cup Ejection-----------*/
+    protected virtual void OnEnable()
+    {
+        if (hasEjectUpgrade)
+        {
+            cupEjectRoutine = StartCoroutine(CupEjectionLoop());
+        }
+    }
 
+    protected virtual void OnDisable()
+    {
+        if (cupEjectRoutine != null)
+        {
+            StopCoroutine(cupEjectRoutine);
+            cupEjectRoutine = null;
+        }
+    }
+
+    private IEnumerator CupEjectionLoop()
+    {
+        WaitForSeconds wait = new WaitForSeconds(ejectCheckInterval);
+
+        while (true)
+        {
+            foreach (var snap in cupSnapPoints)
+            {
+                if (snap.Occupant != null && snap.CanReleaseCup())
+                {
+                    // Let the machine specific completion logic decide
+                    if (CheckCupCompletionForSnap(snap))
+                    {
+                        snap.TryEject();
+                    }
+                }
+            }
+
+            yield return wait;
+        }
+    }
+
+    protected virtual bool CheckCupCompletionForSnap(CupSnapPoint snap)
+    {
+        return CheckCupCompletion();
+    }
 }

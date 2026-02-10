@@ -72,8 +72,9 @@ public class TeaMachine : Machine
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
+        
         MachineLever lever = trigger as MachineLever;
-        if (lever == null || !HasAnyIncompleteCup())
+        if (lever == null || !HasAnyIncompleteCup() || employee == null)
             yield break;
 
         // Exaggerate the difference in workspeed for this specific machine
