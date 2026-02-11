@@ -58,6 +58,7 @@ public class Cup : MonoBehaviour, IInteractable
         col = GetComponent<Collider>();
     }
 
+    /*-------------Interaction---------------*/
     public void Interact(PlayerControls player)
     {
         // If picked back up while it was snapped to a point, tell the snapPoint its been removed
@@ -73,6 +74,7 @@ public class Cup : MonoBehaviour, IInteractable
         player.PickUp(gameObject);
     }
 
+    // Change whether the cup can be picked up or not. Typically cups can't be picked up if a machine is currently working on them. 
     public void SetGrabEnabled(bool enabled)
     {
         canBeGrabbed = enabled;
@@ -82,22 +84,6 @@ public class Cup : MonoBehaviour, IInteractable
     {
         return canBeGrabbed;
     }
-
-    public void TogglePhysics(bool toggle)
-    {
-        if(toggle == true)
-        {
-            rb.isKinematic = false;
-            //col.enabled = true;
-        } else 
-        { 
-            rb.isKinematic = true;
-            //col.enabled = false;
-        }
-    }
-
-    public Rigidbody GetRb() {  return rb; }
-    public Collider GetCollider() { return col; } 
 
     public void OnRelease(Vector3 releasePos)
     {
@@ -147,20 +133,39 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
-    /*-----------------SNAP LOGIC------------------*/
+    public Rigidbody GetRb() { return rb; }
+    public Collider GetCollider() { return col; }
 
+    // Cups are kinematic while held or snapped to a machine
+    public void TogglePhysics(bool toggle)
+    {
+        if (toggle == true)
+        {
+            rb.isKinematic = false;
+            //col.enabled = true;
+        }
+        else
+        {
+            rb.isKinematic = true;
+            //col.enabled = false;
+        }
+    }
+
+    /*-----------------SNAP LOGIC------------------*/
+    // If a machine has multiple cupSnapPoints, this will automatically find the best snapPoint for the cup.
+    // This makes it easier for the player to quickly put cups in machines.
     private CupSnapPoint FindBestSnapPoint(Ray ray)
     {
         // Raycast ignores the currently held cup so it can find snapPoints
         if (!Physics.Raycast(ray, out RaycastHit hit, snapMaxDistance, snapMask))
             return null;
 
-        // First, check if we hit a machine
+        // Look for a machine, then ask the machine what the best snapPoint is. 
         Machine machine = hit.collider.GetComponentInParent<Machine>();
         if (machine != null)
             return machine.GetAvailableSnapPoint();
 
-        // Fallback: check if we hit a standalone snap point
+        // This is for snapPoints not tied to machines
         CupSnapPoint snap = hit.collider.GetComponent<CupSnapPoint>();
         if (snap == null)
             snap = hit.collider.GetComponentInParent<CupSnapPoint>();
@@ -171,16 +176,26 @@ public class Cup : MonoBehaviour, IInteractable
         return null;
     }
 
+    // Assign the cup to the snapPoint, disable physics
     public void RegisterSnapPoint(CupSnapPoint snapPoint)
     {
         currentSnapPoint = snapPoint;
         TogglePhysics(false);
     }
 
+    // Used when the cup is removed from a snapPoint
     public void ClearSnapPoint()
     {
         currentSnapPoint = null;
     }
+
+    /*-------------Pricing-------------------*/
+    public int GetBasePrice()
+    {
+        return basePrice;
+    }
+
+    /*=============FOOD STUFF================*/
 
     /*-----------------BOBA------------------*/
     public void AddBoba()
@@ -225,7 +240,6 @@ public class Cup : MonoBehaviour, IInteractable
             if (!IsTeaFull())
             {
                 teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
-
                 UpdateVisuals();
             }
             else
@@ -261,6 +275,9 @@ public class Cup : MonoBehaviour, IInteractable
     public bool GetIsSealed()
     { return isSealed; }
 
+    /*==============Visuals=================*/
+    // These will be replaced during the art pass
+
     private void UpdateVisuals()
     {
         // This is where we'll make it look like liquid is being added to the cup
@@ -290,10 +307,5 @@ public class Cup : MonoBehaviour, IInteractable
     {
         if(straw)
             straw.SetActive(true);
-    }
-
-    public int GetBasePrice()
-    {
-        return basePrice;
     }
 }
