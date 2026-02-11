@@ -544,6 +544,7 @@ MonoBehaviour:
   trigger: {fileID: 8459332685493540003}
   availableUpgrades:
   - {fileID: 11400000, guid: a8354f9ac4fa2ba4a9aa0a2e7496bb83, type: 2}
+  - {fileID: 11400000, guid: 10405254194e5c64da25a8e44a8c35fc, type: 2}
   hasEjectUpgrade: 0
   ejectCheckInterval: 0.1
   emitter: {fileID: 8665896228354284075}

@@ -89,6 +89,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
 
     public void ApplyUpgrade(Upgrade m_upgrade)
     {
+        // If an upgrade can be applied to any machine, put it here
         var state = GetUpgradeState(m_upgrade);
         if(state == null)
         {
@@ -96,6 +97,15 @@ public abstract class Machine : MonoBehaviour,  IInteractable
             return;
         }
         Debug.Log($"{name} applying {m_upgrade.upgradeName}, old level: {state.level - 1}, new level: {state.level}");
+
+        if (m_upgrade.upgradeID == "AutoEject")
+        {
+            hasEjectUpgrade = true;
+
+            // Start the coroutine if it hasnt already started
+            if (cupEjectRoutine == null)
+                cupEjectRoutine = StartCoroutine(CupEjectionLoop());
+        }
 
         state.Apply();
         OnUpgradeApplied(m_upgrade, state);

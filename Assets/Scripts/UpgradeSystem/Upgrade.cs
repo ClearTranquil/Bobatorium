@@ -20,7 +20,7 @@ public class Upgrade : ScriptableObject
     public string description;
     public Sprite icon;
 
-    public MachineType machineType;
+    //public MachineType machineType;
 
     public int baseCost = 10;
 

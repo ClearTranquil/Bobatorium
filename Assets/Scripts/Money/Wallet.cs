@@ -1,11 +1,21 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Wallet : MonoBehaviour
 {
     public int balance { get; private set; }
 
     public event Action<int> OnMoneyChanged;
+
+    private void Update()
+    {
+        if (Keyboard.current.f9Key.wasPressedThisFrame)
+        {
+            Deposit(50);
+            Debug.Log("Debug: 50 dollars added to wallet");
+        }
+    }
 
     public void Deposit(int amount)
     {

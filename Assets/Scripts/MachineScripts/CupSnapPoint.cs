@@ -72,6 +72,7 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
 
             Vector3 direction = ejectDirection.normalized;
             rb.AddForce(direction * ejectForce, ForceMode.Impulse);
+            rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
         }
 
         return true;

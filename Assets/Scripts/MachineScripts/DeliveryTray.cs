@@ -30,15 +30,8 @@ public class DeliveryTray : Machine
             if (cupInfo != null)
             {
                 Cup cup = snap.GetComponentInChildren<Cup>();
-                bool cupValid = false;
 
-                // Insert cup validation logic here!! 
-                if (cupInfo.BobaFull && cupInfo.TeaFull && cupInfo.IsSealed)
-                {
-                    cupValid = true;
-                }
-
-                if (cupValid)
+                if (IsCupComplete(cupInfo))
                 {
                     Debug.Log("Sold!");
                     cup.OnCupValiated();
@@ -48,16 +41,19 @@ public class DeliveryTray : Machine
                     ScoreCup(cup.GetComponent<Cup>());
                     //Destroy(cup.gameObject); Cups are now destroyed by NPCs. Kinda like they're drinking it. That makes sense right? 
                     snap.Clear();
-                }
-                else
+                } else
                 {
-                    Debug.Log("Cup rejected");
-                    //Destroy(cup.gameObject);
+                    snap.TryEject();
                 }
             }
 
             yield return new WaitForSeconds(timeBetweenCups);
         }
+    }
+
+    private bool IsCupComplete(ICupInfo cupInfo)
+    {
+        return cupInfo.BobaFull && cupInfo.TeaFull && cupInfo.IsSealed;
     }
 
     private void ScoreCup(Cup m_cup)

@@ -123,6 +123,9 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void OnHold()
     {
+        // Reset rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
+
         // Disable physics while held
         TogglePhysics(false);
         
