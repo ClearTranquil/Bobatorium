@@ -10,6 +10,7 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
     public int BobaFillAmount => Occupant != null ? Occupant.BobaCount : 0;
     public bool BobaFull => Occupant != null ? Occupant.IsBobaFull() : false;
     public bool IsSealed => Occupant != null && Occupant.GetIsSealed();
+    public bool IsSnapped => Occupant.IsSnapped;
 
     [Header("Cup Ejection")]
     [SerializeField] private Transform ejectPoint;
@@ -34,8 +35,8 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
 
     public override void Clear()
     {
+        Occupant.ClearSnapPoint();
         base.Clear();
-        NotifyMachineCupInserted();
     }
 
     public void NotifyMachineCupInserted()

@@ -15,6 +15,8 @@ public class Cup : MonoBehaviour, IInteractable
     private bool canBeGrabbed = true;
     private Rigidbody rb;
     private Collider col;
+    private Vector3 defaultCenterOfMass;
+    [SerializeField] private Vector3 filledCenterOfMassOffset = new Vector3(0f, -0.1f, 0f);
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -49,6 +51,7 @@ public class Cup : MonoBehaviour, IInteractable
     public int BobaCount => bobaCount;
     public bool BobaFull => IsBobaFull();
     public bool IsSealed => GetIsSealed();
+    public bool IsSnapped => currentSnapPoint != null;
 
     private void Awake()
     {
@@ -56,6 +59,7 @@ public class Cup : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        defaultCenterOfMass = rb.centerOfMass;
     }
 
     /*-------------Interaction---------------*/
@@ -205,6 +209,7 @@ public class Cup : MonoBehaviour, IInteractable
         if(bobaCount >= maxBoba)
         {
             UpdateVisuals();
+            UpdateCenterOfMass();
         }
     }
 
@@ -241,9 +246,11 @@ public class Cup : MonoBehaviour, IInteractable
             {
                 teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
                 UpdateVisuals();
+                UpdateCenterOfMass();
             }
             else
             {
+                UpdateCenterOfMass();
                 UpdateVisuals();
             }
         } else
@@ -261,6 +268,17 @@ public class Cup : MonoBehaviour, IInteractable
         else
         {
             return false;
+        }
+    }
+
+    private void UpdateCenterOfMass()
+    {
+        if(BobaFull || TeaFill)
+        {
+            rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
+        } else
+        {
+            rb.centerOfMass = defaultCenterOfMass;
         }
     }
 

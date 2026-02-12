@@ -60,6 +60,11 @@ public class BobaMachine : Machine
         return false;
     }
 
+    public override bool CheckSpecificCupCompletion(Cup cup)
+    {
+        return cup.BobaFull;
+    }
+
     private IEnumerator EmitBoba()
     {
         for (int i = 0; i < bobaToEmit; i++)

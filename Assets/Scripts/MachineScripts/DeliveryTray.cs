@@ -56,6 +56,12 @@ public class DeliveryTray : Machine
         return cupInfo.BobaFull && cupInfo.TeaFull && cupInfo.IsSealed;
     }
 
+    // Delivery tray accepts all cups, finished or not. 
+    public override bool CheckSpecificCupCompletion(Cup cup)
+    {
+        return false;
+    }
+
     private void ScoreCup(Cup m_cup)
     {
         SaleEvents.OnCupSold?.Invoke(m_cup);

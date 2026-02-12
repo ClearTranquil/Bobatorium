@@ -45,6 +45,11 @@ public class TeaMachine : Machine
         return false;
     }
 
+    public override bool CheckSpecificCupCompletion(Cup cup)
+    {
+        return cup.TeaFill;
+    }
+
     public bool IsPouring => isPouring;
     public float PourRate => pourRate;
 

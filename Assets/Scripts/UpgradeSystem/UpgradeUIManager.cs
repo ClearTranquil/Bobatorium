@@ -136,7 +136,7 @@ public class UpgradeUIManager : MonoBehaviour
         }
 
         machine.ApplyUpgrade(state.upgrade);
-        Close();
+        //Close();
     }
 
     private void HandleUpgradeApplied(Machine machine, Upgrade upgrade, int level)

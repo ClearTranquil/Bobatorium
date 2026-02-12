@@ -66,6 +66,11 @@ public class CupSealer : Machine
         return false;
     }
 
+    public override bool CheckSpecificCupCompletion(Cup cup)
+    {
+        return cup.IsSealed;
+    }
+
     public override void TriggerAction()
     {
         base.TriggerAction();

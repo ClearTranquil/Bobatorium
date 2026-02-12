@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 7111427297837032801}
   m_Layer: 6
   m_Name: Cup
-  m_TagString: Untagged
+  m_TagString: Cup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,6 +381,7 @@ MonoBehaviour:
   basePrice: 1
   saleModifiers: []
   heldZDistance: 40
+  filledCenterOfMassOffset: {x: 0, y: -0.1, z: 0}
   maxTeaFill: 1
   teaFillAmount: 0
   maxBoba: 5

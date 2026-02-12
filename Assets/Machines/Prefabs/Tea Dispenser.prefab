@@ -377,6 +377,73 @@ Transform:
   - {fileID: 469743274149855803}
   m_Father: {fileID: 4105672326198925233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2275452147439883804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5273716731424346487}
+  - component: {fileID: 4108372949709869924}
+  - component: {fileID: 699616397550235520}
+  m_Layer: 12
+  m_Name: Cup Intake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5273716731424346487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275452147439883804}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.029999733, y: 0, z: -0.19088936}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2940498192744457937}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4108372949709869924
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275452147439883804}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90842295, y: 1.937027, z: 4.9034834}
+  m_Center: {x: -0.045788527, y: -0.916955, z: -1.9517417}
+--- !u!114 &699616397550235520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275452147439883804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fd94934d7b78d47882920dfffce43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CupIntake
+  intakeMoveSpeed: 8
 --- !u!1 &2407792697904553591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,8 +1132,8 @@ Transform:
   m_GameObject: {fileID: 8336517500321258250}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35000038, z: 0}
-  m_LocalScale: {x: 2.6362705, y: 0.26621, z: 4.3348}
+  m_LocalPosition: {x: 0, y: -0.73, z: 0}
+  m_LocalScale: {x: 2.6362705, y: 1.0536925, z: 4.3348}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8856596639540335258}
@@ -1182,6 +1249,7 @@ Transform:
   - {fileID: 8856596639540335258}
   - {fileID: 1132370560473441877}
   - {fileID: 4105672326198925233}
+  - {fileID: 5273716731424346487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5042832836342984519
@@ -1217,11 +1285,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfaa21b9867c7741bd145c06d7a43ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeaMachine
-  trigger: {fileID: 1606134916205729267}
   availableUpgrades:
   - {fileID: 11400000, guid: e2a96dcc9af59b1439e121562da959d2, type: 2}
   - {fileID: 11400000, guid: 10405254194e5c64da25a8e44a8c35fc, type: 2}
-  hasEjectUpgrade: 0
+  trigger: {fileID: 1606134916205729267}
+  hasEjectUpgrade: 1
   ejectCheckInterval: 0.1
   basePourRate: 0.25
   spout: {fileID: 699001592231627404}

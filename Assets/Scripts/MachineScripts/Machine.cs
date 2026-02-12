@@ -32,7 +32,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     public event System.Action OnMachineTriggered;
 
 
-    /*----------Upgrade Events and Init--------------*/
+    /*================================Upgrade Events and Init================================*/
 
     protected virtual void Awake()
     {
@@ -74,7 +74,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 #endif
 
-    /*--------------Upgrade Queries---------------*/
+    /*================================Upgrade Queries================================*/
     // Tells upgrade UI what level current upgrades are
     public IReadOnlyList<UpgradeState> GetUpgradeStates()
     {
@@ -132,7 +132,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return null;
     }
 
-    /*----------------Triggers--------------*/
+    /*================================Triggers================================*/
 
     // What the machine does when activated by button, lever, or ripcord. Gets overridden by specific machines.
     public virtual void TriggerAction()
@@ -147,7 +147,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         
     }
 
-    /*------------Interactions---------------*/
+    /*================================Player and Cup Interactions================================*/
 
     // These are required for the playercontroller to interact with machines
     public bool CanInteract(PlayerControls player)
@@ -176,23 +176,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         
     }
 
-    public virtual void OnCupInserted()
-    {
-        // TODO: add animations and sfx when a cup is inserted
-    }
-
-    // Checks for any open snapPoints on this machine
-    public CupSnapPoint GetAvailableSnapPoint()
-    {
-        foreach (var snap in cupSnapPoints)
-        {
-            if (!snap.IsOccupied && !snap.IsBusy)
-                return snap;
-        }
-        return null;
-    }
-
-    /*----------Employee Interaction------------*/
+    /*================================Employee Interaction================================*/
 
     // Assigns an employee to this machine
     public void SetActiveEmployee(Employee employee)
@@ -242,6 +226,11 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return false;
     }
 
+    public virtual bool CheckSpecificCupCompletion(Cup cup)
+    {
+        return false;
+    }
+
     // Tells employees if there's work to be done on this machine
     public virtual bool CanEmployeeWork()
     {
@@ -263,7 +252,9 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         yield break;
     }
 
-    /*------------Cup Ejection-----------*/
+    /*================================Cup Interaction================================*/
+
+    /*----------------Cup ejection----------------*/
     // When the upgrade is active, kick off a loop that checks if the cup is ready to be ejected
     protected virtual void OnEnable()
     {
@@ -302,5 +293,22 @@ public abstract class Machine : MonoBehaviour,  IInteractable
 
             yield return wait;
         }
+    }
+
+    /*----------------Cup Snapping----------------*/
+    public virtual void OnCupInserted()
+    {
+        // TODO: add animations and sfx when a cup is inserted
+    }
+
+    // Checks for any open snapPoints on this machine
+    public CupSnapPoint GetAvailableSnapPoint()
+    {
+        foreach (var snap in cupSnapPoints)
+        {
+            if (!snap.IsOccupied && !snap.IsBusy)
+                return snap;
+        }
+        return null;
     }
 }

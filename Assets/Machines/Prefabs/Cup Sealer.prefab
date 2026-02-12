@@ -172,8 +172,8 @@ Transform:
   m_GameObject: {fileID: 608522376054416601}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35000038, z: 0}
-  m_LocalScale: {x: 2.6362705, y: 0.26621, z: 4.3348}
+  m_LocalPosition: {x: 0, y: -0.78, z: 0}
+  m_LocalScale: {x: 2.6362705, y: 0.9391622, z: 4.3348}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6009140628261873636}
@@ -587,6 +587,7 @@ Transform:
   - {fileID: 6009140628261873636}
   - {fileID: 6761808198274655117}
   - {fileID: 1013465008331171361}
+  - {fileID: 551123563939504966}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7948750313717342946
@@ -622,12 +623,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362cf518d63cbdb4a8e81be823f152b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CupSealer
-  trigger: {fileID: 5724551919870307160}
   availableUpgrades:
   - {fileID: 11400000, guid: 008f15f3ee28c9842be97dfa03543476, type: 2}
   - {fileID: 11400000, guid: 67ad0b6b6fca7a444ba6bb6bf2ba5c3c, type: 2}
   - {fileID: 11400000, guid: 10405254194e5c64da25a8e44a8c35fc, type: 2}
-  hasEjectUpgrade: 0
+  trigger: {fileID: 5724551919870307160}
+  hasEjectUpgrade: 1
   ejectCheckInterval: 0.1
   baseClawDuration: 1
   baseRotationDuration: 1.5
@@ -974,6 +975,73 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4292361685442252603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551123563939504966}
+  - component: {fileID: 2923338321157847816}
+  - component: {fileID: 5094793188707053802}
+  m_Layer: 12
+  m_Name: Cup Intake (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551123563939504966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292361685442252603}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.19088936}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8935905591170097521}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2923338321157847816
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292361685442252603}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90842295, y: 1.937027, z: 4.9034834}
+  m_Center: {x: -0.045788527, y: -0.916955, z: -1.9517417}
+--- !u!114 &5094793188707053802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4292361685442252603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fd94934d7b78d47882920dfffce43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CupIntake
+  intakeMoveSpeed: 8
 --- !u!1 &4508044453503141099
 GameObject:
   m_ObjectHideFlags: 0

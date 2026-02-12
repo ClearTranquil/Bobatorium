@@ -8,5 +8,5 @@ public interface ICupInfo
     int BobaFillAmount { get; }
     bool BobaFull { get; }
     bool IsSealed {  get; }
-
+    bool IsSnapped { get; }
 }
