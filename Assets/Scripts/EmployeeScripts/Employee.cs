@@ -177,17 +177,14 @@ public class Employee : MonoBehaviour, IInteractable
                 yield return null;
                 continue;
             }
-            
-            if (!CurrentMachine.CanEmployeeWork())
+
+            if (CurrentMachine.CanEmployeeWork())
             {
-                CurrentMachine.StopEmployeeWork();
-                yield return null;
-                continue;
+                CurrentMachine.ActivateByEmployee(GetEffectiveWorkSpeed());
             }
 
-            CurrentMachine.ActivateByEmployee(GetEffectiveWorkSpeed());
-
             yield return new WaitForSeconds(reactionDelay);
+
         }
     }
 
@@ -198,6 +195,7 @@ public class Employee : MonoBehaviour, IInteractable
 
     public void OnCupCompleted()
     {
+        Debug.Log("Cup complete");
         cupsCompleted++;
 
         if (cupsCompleted < cupsUntilCheck)

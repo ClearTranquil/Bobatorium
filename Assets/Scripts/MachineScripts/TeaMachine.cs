@@ -86,6 +86,7 @@ public class TeaMachine : Machine
 
         employee.OnCupCompleted();
         lever.StopOperating();
+        StopEmployeeWork();
     }
 
     private bool HasAnyIncompleteCup()

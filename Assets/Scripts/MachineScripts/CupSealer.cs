@@ -24,7 +24,7 @@ public class CupSealer : Machine
 
     [Header("Employee interaction")]
     [SerializeField] private float timeBetweenEmployeeTrigger;
-
+    private bool isBeingWorked = false;
     private bool isProcessing = false;
 
     protected override void Awake()
@@ -323,6 +323,11 @@ public class CupSealer : Machine
         isBeingWorked = false;
     }
 
+    public override bool CanEmployeeWork()
+    {
+        return HasAnyCup() && !CheckCupCompletion() && !isBeingWorked;
+    }
+
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
         MachineRipcord ripcord = trigger as MachineRipcord;
@@ -333,7 +338,7 @@ public class CupSealer : Machine
         {
             if (CanEmployeeWork())
             {
-                StartEmployeeWork();
+                isBeingWorked = true;
 
                 // Chance to fail based on fatigue
                 int fatigue = employee.GetFatigueLevel();
@@ -352,39 +357,21 @@ public class CupSealer : Machine
                 if (success)
                 {
                     ripcord.RemoteActivate(1f);
-
-                    // Wait until cup is fully sealed
-                    while (!CheckCupCompletion())
-                        yield return null;
-
                     employee.OnCupCompleted();
+                    StopEmployeeWork();
                 }
                 else
                 {
                     // Failed pull animation + short delay
                     yield return ripcord.PlayFailedPullAnimation();
                     yield return new WaitForSeconds(2f);
+                    isBeingWorked = false;
                 }
-
-                StopEmployeeWork(); // allow next cup to be worked
             }
 
-            yield return null; // keep checking for new cups
+            yield return null; 
         }
 
         StopEmployeeWork();
-    }
-
-    /*----- Machine-side flag logic -----*/
-    private bool isBeingWorked = false;
-
-    public override bool CanEmployeeWork()
-    {
-        return HasAnyCup() && !CheckCupCompletion() && !isBeingWorked;
-    }
-
-    public void StartEmployeeWork()
-    {
-        isBeingWorked = true;
     }
 }

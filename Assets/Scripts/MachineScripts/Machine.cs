@@ -251,7 +251,8 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     // Reset's employee's current work loop, then kicks off a new work loop
     public void ActivateByEmployee(float workSpeed)
     {
-        StopEmployeeWork();
+        if (employeeWorkRoutine != null)
+            return;
 
         employeeWorkRoutine = StartCoroutine(EmployeeWorkLoop(activeEmployee));
     }

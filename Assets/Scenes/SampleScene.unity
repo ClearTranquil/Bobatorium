@@ -802,6 +802,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: fatigueLevel
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.1986854

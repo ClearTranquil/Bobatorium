@@ -136,11 +136,8 @@ public class BobaMachine : Machine
             }
         }
 
-        if (CheckCupCompletion() && employee.CurrentMachine == this)
-        {
-            employee.OnCupCompleted();
-        }
-
+        employee.OnCupCompleted();
         StopEmployeeWork();
+        yield break;
     }
 }
