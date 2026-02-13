@@ -320,9 +320,9 @@ public class CupSealer : Machine
     }
 
     /*----------------Employee Interaction-------------------*/
-    public override void OnCupInserted()
+    public override void OnCupInserted(Cup cup)
     {
-        base.OnCupInserted();
+        base.OnCupInserted(cup);
 
         // New cup inserted, allow employee to work
         isBeingWorked = false;

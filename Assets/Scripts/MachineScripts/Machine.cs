@@ -296,8 +296,10 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 
     /*----------------Cup Snapping----------------*/
-    public virtual void OnCupInserted()
+    public virtual void OnCupInserted(Cup cup)
     {
+        if (!cup) return;
+
         // TODO: add animations and sfx when a cup is inserted
     }
 

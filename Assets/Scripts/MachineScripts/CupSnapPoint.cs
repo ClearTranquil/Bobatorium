@@ -43,7 +43,7 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
     {
         Machine machine = GetComponentInParent<Machine>();
         if (machine != null)
-            machine.OnCupInserted();
+            machine.OnCupInserted(Occupant);
     }
 
     /*----------Cup Ejection----------*/
