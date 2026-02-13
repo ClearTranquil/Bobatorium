@@ -26,29 +26,65 @@ public class CupIntake : MonoBehaviour
         return true;
     }
 
-    public IEnumerator IntakeCup(Cup m_cup)
+    public IEnumerator IntakeCup(Cup cup)
     {
         CupSnapPoint snap = parentMachine.GetAvailableSnapPoint();
         if (!snap) yield break;
 
         snap.IsBusy = true;
-        m_cup.TogglePhysics(false);
+        cup.TogglePhysics(false);
+
         Transform target = snap.transform;
 
-        while (Vector3.Distance(m_cup.transform.position, target.position) > 0.01f)
+        // These are here to provide an exit case if the cup cant snap
+        float maxSnapDistance = 5f; 
+        float maxSnapTime = 2f;
+
+        float elapsed = 0f;
+
+        while (true)
         {
-            m_cup.transform.position = Vector3.MoveTowards(m_cup.transform.position, target.position, intakeMoveSpeed * Time.deltaTime);
-            m_cup.transform.rotation = Quaternion.Slerp(m_cup.transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
+            if (!cup || !snap)
+                break;
+
+            if (cup.IsSnapped)
+                break;
+
+            float distance = Vector3.Distance(cup.transform.position, target.position);
+
+            // Success condition
+            if (distance <= 0.01f)
+                break;
+
+            // Abort if cup gets too far
+            if (distance > maxSnapDistance)
+            {
+                Debug.Log("Intake aborted: cup too far");
+                break;
+            }
+
+            // Abort if too much time has passed
+            elapsed += Time.deltaTime;
+            if (elapsed > maxSnapTime)
+            {
+                Debug.Log("Intake aborted: timeout");
+                break;
+            }
+
+            cup.transform.position = Vector3.MoveTowards(cup.transform.position, target.position, intakeMoveSpeed * Time.deltaTime);
+            cup.transform.rotation = Quaternion.Slerp(cup.transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
+
             yield return null;
         }
 
-        if (snap.TrySnap(m_cup))
+        // Final snap attempt
+        if (!cup.IsSnapped && snap.TrySnap(cup))
         {
-            // Let the snapPoint handle it
+            // Let the snap point sort it out 
         }
         else
         {
-            m_cup.TogglePhysics(true);
+            cup.TogglePhysics(true);
         }
 
         snap.IsBusy = false;
