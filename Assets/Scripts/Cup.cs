@@ -127,7 +127,7 @@ public class Cup : MonoBehaviour, IInteractable
         Ray ray = mainCam.ScreenPointToRay(mousePos);
         heldSnapPoint = FindBestSnapPoint(ray);
 
-        if (heldSnapPoint)
+        if (heldSnapPoint && heldSnapPoint.gameObject.activeSelf)
             desiredPosition = heldSnapPoint.transform.position;
 
         // Smoothly move towards the desired position, cursor or snap point

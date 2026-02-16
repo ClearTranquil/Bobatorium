@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BobaMachine : Machine
 {
-    [SerializeField] private Transform emitter;
+    [SerializeField] private Transform[] emitters;
+    [SerializeField] private GameObject slotUpgrade1;
+    [SerializeField] private GameObject slotUpgrade2;
 
     private bool canEmit = true;
     [SerializeField] private float timeBetweenEmit = .1f;
@@ -69,22 +71,28 @@ public class BobaMachine : Machine
     {
         for (int i = 0; i < bobaToEmit; i++)
         {
-            if (bobaPool.Count == 0) break;
-
-            GameObject boba = bobaPool.Dequeue();
-            boba.transform.position = emitter.position;
-            boba.transform.rotation = Quaternion.identity;
-
-            // Reset boba's physics
-            Rigidbody rb = boba.GetComponent<Rigidbody>();
-            if (rb)
+            foreach (Transform emitter in emitters)
             {
-                rb.angularVelocity = Vector3.zero;
-                rb.linearVelocity = Vector3.zero;
-            }
+                if (!emitter.gameObject.activeSelf)
+                    continue;
 
-            boba.SetActive(true);
-            bobaPool.Enqueue(boba);
+                if (bobaPool.Count == 0)
+                    yield break;
+
+                GameObject boba = bobaPool.Dequeue();
+
+                boba.transform.position = emitter.position;
+                boba.transform.rotation = Quaternion.identity;
+
+                Rigidbody rb = boba.GetComponent<Rigidbody>();
+                if (rb)
+                {
+                    rb.angularVelocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
+                }
+
+                boba.SetActive(true);
+            }
 
             yield return new WaitForSeconds(timeBetweenEmit);
         }
@@ -115,7 +123,34 @@ public class BobaMachine : Machine
             return true;
         }
 
+        if (m_upgrade.upgradeID == "AddCupSlot")
+        {
+            Debug.Log($"Upgrade event received. newLevel={m_newLevel}, stackValues={string.Join(",", m_upgrade.stackValues)}");
+            ActivateEmitter(Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]));
+            Debug.Log($"{name} bobaToEmit updated to {bobaToEmit}");
+            return true;
+        }
+
         return false;
+    }
+
+    private void ActivateEmitter(int upgradeLevel)
+    {
+        switch (upgradeLevel)
+        {
+            case 1: 
+                slotUpgrade1.SetActive(true);
+                emitters[1].gameObject.SetActive(true);
+                cupSnapPoints[1].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 1");
+                return;
+            case 2: 
+                slotUpgrade2.SetActive(true);
+                emitters[2].gameObject.SetActive(true);
+                cupSnapPoints[2].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 2");
+                return;
+        }
     }
 
     /*----------Employee Interaction---------*/

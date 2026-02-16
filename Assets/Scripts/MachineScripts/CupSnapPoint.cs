@@ -49,34 +49,33 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
     /*----------Cup Ejection----------*/
     public bool TryEject()
     {
-        Debug.Log("Trying to eject cup");
-        
         if (!Occupant || IsBusy)
             return false;
 
         Cup cup = Occupant;
 
-        // Clear snapPoint, clear parent, enable physics
+        // Clear snapPoint and detach
         Clear();
         cup.transform.SetParent(null);
         cup.TogglePhysics(true);
 
-        // Reset the cup's velocity, just to be safe
         Rigidbody rb = cup.GetRb();
+        if (!rb) return false;
 
-        if (rb)
-        {
-            rb.Sleep();
-            rb.WakeUp();
+        rb.Sleep();
+        rb.WakeUp();
 
-            rb.transform.position = ejectPoint.position;
+        // Set cup to ejectPoint position
+        rb.transform.position = ejectPoint.position;
 
-            Vector3 direction = ejectDirection.normalized;
-            rb.AddForce(direction * ejectForce, ForceMode.Impulse);
-            rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
-        }
+        // Force cup to be upright and aligned with machine forward
+        Machine parentMachine = GetComponentInParent<Machine>();
+        rb.transform.rotation = Quaternion.LookRotation(parentMachine.transform.forward, Vector3.up);
+
+        // Apply impulse in machine forward direction
+        rb.AddForce(parentMachine.transform.forward * ejectForce, ForceMode.Impulse);
 
         return true;
     }
-    
+
 }

@@ -7,9 +7,11 @@ public class TeaMachine : Machine
     [Header("Pour Settings")]
     [SerializeField] private float basePourRate = 0.25f;
     private float pourRate = .25f;
-    [SerializeField] private Transform spout;
+    [SerializeField] private Transform[] spouts;
 
     private bool isPouring;
+    [SerializeField] private GameObject slotUpgrade1;
+    [SerializeField] private GameObject slotUpgrade2;
 
     protected override void Awake()
     {
@@ -72,7 +74,33 @@ public class TeaMachine : Machine
             return true;
         }
 
+        if (m_upgrade.upgradeID == "AddCupSlot")
+        {
+            Debug.Log($"Upgrade event received. newLevel={m_newLevel}, stackValues={string.Join(",", m_upgrade.stackValues)}");
+            ActivateSpout(Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]));
+            return true;
+        }
+
         return false;
+    }
+
+    private void ActivateSpout(int upgradeLevel)
+    {
+        switch (upgradeLevel)
+        {
+            case 1:
+                slotUpgrade1.SetActive(true);
+                spouts[1].gameObject.SetActive(true);
+                cupSnapPoints[1].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 1");
+                return;
+            case 2:
+                slotUpgrade2.SetActive(true);
+                spouts[2].gameObject.SetActive(true);
+                cupSnapPoints[2].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 2");
+                return;
+        }
     }
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)

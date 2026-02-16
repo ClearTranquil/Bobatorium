@@ -1480,7 +1480,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.050309535
+      value: 0.021781849
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
       propertyPath: m_LocalScale.y
@@ -1492,7 +1492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.27
+      value: 20.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1812,7 +1812,7 @@ Transform:
   m_GameObject: {fileID: 1139732715}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.6, y: 15.95583, z: 29.899994}
+  m_LocalPosition: {x: -6.6, y: 15.6, z: 29.899994}
   m_LocalScale: {x: 44.104412, y: 54.40572, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1933,7 +1933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8935905591170097521, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.35
+      value: 16.09
       objectReference: {fileID: 0}
     - target: {fileID: 8935905591170097521, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2162,7 +2162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1580005882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2756,13 +2756,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
-    - target: {fileID: 595119168228571322, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
-      propertyPath: hasEjectUpgrade
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2940498192744457937, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.35
+      value: 10.02
       objectReference: {fileID: 0}
     - target: {fileID: 2940498192744457937, guid: b240b433a45d421429f181a6a57f59c3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2819,7 +2815,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 772452983688327612, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6400001
+      value: -0.81
       objectReference: {fileID: 0}
     - target: {fileID: 772452983688327612, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2857,13 +2853,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2419691487135635300, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3953797676247165191, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
       propertyPath: m_Name
       value: Boba Dispenser
       objectReference: {fileID: 0}
-    - target: {fileID: 7771216306209374641, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
-      propertyPath: hasEjectUpgrade
-      value: 1
+    - target: {fileID: 7818666263945771750, guid: b5e134c3cfdeb414bbc26629e3470d34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2921,6 +2921,14 @@ PrefabInstance:
     - target: {fileID: 1281604165638230741, guid: 996334f11989bb94b8ac7a17428d13df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628653177591725672, guid: 996334f11989bb94b8ac7a17428d13df, type: 3}
+      propertyPath: m_Size.y
+      value: 2.7282228
+      objectReference: {fileID: 0}
+    - target: {fileID: 7628653177591725672, guid: 996334f11989bb94b8ac7a17428d13df, type: 3}
+      propertyPath: m_Center.y
+      value: -0.23159266
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3114,13 +3122,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2076410601}
     m_Modifications:
+    - target: {fileID: 1922457819857885397, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
+      propertyPath: hasEjectUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7785758168431120861, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
       propertyPath: m_Name
       value: Customer Tray
       objectReference: {fileID: 0}
     - target: {fileID: 8603870619020045296, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.279999
+      value: 22.019999
       objectReference: {fileID: 0}
     - target: {fileID: 8603870619020045296, guid: 33fcb14e1cb22614b882cd2fdfec0b35, type: 3}
       propertyPath: m_LocalPosition.y
