@@ -985,7 +985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95fd94934d7b78d47882920dfffce43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CupIntake
-  intakeMoveSpeed: 8
+  intakeMoveSpeed: 15
 --- !u!1 &3157022384270081673
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,7 +2117,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1007625365690225691, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.2599988
+      value: -2.439999
       objectReference: {fileID: 0}
     - target: {fileID: 2097889656157513034, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2160,12 +2160,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
+      propertyPath: ejectForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectPoint
       value: 
       objectReference: {fileID: 53687783543761885}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectDirection.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2899637105873264896, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_Name
@@ -2208,7 +2212,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1007625365690225691, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.2599988
+      value: -2.44
       objectReference: {fileID: 0}
     - target: {fileID: 2097889656157513034, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2251,12 +2255,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
+      propertyPath: ejectForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectPoint
       value: 
       objectReference: {fileID: 4312517767285439035}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectDirection.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2899637105873264896, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_Name
@@ -2303,7 +2311,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1007625365690225691, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.26
+      value: -2.4400003
       objectReference: {fileID: 0}
     - target: {fileID: 2097889656157513034, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2346,12 +2354,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
+      propertyPath: ejectForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectPoint
       value: 
       objectReference: {fileID: 9080402897586314970}
     - target: {fileID: 2433170066026489804, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: ejectDirection.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2899637105873264896, guid: 460a7810bfe710a469d1017de04fe4e0, type: 3}
       propertyPath: m_Name

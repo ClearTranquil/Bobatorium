@@ -127,7 +127,6 @@ public class BobaMachine : Machine
         {
             Debug.Log($"Upgrade event received. newLevel={m_newLevel}, stackValues={string.Join(",", m_upgrade.stackValues)}");
             ActivateEmitter(Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]));
-            Debug.Log($"{name} bobaToEmit updated to {bobaToEmit}");
             return true;
         }
 

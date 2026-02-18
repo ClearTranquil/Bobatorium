@@ -3,9 +3,12 @@ using System.Collections;
 
 public class CupSealer : Machine
 {
+    [SerializeField] private GameObject slotUpgrade1;
+    [SerializeField] private GameObject slotUpgrade2;
+    
     [Header("Base states")]
-    private float baseClawSpeedMult = 1f;
-    private float baseRotationSpeedMult = 1f;
+    //private float baseClawSpeedMult = 1f;
+    //private float baseRotationSpeedMult = 1f;
     private float clawSpeedMult = 1f;
     private float rotationSpeedMult = 1f;
     [SerializeField] private float baseClawDuration = .5f;
@@ -17,10 +20,10 @@ public class CupSealer : Machine
     [SerializeField] private float armGripDistance = 0.1f;
 
     [Header("Claws")]
-    [SerializeField] private Transform leftArm;
-    [SerializeField] private Transform rightArm;
-    private Vector3 leftArmRestPos;
-    private Vector3 rightArmRestPos;
+    [SerializeField] private Transform[] leftArms;
+    [SerializeField] private Transform[] rightArms;
+    private Vector3[] leftRestPositions;
+    private Vector3[] rightRestPositions;
 
     [Header("Employee interaction")]
     [SerializeField] private float timeBetweenEmployeeTrigger;
@@ -31,11 +34,14 @@ public class CupSealer : Machine
     {
         base.Awake();
 
-        clawSpeedMult = baseClawSpeedMult;
-        rotationSpeedMult = baseRotationSpeedMult;
+        leftRestPositions = new Vector3[leftArms.Length];
+        rightRestPositions = new Vector3[rightArms.Length];
 
-        leftArmRestPos = leftArm.localPosition;
-        rightArmRestPos = rightArm.localPosition;
+        for (int i = 0; i < leftArms.Length; i++)
+            leftRestPositions[i] = leftArms[i].localPosition;
+
+        for (int i = 0; i < rightArms.Length; i++)
+            rightRestPositions[i] = rightArms[i].localPosition;
     }
 
     protected override bool HandleUpgradeEvent(Machine m_machine, Upgrade m_upgrade, int m_newLevel)
@@ -47,8 +53,30 @@ public class CupSealer : Machine
 
         if (m_upgrade.upgradeID == "RotSpeed")
             rotationSpeedMult = m_upgrade.stackValues[m_newLevel - 1];
-
+        
+        if (m_upgrade.upgradeID == "AddCupSlot")
+        {
+            ActivateSealer(Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]));
+            return true;
+        }
         return true;
+    }
+
+    private void ActivateSealer(int upgradeLevel)
+    {
+        switch (upgradeLevel)
+        {
+            case 1:
+                slotUpgrade1.SetActive(true);
+                cupSnapPoints[1].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 1");
+                return;
+            case 2:
+                slotUpgrade2.SetActive(true);
+                cupSnapPoints[2].gameObject.SetActive(true);
+                Debug.Log("Activating cup slot 2");
+                return;
+        }
     }
 
     public override bool CheckCupCompletion()
@@ -102,7 +130,7 @@ public class CupSealer : Machine
         Cup cup = snap.Occupant;
         Transform snapTransform = snap.transform;
 
-        if(leftArm && rightArm)
+        if (leftArms != null && rightArms != null && leftArms.Length > 0 && rightArms.Length > 0)
             yield return ClampCup(snapTransform, cup);
 
         yield return LiftCup(snapTransform);
@@ -113,7 +141,7 @@ public class CupSealer : Machine
 
         yield return LowerCup(snapTransform);
 
-        if (leftArm && rightArm)
+        if (leftArms != null && rightArms != null && leftArms.Length > 0 && rightArms.Length > 0)
             yield return ReleaseCup(snapTransform, cup);
 
         snap.IsBusy = false;
@@ -134,86 +162,125 @@ public class CupSealer : Machine
     }
 
     /*----------------------Coroutine Steps----------------------*/
-
+    // TO DO: Clean all this mess up
     private IEnumerator ClampCup(Transform snapTransform, Cup cup)
     {
-        // Lower the claw arms to meet the cup
-        
-        float downDuration = (baseClawDuration / 2) / clawSpeedMult;
-        Vector3 leftDownTarget = leftArmRestPos + Vector3.down * armLowerDistance;
-        Vector3 rightDownTarget = rightArmRestPos + Vector3.down * armLowerDistance;
-
-        Vector3 leftStart = leftArm.localPosition;
-        Vector3 rightStart = rightArm.localPosition;
-
+        // Lower the claw arms
+        float downDuration = (baseClawDuration / 2f) / clawSpeedMult;
         float elapsed = 0f;
+
+        Vector3[] leftStart = new Vector3[leftArms.Length];
+        Vector3[] rightStart = new Vector3[rightArms.Length];
+        Vector3[] leftDownTarget = new Vector3[leftArms.Length];
+        Vector3[] rightDownTarget = new Vector3[rightArms.Length];
+
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+
+            leftDownTarget[i] = leftStart[i] + Vector3.down * armLowerDistance;
+            rightDownTarget[i] = rightStart[i] + Vector3.down * armLowerDistance;
+        }
+
         while (elapsed < downDuration)
         {
             float t = elapsed / downDuration;
-            leftArm.localPosition = Vector3.Lerp(leftStart, leftDownTarget, t);
-            rightArm.localPosition = Vector3.Lerp(rightStart, rightDownTarget, t);
+            for (int i = 0; i < leftArms.Length; i++)
+            {
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftDownTarget[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightDownTarget[i], t);
+            }
             elapsed += Time.deltaTime;
             yield return null;
         }
-        leftArm.localPosition = leftDownTarget;
-        rightArm.localPosition = rightDownTarget;
 
-        // Move the claw arms inwards to grip the cup
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftArms[i].localPosition = leftDownTarget[i];
+            rightArms[i].localPosition = rightDownTarget[i];
+        }
 
+        // Move the claw arms inward to grip
         float inwardDuration = baseClawDuration / clawSpeedMult;
-        Vector3 leftGripTarget = leftDownTarget + Vector3.right * armGripDistance;
-        Vector3 rightGripTarget = rightDownTarget + Vector3.left * armGripDistance;
-
-        leftStart = leftArm.localPosition;
-        rightStart = rightArm.localPosition;
         elapsed = 0f;
+
+        Vector3[] leftGripTarget = new Vector3[leftArms.Length];
+        Vector3[] rightGripTarget = new Vector3[rightArms.Length];
+
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftGripTarget[i] = leftDownTarget[i] + Vector3.right * armGripDistance;
+            rightGripTarget[i] = rightDownTarget[i] + Vector3.left * armGripDistance;
+
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+        }
 
         while (elapsed < inwardDuration)
         {
             float t = elapsed / inwardDuration;
-            leftArm.localPosition = Vector3.Lerp(leftStart, leftGripTarget, t);
-            rightArm.localPosition = Vector3.Lerp(rightStart, rightGripTarget, t);
+            for (int i = 0; i < leftArms.Length; i++)
+            {
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftGripTarget[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightGripTarget[i], t);
+            }
             elapsed += Time.deltaTime;
             yield return null;
         }
-        leftArm.localPosition = leftGripTarget;
-        rightArm.localPosition = rightGripTarget;
+
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftArms[i].localPosition = leftGripTarget[i];
+            rightArms[i].localPosition = rightGripTarget[i];
+        }
     }
 
     private IEnumerator LiftCup(Transform snapTransform)
     {
-        // Once cup is gripped, move cup upwards
-
         float duration = baseClawDuration / clawSpeedMult;
         float elapsed = 0f;
 
         Vector3 cupStart = snapTransform.position;
         Vector3 cupTarget = cupStart + Vector3.up * liftHeight;
 
-        Vector3 leftStart = leftArm.localPosition;
-        Vector3 rightStart = rightArm.localPosition;
+        Vector3[] leftStart = new Vector3[leftArms.Length];
+        Vector3[] rightStart = new Vector3[rightArms.Length];
 
-        Vector3 leftTarget = leftStart + Vector3.up * liftHeight;
-        Vector3 rightTarget = rightStart + Vector3.up * liftHeight;
+        Vector3[] leftTarget = new Vector3[leftArms.Length];
+        Vector3[] rightTarget = new Vector3[rightArms.Length];
+
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+
+            leftTarget[i] = leftStart[i] + Vector3.up * liftHeight;
+            rightTarget[i] = rightStart[i] + Vector3.up * liftHeight;
+        }
 
         while (elapsed < duration)
         {
             float t = elapsed / duration;
+
             snapTransform.position = Vector3.Lerp(cupStart, cupTarget, t);
-            if (leftArm && rightArm)
+
+            for (int i = 0; i < leftArms.Length; i++)
             {
-                leftArm.localPosition = Vector3.Lerp(leftStart, leftTarget, t);
-                rightArm.localPosition = Vector3.Lerp(rightStart, rightTarget, t);
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftTarget[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightTarget[i], t);
             }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         snapTransform.position = cupTarget;
-        if (leftArm && rightArm)
+
+        for (int i = 0; i < leftArms.Length; i++)
         {
-            leftArm.localPosition = leftTarget;
-            rightArm.localPosition = rightTarget;
+            leftArms[i].localPosition = leftTarget[i];
+            rightArms[i].localPosition = rightTarget[i];
         }
     }
 
@@ -234,88 +301,122 @@ public class CupSealer : Machine
 
     private IEnumerator LowerCup(Transform snapTransform)
     {
-        // Once cup is sealed, put it back down
-
         float duration = baseClawDuration / clawSpeedMult;
         float elapsed = 0f;
 
         Vector3 cupStart = snapTransform.position;
         Vector3 cupTarget = cupStart - Vector3.up * liftHeight;
 
-        Vector3 leftStart = leftArm.localPosition;
-        Vector3 rightStart = rightArm.localPosition;
+        Vector3[] leftStart = new Vector3[leftArms.Length];
+        Vector3[] rightStart = new Vector3[rightArms.Length];
 
-        Vector3 leftTarget = leftStart - Vector3.up * liftHeight;
-        Vector3 rightTarget = rightStart - Vector3.up * liftHeight;
+        Vector3[] leftTarget = new Vector3[leftArms.Length];
+        Vector3[] rightTarget = new Vector3[rightArms.Length];
+
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+
+            leftTarget[i] = leftStart[i] - Vector3.up * liftHeight;
+            rightTarget[i] = rightStart[i] - Vector3.up * liftHeight;
+        }
 
         while (elapsed < duration)
         {
             float t = elapsed / duration;
+
             snapTransform.position = Vector3.Lerp(cupStart, cupTarget, t);
-            if (leftArm && rightArm)
+
+            for (int i = 0; i < leftArms.Length; i++)
             {
-                leftArm.localPosition = Vector3.Lerp(leftStart, leftTarget, t);
-                rightArm.localPosition = Vector3.Lerp(rightStart, rightTarget, t);
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftTarget[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightTarget[i], t);
             }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         snapTransform.position = cupTarget;
-        if (leftArm && rightArm)
+
+        for (int i = 0; i < leftArms.Length; i++)
         {
-            leftArm.localPosition = leftTarget;
-            rightArm.localPosition = rightTarget;
+            leftArms[i].localPosition = leftTarget[i];
+            rightArms[i].localPosition = rightTarget[i];
         }
     }
 
     private IEnumerator ReleaseCup(Transform snapTransform, Cup cup)
     {
-        // Move arms apart to "unclamp" the cup
+        float outwardDuration = (baseClawDuration / 2f) / clawSpeedMult;
 
-        float outwardDuration = (baseClawDuration / 2) / clawSpeedMult;
+        Vector3[] leftStart = new Vector3[leftArms.Length];
+        Vector3[] rightStart = new Vector3[rightArms.Length];
 
-        Vector3 leftOutTarget = leftArm.localPosition + Vector3.left * armGripDistance;
-        Vector3 rightOutTarget = rightArm.localPosition + Vector3.right * armGripDistance;
+        Vector3[] leftOutTarget = new Vector3[leftArms.Length];
+        Vector3[] rightOutTarget = new Vector3[rightArms.Length];
 
-        Vector3 leftStart = leftArm.localPosition;
-        Vector3 rightStart = rightArm.localPosition;
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+
+            leftOutTarget[i] = leftStart[i] + Vector3.left * armGripDistance;
+            rightOutTarget[i] = rightStart[i] + Vector3.right * armGripDistance;
+        }
 
         float elapsed = 0f;
         while (elapsed < outwardDuration)
         {
             float t = elapsed / outwardDuration;
-            leftArm.localPosition = Vector3.Lerp(leftStart, leftOutTarget, t);
-            rightArm.localPosition = Vector3.Lerp(rightStart, rightOutTarget, t);
+
+            for (int i = 0; i < leftArms.Length; i++)
+            {
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftOutTarget[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightOutTarget[i], t);
+            }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        leftArm.localPosition = leftOutTarget;
-        rightArm.localPosition = rightOutTarget;
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftArms[i].localPosition = leftOutTarget[i];
+            rightArms[i].localPosition = rightOutTarget[i];
+        }
 
-        // Allow cup to be grabbed at this point
         cup.SetGrabEnabled(true);
-
-        // Move arms back to their rest position
 
         float upDuration = baseClawDuration / clawSpeedMult;
 
-        leftStart = leftArm.localPosition;
-        rightStart = rightArm.localPosition;
-        elapsed = 0f;
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftStart[i] = leftArms[i].localPosition;
+            rightStart[i] = rightArms[i].localPosition;
+        }
 
+        elapsed = 0f;
         while (elapsed < upDuration)
         {
             float t = elapsed / upDuration;
-            leftArm.localPosition = Vector3.Lerp(leftStart, leftArmRestPos, t);
-            rightArm.localPosition = Vector3.Lerp(rightStart, rightArmRestPos, t);
+
+            for (int i = 0; i < leftArms.Length; i++)
+            {
+                leftArms[i].localPosition = Vector3.Lerp(leftStart[i], leftRestPositions[i], t);
+                rightArms[i].localPosition = Vector3.Lerp(rightStart[i], rightRestPositions[i], t);
+            }
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        leftArm.localPosition = leftArmRestPos;
-        rightArm.localPosition = rightArmRestPos;
+        for (int i = 0; i < leftArms.Length; i++)
+        {
+            leftArms[i].localPosition = leftRestPositions[i];
+            rightArms[i].localPosition = rightRestPositions[i];
+        }
 
     }
 

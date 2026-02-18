@@ -208,16 +208,23 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         trigger?.StopOperating();
     }
 
-    // Scans all cupSnapPoints to see if they're occupied
+    // Scans all active cupSnapPoints to see if they're occupied
     public bool HasAnyCup()
     {
-        foreach(var snap in cupSnapPoints)
+        bool hasActiveSlot = false;
+
+        foreach (var snap in cupSnapPoints)
         {
-            if (snap.IsOccupied)
-                return true;
+            if (!snap.gameObject.activeSelf)
+                continue;
+
+            hasActiveSlot = true;
+
+            if (!snap.IsOccupied)
+                return false;
         }
 
-        return false;
+        return hasActiveSlot;
     }
 
     // Each machine has different cup completion checks. Ex: BobaMachine checks if BobaFull == true
@@ -280,11 +287,11 @@ public abstract class Machine : MonoBehaviour,  IInteractable
 
         while (true)
         {
-            foreach (var snap in cupSnapPoints)
+            if (CheckCupCompletion())
             {
-                if (snap.Occupant != null && snap.CanReleaseCup())
+                foreach (var snap in cupSnapPoints)
                 {
-                    if (CheckCupCompletion())
+                    if (snap.Occupant != null && snap.CanReleaseCup())
                     {
                         snap.TryEject();
                     }

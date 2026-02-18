@@ -34,17 +34,24 @@ public class TeaMachine : Machine
 
     public override bool CheckCupCompletion()
     {
+        bool hasActiveCup = false;
+
         foreach (var snap in cupSnapPoints)
         {
+            if (!snap.gameObject.activeSelf)
+                continue;
+
             ICupInfo cup = snap;
-            if (cup != null)
-            {             
-                if (cup.TeaFull)
-                    return true;
-            }
+            if (cup == null)
+                return false;
+
+            hasActiveCup = true;
+
+            if (!cup.TeaFull)
+                return false;
         }
 
-        return false;
+        return hasActiveCup;
     }
 
     public override bool CheckSpecificCupCompletion(Cup cup)
