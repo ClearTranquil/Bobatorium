@@ -34,6 +34,11 @@ public class Employee : MonoBehaviour, IInteractable
     [SerializeField] private SpriteRenderer faceRenderer;
     [SerializeField] private Sprite[] fatigueFaceSprites;
 
+    [Header("Visual Rotation")]
+    [SerializeField] private Transform modelTransform;
+    [SerializeField] private float rotationSpeed = 360f;
+    private Quaternion targetModelRotation;
+
     // Each employee has random fatigue thresholds
     private int cupsUntilCheck;
     [SerializeField] private int fatigueChanceDenominator = 8;
@@ -47,6 +52,13 @@ public class Employee : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
 
         InitializeFatigue();
+    }
+
+    private void Update()
+    {
+        if (!modelTransform) return;
+
+        modelTransform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void InitializeFatigue()
@@ -84,6 +96,8 @@ public class Employee : MonoBehaviour, IInteractable
         transform.SetParent(null);
         gameObject.layer = heldLayer;
 
+        FaceCamera();
+
         player.PickUp(gameObject);
     }
 
@@ -115,10 +129,26 @@ public class Employee : MonoBehaviour, IInteractable
         Ray ray = mainCam.ScreenPointToRay(mousePos);
         heldSnapPoint = FindBestSnapPoint(ray);
 
-        if (heldSnapPoint != null)
+        if (heldSnapPoint)
+        {
             desiredPos = heldSnapPoint.transform.position;
+            targetModelRotation = heldSnapPoint.transform.rotation;
+        } else
+        {
+            FaceCamera();
+        }
 
-        transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+            transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+    }
+
+    private void FaceCamera()
+    {
+        if (!modelTransform || !mainCam) return;
+
+        Vector3 direction = mainCam.transform.forward;
+        direction.y = 0f;
+
+        targetModelRotation = Quaternion.LookRotation(direction);
     }
 
 
@@ -146,6 +176,7 @@ public class Employee : MonoBehaviour, IInteractable
         CurrentMachine.SetActiveEmployee(this);
 
         snapPoint.OnEmployeePlaced();
+        targetModelRotation = snapPoint.transform.rotation;
         StartWorkLoop();
     }
 
@@ -240,6 +271,14 @@ public class Employee : MonoBehaviour, IInteractable
         {
             PassOut();
         }
+    }
+
+    public void HealFatigue(int amount)
+    {
+        if (fatigueLevel == 0) return;
+        fatigueLevel = Mathf.Clamp(fatigueLevel - amount, 0, maxFatigue);
+
+        UpdateFatigueVisuals();
     }
 
     public void ResetFatigue()
