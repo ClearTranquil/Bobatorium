@@ -33,6 +33,16 @@ public class CameraManager : MonoBehaviour
         toggleButton.onClick.AddListener(ToggleCamera);
     }
 
+    private void OnEnable()
+    {
+        Employee.OnEdgeScreenSwitchRequest += HandleEdgeSwitch;
+    }
+
+    private void OnDisable()
+    {
+        Employee.OnEdgeScreenSwitchRequest -= HandleEdgeSwitch;
+    }
+
     private void Update()
     {
         cameraTransform.rotation = Quaternion.RotateTowards(cameraTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -51,6 +61,20 @@ public class CameraManager : MonoBehaviour
         {
             targetRotation = mainRotation;
             buttonImage.sprite = leftArrowSprite;
+        }
+    }
+
+    private void HandleEdgeSwitch(bool fromLeftSide)
+    {
+        // When in main room and employee is moved to the left side of screen
+        if (!isInBreakRoom && fromLeftSide)
+        {
+            ToggleCamera();
+        }
+        // And vice versa 
+        else if (isInBreakRoom && !fromLeftSide)
+        {
+            ToggleCamera();
         }
     }
 }

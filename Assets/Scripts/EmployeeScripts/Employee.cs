@@ -39,6 +39,11 @@ public class Employee : MonoBehaviour, IInteractable
     [SerializeField] private float rotationSpeed = 360f;
     private Quaternion targetModelRotation;
 
+    [Header("Screen Edge Switch")]
+    [SerializeField] private float screenEdgeThreshold = 40f;
+    private bool hasTriggeredEdgeSwitch;
+    public static event System.Action<bool> OnEdgeScreenSwitchRequest;
+
     // Each employee has random fatigue thresholds
     private int cupsUntilCheck;
     [SerializeField] private int fatigueChanceDenominator = 8;
@@ -138,7 +143,28 @@ public class Employee : MonoBehaviour, IInteractable
             FaceCamera();
         }
 
-            transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+        transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+
+        HandleScreenEdgeSwitch(mousePos);
+    }
+
+    private void HandleScreenEdgeSwitch(Vector2 m_mousePos)
+    {
+        float screenWidth = Screen.width;
+
+        bool nearLeft = m_mousePos.x <= screenEdgeThreshold;
+        bool nearRight = m_mousePos.x >= screenWidth - screenEdgeThreshold;
+
+        if(nearLeft || nearRight && !hasTriggeredEdgeSwitch)
+        {
+            OnEdgeScreenSwitchRequest?.Invoke(nearLeft);
+            hasTriggeredEdgeSwitch = true;
+        }
+
+        if(!nearLeft && !nearRight)
+        {
+            hasTriggeredEdgeSwitch = false;
+        }
     }
 
     private void FaceCamera()
