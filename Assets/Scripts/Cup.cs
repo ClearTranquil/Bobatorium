@@ -45,6 +45,11 @@ public class Cup : MonoBehaviour, IInteractable
     private int originalLayer;
     private int heldLayer = 7;
 
+    [Header("Commerce")]
+    private bool readyForSale = false;
+    public bool IsReadyForSale => readyForSale;
+    [SerializeField] private float tipBonus = 0f;
+
     [Header("Interface Variable Exposure")]
     public float TeaFillAmount => teaFillAmount;
     public bool TeaFill => IsTeaFull();
@@ -293,6 +298,25 @@ public class Cup : MonoBehaviour, IInteractable
     public bool GetIsSealed()
     { return isSealed; }
 
+    /*============Sale Data==================*/
+    public void MarkReadyForSale()
+    {
+        readyForSale = true;
+    }
+
+    public void OnCupValiated()
+    {
+        MarkReadyForSale();
+        
+        if (straw)
+            straw.SetActive(true);
+    }
+
+    public float GetTipBonus()
+    {
+        return tipBonus;
+    }
+
     /*==============Visuals=================*/
     // These will be replaced during the art pass
 
@@ -319,11 +343,5 @@ public class Cup : MonoBehaviour, IInteractable
         {
             cupLid.SetActive(true);
         }
-    }
-
-    public void OnCupValiated()
-    {
-        if(straw)
-            straw.SetActive(true);
     }
 }

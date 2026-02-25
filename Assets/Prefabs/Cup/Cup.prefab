@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50f9759b8c28ca428e3d26af6a3c1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cup
-  basePrice: 1
+  basePrice: 100
   saleModifiers: []
   heldZDistance: 40
   filledCenterOfMassOffset: {x: 0, y: -0.1, z: 0}
@@ -397,6 +397,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   snapMaxDistance: 100
+  tipBonus: 0
 --- !u!65 &7111427297837032801
 BoxCollider:
   m_ObjectHideFlags: 0

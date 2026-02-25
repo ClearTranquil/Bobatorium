@@ -18,7 +18,7 @@ public class NPCManager : MonoBehaviour
     private bool isProcessingReturn = false;
 
 
-    public void OnCupSold(Cup cup)
+    public void OnCupSold(Cup cup, Customer customer)
     {
         StartCoroutine(moveNPCs(cup));
     }
@@ -124,6 +124,10 @@ public class NPCManager : MonoBehaviour
         cup.transform.position = target.position;
         cup.transform.rotation = target.rotation;
         cup.transform.SetParent(target);
+
+        // Get the Customer component for sale data
+        Customer customer = npc.GetComponent<Customer>();
+        SaleEvents.OnCupSold?.Invoke(cup, customer);
     }
 
     private void OnEnable()

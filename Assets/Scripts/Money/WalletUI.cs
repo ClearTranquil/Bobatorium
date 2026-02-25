@@ -31,6 +31,6 @@ public class WalletUI : MonoBehaviour
     public void UpdateBalance(int amount)
     {
         //Debug.Log("Trying to update balance...");
-        balanceText.text = $"${amount}";
+        balanceText.text = "$" + (amount / 100f).ToString("F2");
     }
 }

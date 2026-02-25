@@ -75,8 +75,6 @@ public class DeliveryTray : Machine
 
                     yield return new WaitForSeconds(.5f);
 
-                    ScoreCup(cup.GetComponent<Cup>());
-                    //Destroy(cup.gameObject); Cups are now destroyed by NPCs. Kinda like they're drinking it. That makes sense right? 
                     snap.Clear();
                 } else
                 {
@@ -97,10 +95,5 @@ public class DeliveryTray : Machine
     public override bool CheckSpecificCupCompletion(Cup cup)
     {
         return false;
-    }
-
-    private void ScoreCup(Cup m_cup)
-    {
-        SaleEvents.OnCupSold?.Invoke(m_cup);
     }
 }

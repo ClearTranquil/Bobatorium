@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db59a4c3eb558954d912c1f11826aeeb, type: 3}
-  m_Name: RotSpeed
+  m_Name: BobaPerClick
   m_EditorClassIdentifier: Assembly-CSharp::Upgrade
-  upgradeID: RotSpeed
-  upgradeName: Faster Cup Sealing
-  description: Seals cups faster
-  icon: {fileID: 21300000, guid: f87cca0674dba7242ad483cce2064972, type: 3}
-  machineType: 2
-  baseCost: 5
-  manualCosts: 050000000a0000000f00000014000000
+  upgradeID: BobaPerClick
+  upgradeName: More Boba
+  description: Dispense more boba per button press
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  baseCost: 10
+  manualCosts: 050000000f00000019000000
   stackValues:
-  - 1.25
-  - 1.5
-  - 1.75
   - 2
+  - 4
+  - 6

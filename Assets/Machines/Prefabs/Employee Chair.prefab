@@ -82,7 +82,7 @@ MonoBehaviour:
   trigger: {fileID: 0}
   hasEjectUpgrade: 0
   ejectCheckInterval: 0.1
-  healInterval: 5
+  healInterval: 30
 --- !u!1001 &5139025531710552165
 PrefabInstance:
   m_ObjectHideFlags: 0

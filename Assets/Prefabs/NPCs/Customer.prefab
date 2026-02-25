@@ -298,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3614093637738468580}
   - component: {fileID: 5657674414037930811}
+  - component: {fileID: 4903767999184658580}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -336,3 +337,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCMover
   moveSpeed: 30
   cupSlot: {fileID: 5832174034923841599}
+--- !u!114 &4903767999184658580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068824270809336643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede75f847962f1143963637b7dd6fd91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Customer
+  baseTipChance: 1
