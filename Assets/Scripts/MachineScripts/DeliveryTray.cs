@@ -70,8 +70,10 @@ public class DeliveryTray : Machine
 
                 if (IsCupComplete(cupInfo))
                 {
-                    Debug.Log("Sold!");
                     cup.OnCupValiated();
+
+                    // Customer is assigned later, in the NPC manager script. Thats why its null right now. 
+                    SaleEvents.OnCupReady?.Invoke(cup, null);
 
                     yield return new WaitForSeconds(.5f);
 

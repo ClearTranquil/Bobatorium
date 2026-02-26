@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
-    [SerializeField] private List<NPCMover> line = new List<NPCMover>();
+    [SerializeField] private List<Customer> line = new List<Customer>();
     [SerializeField] private Transform[] linePositions;
     [SerializeField] private Transform offScreenPosition;
     [SerializeField] private Transform hiddenPosition;
@@ -14,49 +14,43 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private float cupToHandTime = .5f;
     [SerializeField] private float offscreenWaitTime = 3f;
 
-    private Queue<NPCMover> returnQueue = new Queue<NPCMover>();
+    private Queue<Customer> returnQueue = new Queue<Customer>();
     private bool isProcessingReturn = false;
 
+    //private IEnumerator moveNPCs(Cup cup)
+    //{
+    //    if (line.Count == 0)
+    //    {
+    //        Debug.LogWarning("Cup sold but no NPCs in line.");
+    //        yield break;
+    //    }
 
-    public void OnCupSold(Cup cup, Customer customer)
-    {
-        StartCoroutine(moveNPCs(cup));
-    }
+    //    // NPC pos 1 takes cup
+    //    Customer cusToMove = line[0];
+    //    StartCoroutine(MoveCupToSlot(cusToMove, cup));
+    //    yield return new WaitForSeconds(.2f);
 
-    private IEnumerator moveNPCs(Cup cup)
-    {
-        if (line.Count == 0)
-        {
-            Debug.LogWarning("Cup sold but no NPCs in line.");
-            yield break;
-        }
+    //    // NPC moves off screen
+    //    line.RemoveAt(0);
+    //    cusToMove.MoveTo(offScreenPosition);
 
-        // NPC pos 1 takes cup
-        NPCMover npcToMove = line[0];
-        StartCoroutine(MoveCupToSlot(npcToMove, cup));
-        yield return new WaitForSeconds(.2f);
+    //    // Move other NPCs
+    //    UpdateLinePositions();
 
-        // NPC moves off screen
-        line.RemoveAt(0);
-        npcToMove.MoveTo(offScreenPosition);
+    //    // Wait a sec, teleport offscreen NPC to a hidden position at the end of the line. Remove cup while offscreen. 
+    //    yield return new WaitForSeconds(1f);
+    //    Destroy(cup.gameObject);
+    //    cusToMove.TeleportTo(hiddenPosition);
 
-        // Move other NPCs
-        UpdateLinePositions();
+    //    // Queue for line return
+    //    returnQueue.Enqueue(cusToMove);
 
-        // Wait a sec, teleport offscreen NPC to a hidden position at the end of the line. Remove cup while offscreen. 
-        yield return new WaitForSeconds(1f);
-        Destroy(cup.gameObject);
-        npcToMove.TeleportTo(hiddenPosition);
-
-        // Queue for line return
-        returnQueue.Enqueue(npcToMove);
-
-        // Start return processor if needed
-        if (!isProcessingReturn)
-        {
-            StartCoroutine(ProcessReturns());
-        }
-    }
+    //    // Start return processor if needed
+    //    if (!isProcessingReturn)
+    //    {
+    //        StartCoroutine(ProcessReturns());
+    //    }
+    //}
 
     private IEnumerator ProcessReturns()
     {
@@ -64,25 +58,25 @@ public class NPCManager : MonoBehaviour
 
         while (returnQueue.Count > 0)
         {
-            NPCMover npc = returnQueue.Dequeue();
+            Customer cus = returnQueue.Dequeue();
 
-            npc.MoveTo(backOfLine);
+            cus.MoveTo(backOfLine);
 
             // Wait while they are offscreen
             yield return new WaitForSeconds(offscreenWaitTime);
 
             // Add NPC back into the line
-            line.Add(npc);
+            line.Add(cus);
 
             int index = line.Count - 1;
 
             if (index < linePositions.Length)
             {
-                npc.MoveTo(linePositions[index]);
+                cus.MoveTo(linePositions[index]);
             }
             else
             {
-                npc.MoveTo(backOfLine);
+                cus.MoveTo(backOfLine);
                 Debug.LogWarning("NPC returned but no line position available.");
             }
             yield return new WaitForSeconds(0.3f);
@@ -101,43 +95,59 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveCupToSlot(NPCMover npc, Cup cup)
+
+
+    private IEnumerator MoveCupToSlot(Customer cus, Cup cup)
     {
-        Transform target = npc.GetCupSlot().transform;
-        
-        Vector3 startPos = cup.transform.position;
-        Quaternion startRot = cup.transform.rotation;
+        if (cus == null || cup == null || line.Count == 0)
+            yield break;
 
-        float t = 0f;
+        // Step 1: Customer takes the cup
+        cus.ReceiveCup(cup, cupToHandTime);
 
-        while (t < 1f)
-        {
-            t += Time.deltaTime / cupToHandTime;
+        // Step 2: Small buffer so customer can start receiving
+        yield return new WaitForSeconds(0.2f);
 
-            cup.transform.position = Vector3.Lerp(startPos, target.position, t);
-            cup.transform.rotation = Quaternion.Slerp(startRot, target.rotation, t);
+        // Step 3: Remove customer from front of line and move offscreen
+        line.RemoveAt(0);
+        cus.MoveTo(offScreenPosition);
 
-            yield return null;
-        }
+        // Step 4: Move other customers forward
+        UpdateLinePositions();
 
-        // Snap cleanly at the end
-        cup.transform.position = target.position;
-        cup.transform.rotation = target.rotation;
-        cup.transform.SetParent(target);
+        // Step 5: Wait a bit before teleporting offscreen customer
+        yield return new WaitForSeconds(1f);
 
-        // Get the Customer component for sale data
-        Customer customer = npc.GetComponent<Customer>();
-        SaleEvents.OnCupSold?.Invoke(cup, customer);
+        // Step 6: Teleport customer to hidden position
+        cus.TeleportTo(hiddenPosition);
+
+        // Step 7: Remove cup now (cup is destroyed while customer is offscreen)
+        Destroy(cup.gameObject);
+
+        // Step 8: Queue for return
+        returnQueue.Enqueue(cus);
+
+        // Step 9: Start return processor if needed
+        if (!isProcessingReturn)
+            StartCoroutine(ProcessReturns());
     }
 
     private void OnEnable()
     {
-        SaleEvents.OnCupSold += OnCupSold;
+        SaleEvents.OnCupReady += OnCupReady;
     }
 
     private void OnDisable()
     {
-        SaleEvents.OnCupSold -= OnCupSold;
+        SaleEvents.OnCupReady -= OnCupReady;
     }
 
+    public void OnCupReady(Cup cup, Customer customer)
+    {
+        if (!cup.IsReadyForSale)
+            cup.MarkReadyForSale();
+
+        Customer firstCustomer = line[0];
+        StartCoroutine(MoveCupToSlot(firstCustomer, cup));
+    }
 }
