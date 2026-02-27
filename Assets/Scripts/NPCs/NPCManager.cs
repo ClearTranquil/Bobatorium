@@ -102,32 +102,28 @@ public class NPCManager : MonoBehaviour
         if (cus == null || cup == null || line.Count == 0)
             yield break;
 
-        // Step 1: Customer takes the cup
+        // Customer takes the cup, invoke cup sale
         cus.ReceiveCup(cup, cupToHandTime);
+        SaleEvents.OnCupSold?.Invoke(cup, cus);
 
-        // Step 2: Small buffer so customer can start receiving
+        // Small buffer so customer can start receiving
         yield return new WaitForSeconds(0.2f);
 
-        // Step 3: Remove customer from front of line and move offscreen
+        // Remove customer from front of line and move offscreen
         line.RemoveAt(0);
         cus.MoveTo(offScreenPosition);
 
-        // Step 4: Move other customers forward
+        // Move other customers forward
         UpdateLinePositions();
-
-        // Step 5: Wait a bit before teleporting offscreen customer
         yield return new WaitForSeconds(1f);
 
-        // Step 6: Teleport customer to hidden position
+        // Teleport customer to hidden position at end of line, remove their cup
         cus.TeleportTo(hiddenPosition);
-
-        // Step 7: Remove cup now (cup is destroyed while customer is offscreen)
         Destroy(cup.gameObject);
 
-        // Step 8: Queue for return
+        // Get back in line, chump
         returnQueue.Enqueue(cus);
 
-        // Step 9: Start return processor if needed
         if (!isProcessingReturn)
             StartCoroutine(ProcessReturns());
     }

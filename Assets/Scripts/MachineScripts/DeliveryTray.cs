@@ -72,10 +72,12 @@ public class DeliveryTray : Machine
                 {
                     cup.OnCupValiated();
 
+                    yield return new WaitForSeconds(.5f);
+
                     // Customer is assigned later, in the NPC manager script. Thats why its null right now. 
                     SaleEvents.OnCupReady?.Invoke(cup, null);
 
-                    yield return new WaitForSeconds(.5f);
+                    //yield return new WaitForSeconds(.5f);
 
                     snap.Clear();
                 } else

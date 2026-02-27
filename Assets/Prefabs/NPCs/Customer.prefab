@@ -334,6 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede75f847962f1143963637b7dd6fd91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  baseTipChance: 1
+  baseTipChance: 0.1
   cupSlot: {fileID: 5432626475900655604}
-  moveSpeed: 8
+  moveSpeed: 12

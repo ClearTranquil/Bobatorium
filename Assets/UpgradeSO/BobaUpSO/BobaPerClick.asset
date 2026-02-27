@@ -16,8 +16,8 @@ MonoBehaviour:
   upgradeName: More Boba
   description: Dispense more boba per button press
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  baseCost: 10
-  manualCosts: 050000000f00000019000000
+  baseCost: 500
+  manualCosts: f4010000dc050000c4090000
   stackValues:
   - 2
   - 4

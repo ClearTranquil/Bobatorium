@@ -44,6 +44,8 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private float snapMaxDistance = 100f;
     private int originalLayer;
     private int heldLayer = 7;
+    [SerializeField] private float snapBlockDuration = 0.1f; // Small delay after pickup
+    private float snapBlockTimer = 0f;
 
     [Header("Commerce")]
     private bool readyForSale = false;
@@ -80,6 +82,9 @@ public class Cup : MonoBehaviour, IInteractable
         // When picked up, change obj's layer so the player can raycast through the cup
         gameObject.layer = heldLayer;
         transform.SetParent(null);
+
+        snapBlockTimer = snapBlockDuration;
+
         player.PickUp(gameObject);
     }
 
@@ -118,28 +123,36 @@ public class Cup : MonoBehaviour, IInteractable
 
     public void OnHold()
     {
-        // Reset rotation
+        // Reset rotation, pause physics
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
-
-        // Disable physics while held
         TogglePhysics(false);
-        
-        // Follow the player's cursor while being held
+
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPosition = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
 
-        // Look for nearby snap points
         Ray ray = mainCam.ScreenPointToRay(mousePos);
-        heldSnapPoint = FindBestSnapPoint(ray);
+
+        // Allows cups to be instantly picked up without resnapping to the machine
+        snapBlockTimer -= Time.deltaTime;
+
+        if (snapBlockTimer <= 0f)
+        {
+            heldSnapPoint = FindBestSnapPoint(ray);
+        }
+        else
+        {
+            heldSnapPoint = null;
+        }
 
         if (heldSnapPoint && heldSnapPoint.gameObject.activeSelf)
             desiredPosition = heldSnapPoint.transform.position;
 
-        // Smoothly move towards the desired position, cursor or snap point
-        if (desiredPosition != Vector3.zero)
-        {
-            transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, followSmoothTime);
-        }
+        transform.position = Vector3.SmoothDamp(
+            transform.position,
+            desiredPosition,
+            ref velocity,
+            followSmoothTime
+        );
     }
 
     public Rigidbody GetRb() { return rb; }

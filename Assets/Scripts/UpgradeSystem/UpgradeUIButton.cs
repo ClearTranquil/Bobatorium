@@ -34,9 +34,16 @@ public class UpgradeUIButton : MonoBehaviour
         icon = upgrade.icon;
 
         if (!state.IsMaxed)
-            costText.text = $"${upgrade.GetCost(state.level)}";
+        {
+            int costInCents = upgrade.GetCost(state.level);
+            float costInDollars = costInCents / 100f;
+
+            costText.text = $"${costInDollars:0.00}";
+        }
         else
+        {
             costText.text = "Sold out!";
+        }
 
         button.interactable = !state.IsMaxed;
     }
