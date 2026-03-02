@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Collections;
 
 [RequireComponent(typeof(Collider))]
-public class Conveyor : MonoBehaviour
+public class Conveyor : Machine
 {
     [Header("Conveyor settings")]
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float baseSpeed = 2f;
+    private float speed;
     [SerializeField] private Vector3 localDirection = Vector3.forward;
     [SerializeField] private float intakeCheckRadius = 0.5f;
     [SerializeField] LayerMask intakeLayerMask;
 
     private readonly List<Cup> cupsOnBelt = new();
+
+    protected override void Awake()
+    {
+        speed = baseSpeed;
+    }
 
     private void FixedUpdate()
     {
@@ -45,6 +51,12 @@ public class Conveyor : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public override void SetTriggerStrength(float value)
+    {
+        value = Mathf.Clamp01(value);
+        speed = baseSpeed * value;
     }
 
     private void OnCollisionStay(Collision collision)

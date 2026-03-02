@@ -380,7 +380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cup
   basePrice: 100
   saleModifiers: []
-  heldZDistance: 30
+  heldZDistance: 35
   filledCenterOfMassOffset: {x: 0, y: -0.1, z: 0}
   maxTeaFill: 1
   teaFillAmount: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   snapMaxDistance: 50
-  snapBlockDuration: 1
+  snapBlockDuration: 0.3
   tipBonus: 0
 --- !u!65 &7111427297837032801
 BoxCollider:

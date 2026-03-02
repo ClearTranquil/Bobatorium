@@ -146,6 +146,12 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         
     }
 
+    // Used for machines that might have a trigger value between 0-1, like the conveyor belt
+    public virtual void SetTriggerStrength(float value)
+    {
+        // Default: do nothing
+    }
+
     /*================================Player and Cup Interactions================================*/
 
     // These are required for the playercontroller to interact with machines
