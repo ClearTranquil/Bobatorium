@@ -57,6 +57,7 @@ public class Employee : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
 
         InitializeFatigue();
+        FaceCamera();
     }
 
     private void Update()

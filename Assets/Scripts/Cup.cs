@@ -173,6 +173,14 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     /*-----------------SNAP LOGIC------------------*/
     // If a machine has multiple cupSnapPoints, this will automatically find the best snapPoint for the cup.
     // This makes it easier for the player to quickly put cups in machines.

@@ -41,6 +41,11 @@ public class PlayerControls : MonoBehaviour
             //Debug.Log("Clicked on " + hit.collider.gameObject);
             
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+
+            // If it can be clicked but isnt an interactable, just ignore it. Let that object figure itself out. 
+            if (interactable == null)
+                return;
+
             if (!interactable.CanInteract(this))
                 return;
 
