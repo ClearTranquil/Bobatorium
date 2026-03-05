@@ -380,6 +380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cup
   basePrice: 100
   saleModifiers: []
+  followSmoothTime: 0.005
   heldZDistance: 35
   filledCenterOfMassOffset: {x: 0, y: -0.1, z: 0}
   maxTeaFill: 1
@@ -392,7 +393,6 @@ MonoBehaviour:
   cupWithTea: {fileID: 1723944475869222786}
   cupLid: {fileID: 1483044219101180075}
   straw: {fileID: 7437326784432993034}
-  followSmoothTime: 0.05
   snapMask:
     serializedVersion: 2
     m_Bits: 1024

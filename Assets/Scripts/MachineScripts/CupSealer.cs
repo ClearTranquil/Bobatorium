@@ -27,7 +27,7 @@ public class CupSealer : Machine
 
     [Header("Employee interaction")]
     [SerializeField] private float timeBetweenEmployeeTrigger;
-    private bool isBeingWorked = false;
+    //private bool isBeingWorked = false;
     private bool isProcessing = false;
 
     protected override void Awake()
@@ -421,17 +421,10 @@ public class CupSealer : Machine
     }
 
     /*----------------Employee Interaction-------------------*/
-    public override void OnCupInserted(Cup cup)
-    {
-        base.OnCupInserted(cup);
-
-        // New cup inserted, allow employee to work
-        isBeingWorked = false;
-    }
 
     public override bool CanEmployeeWork()
     {
-        return HasAnyCup() && !CheckCupCompletion() && !isBeingWorked;
+        return HasAnyCup() && !CheckCupCompletion() && !isProcessing;
     }
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
@@ -444,7 +437,7 @@ public class CupSealer : Machine
         {
             if (CanEmployeeWork())
             {
-                isBeingWorked = true;
+                //isBeingWorked = true;
 
                 // Chance to fail based on fatigue
                 int fatigue = employee.GetFatigueLevel();
@@ -471,7 +464,7 @@ public class CupSealer : Machine
                     // Failed pull animation + short delay
                     yield return ripcord.PlayFailedPullAnimation();
                     yield return new WaitForSeconds(2f);
-                    isBeingWorked = false;
+                    //isBeingWorked = false;
                 }
             }
 

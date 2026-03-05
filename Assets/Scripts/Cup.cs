@@ -11,6 +11,7 @@ public class Cup : MonoBehaviour, IInteractable
     public List<SaleModifier> saleModifiers;
 
     [Header("Physics")]
+    [SerializeField] private float followSmoothTime = 0.05f;
     [SerializeField] private float heldZDistance = 15f;
     private bool canBeGrabbed = true;
     private Rigidbody rb;
@@ -35,7 +36,6 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject straw;
 
     [Header("Position Snapping")]
-    [SerializeField] private float followSmoothTime = 0.05f;
     private Vector3 velocity;
     private Vector3 desiredPosition;
     private CupSnapPoint heldSnapPoint;
