@@ -99,7 +99,7 @@ public class NPCManager : MonoBehaviour
 
     private IEnumerator MoveCupToSlot(Customer cus, Cup cup)
     {
-        if (cus == null || cup == null || line.Count == 0)
+        if (cus == null || cup == null)
             yield break;
 
         // Customer takes the cup, invoke cup sale
@@ -142,6 +142,12 @@ public class NPCManager : MonoBehaviour
     {
         if (!cup.IsReadyForSale)
             cup.MarkReadyForSale();
+
+        if (line.Count == 0)
+        {
+            Debug.LogWarning("Cup ready but no customers in line.");
+            return;
+        }
 
         Customer firstCustomer = line[0];
         StartCoroutine(MoveCupToSlot(firstCustomer, cup));

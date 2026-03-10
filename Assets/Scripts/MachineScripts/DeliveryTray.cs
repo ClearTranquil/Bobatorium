@@ -7,6 +7,7 @@ public class DeliveryTray : Machine
     [SerializeField] private float timeBetweenCups = .5f;
     [SerializeField] private GameObject slotUpgrade1;
     [SerializeField] private GameObject slotUpgrade2;
+    private bool isScanning = false;
 
     public override void TriggerAction()
     {
@@ -52,11 +53,13 @@ public class DeliveryTray : Machine
      * If a cup is there, check if it meets the requirements to be sold. */
     public void DeliverAll()
     {
-        StartCoroutine(ScanCups());
+        if (!isScanning) StartCoroutine(ScanCups());
     }
 
     private IEnumerator ScanCups()
     {
+        isScanning = true;
+
         foreach (var snap in cupSnapPoints)
         {
             if (!snap.gameObject.activeSelf) continue;
@@ -88,6 +91,8 @@ public class DeliveryTray : Machine
 
             yield return new WaitForSeconds(timeBetweenCups);
         }
+
+        isScanning = false;
     }
 
     private bool IsCupComplete(ICupInfo cupInfo)

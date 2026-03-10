@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 4034425888992826188}
   - component: {fileID: 1546017163495729186}
   - component: {fileID: 4227417747060320207}
+  - component: {fileID: 3189058727167843981}
   m_Layer: 6
   m_Name: Cup Dispenser
   m_TagString: Untagged
@@ -221,6 +222,28 @@ MonoBehaviour:
   spawnInHandOffsetY: 1
   conveyorCupPosition: {fileID: 0}
   conveyor: {fileID: 0}
+--- !u!95 &3189058727167843981
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8944420958396118488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 755d7356a93bfeb4abeafb24ddd3cd37, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &6709865519619162510
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Purchasable
   item: {fileID: 11400000, guid: 2c2f73f44ec5ad64e890163d2c14e7b8, type: 2}
   hoverUIPrefab: {fileID: 2517471466692721757, guid: 0b03874f57c88864080388d6bf328ad3, type: 3}
-  popTextOffset: {x: 0, y: 5, z: 15}
+  popTextOffset: {x: 0, y: 1, z: 10}
 --- !u!114 &91679675
 MonoBehaviour:
   m_ObjectHideFlags: 0

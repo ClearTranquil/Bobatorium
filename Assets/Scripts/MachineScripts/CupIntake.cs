@@ -37,7 +37,7 @@ public class CupIntake : MonoBehaviour
         Transform target = snap.transform;
 
         // These are here to provide an exit case if the cup cant snap
-        float maxSnapDistance = 5f; 
+        float maxSnapDistance = 50f; 
         float maxSnapTime = 2f;
 
         float elapsed = 0f;
@@ -78,9 +78,9 @@ public class CupIntake : MonoBehaviour
         }
 
         // Final snap attempt
-        if (!cup.IsSnapped && snap.TrySnap(cup))
+        if (!cup.IsSnapped && snap && snap.gameObject.activeSelf && snap.TrySnap(cup))
         {
-            // Let the snap point sort it out 
+            // success
         }
         else
         {

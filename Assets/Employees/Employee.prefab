@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 117075878110002783}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5143, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.44, z: 0}
+  m_LocalScale: {x: 0.94598323, y: 0.69606, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2094315624250734084}
@@ -141,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 3820851454623300860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.61, z: 0}
+  m_LocalPosition: {x: 0, y: 0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -284,8 +284,8 @@ Transform:
   m_GameObject: {fileID: 6823493150218577399}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.14, z: -0.55}
-  m_LocalScale: {x: 0.2139934, y: 0.2139934, z: 0.2139934}
+  m_LocalPosition: {x: 0.023, y: 0.013, z: -0.516}
+  m_LocalScale: {x: 0.13564801, y: 0.13564801, z: 0.13564801}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7699077052163110699}
@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 3429995307662640216}
   - component: {fileID: 3744532976212134739}
   - component: {fileID: 1448413557060356442}
+  - component: {fileID: 7232395326876078461}
   m_Layer: 6
   m_Name: Employee
   m_TagString: Untagged
@@ -430,7 +431,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 8.374172, y: 11.685799, z: 5.167619}
-  m_Center: {x: -0.27847767, y: 5.3428993, z: -0.04981351}
+  m_Center: {x: -0.27847767, y: 2.01, z: -0.04981351}
 --- !u!114 &1448413557060356442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,4 +462,27 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c68e7533fa141434aa87796308cd09bd, type: 3}
   modelTransform: {fileID: 2094315624250734084}
   rotationSpeed: 360
+  screenEdgeThreshold: 40
   fatigueChanceDenominator: 8
+--- !u!95 &7232395326876078461
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068824270809336643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e726c687b960129468326de140f2a47e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

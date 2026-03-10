@@ -8,6 +8,7 @@ public class Employee : MonoBehaviour, IInteractable
     private Camera mainCam;
     private Vector3 velocity;
     private Vector3 desiredPos;
+    private Animator animator;
 
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 40f;
@@ -55,6 +56,7 @@ public class Employee : MonoBehaviour, IInteractable
     {
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
+        animator = GetComponent<Animator>();
 
         InitializeFatigue();
         FaceCamera();
@@ -62,9 +64,10 @@ public class Employee : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (!modelTransform) return;
+        //if (!modelTransform) return;
 
-        modelTransform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
+        //modelTransform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void InitializeFatigue()
@@ -355,6 +358,11 @@ public class Employee : MonoBehaviour, IInteractable
 
         int spriteIndex = Mathf.Clamp(fatigueLevel, 0, fatigueFaceSprites.Length - 1);
         faceRenderer.sprite = fatigueFaceSprites[spriteIndex];
+
+        if (animator)
+        {
+            animator.SetFloat("fatigueLevel", fatigueLevel);
+        }
     }
 
     /*-------Buffs---------*/

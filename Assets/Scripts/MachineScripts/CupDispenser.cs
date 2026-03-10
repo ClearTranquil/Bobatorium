@@ -10,6 +10,15 @@ public class CupDispenser : Machine
     [SerializeField] private Transform conveyorCupPosition;
     [SerializeField] private GameObject conveyor;
 
+    private Animator animator;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        animator = GetComponent<Animator>();
+    }
+
     public override bool CanInteract(PlayerControls player)
     {
         return true;
@@ -50,6 +59,7 @@ public class CupDispenser : Machine
         Cup cup = Instantiate(cupPrefab, spawnPos, Quaternion.identity);
 
         player.PickUp(cup.gameObject);
+        animator.SetTrigger("removeCup");
     }
 
     private void SpawnCupOnBelt()
@@ -58,6 +68,7 @@ public class CupDispenser : Machine
         Cup cup = Instantiate(cupPrefab, spawnPos, Quaternion.identity);
         cup.TogglePhysics(true);
         cup.gameObject.transform.rotation = Quaternion.identity;
+        animator.SetTrigger("removeCup");
     }
 
     private IEnumerator CupSpawnLoop()
