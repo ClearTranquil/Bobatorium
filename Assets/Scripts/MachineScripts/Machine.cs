@@ -155,28 +155,28 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     /*================================Player and Cup Interactions================================*/
 
     // These are required for the playercontroller to interact with machines
-    public bool CanInteract(PlayerControls player)
+    public virtual bool CanInteract(PlayerControls player)
     {
         return true;
     }
 
-    public void Interact(PlayerControls player)
+    public virtual void Interact(PlayerControls player)
     {
         
     }
 
     // Right clicking on machines opens the upgrade options
-    public void OnRightClick(PlayerControls player)
+    public virtual void OnRightClick(PlayerControls player)
     {
         UpgradeUIManager.Instance.Open(this);
     }
 
-    public void OnRelease(Vector3 releasePos)
+    public virtual void OnRelease(Vector3 releasePos)
     {
         
     }
 
-    public void OnHold()
+    public virtual void OnHold()
     {
         
     }
@@ -320,7 +320,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     {
         foreach (var snap in cupSnapPoints)
         {
-            if (!snap.IsOccupied && !snap.IsBusy)
+            if (!snap.IsOccupied && !snap.IsBusy && snap.gameObject.activeSelf)
                 return snap;
         }
         return null;

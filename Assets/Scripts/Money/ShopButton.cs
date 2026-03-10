@@ -8,6 +8,7 @@ public class ShopButton : MonoBehaviour
     [Header("References")]
     [SerializeField] private ShopItem item;
     [SerializeField] private GameObject hoverUIPrefab;
+    private Outline outline;
 
     [Header("UI Settings")]
     [SerializeField] private Vector3 popTextOffset = new Vector3(0f, 1f, 0f);
@@ -16,16 +17,20 @@ public class ShopButton : MonoBehaviour
     private GameObject activeUI;
     private Camera cam;
     private Wallet wallet;
+    private bool isHovered;
 
     private void Awake()
     {
         cam = Camera.main;
 
         wallet = FindFirstObjectByType<Wallet>();
-        if (wallet == null) Debug.LogWarning("ShopButton: No Wallet found in scene.");
+        if (!wallet) Debug.LogWarning("ShopButton: No Wallet found in scene.");
 
         uiCanvas = FindFirstObjectByType<Canvas>();
-        if (uiCanvas == null) Debug.LogWarning("ShopButton: No Canvas found in scene.");
+        if (!uiCanvas) Debug.LogWarning("ShopButton: No Canvas found in scene.");
+
+        outline = GetComponent<Outline>();
+        if(!outline) Debug.LogWarning("ShopButton: No Outline found on button.");
     }
 
     private void Update()
@@ -34,6 +39,14 @@ public class ShopButton : MonoBehaviour
         HandleClick();
 
         if (activeUI) UpdateUIPosition();
+
+        if (isHovered)
+        {
+            outline.enabled = true;
+        } else
+        {
+            outline.enabled = false;
+        }
     }
 
     private void HandleHover()
@@ -45,10 +58,12 @@ public class ShopButton : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 ShowHoverUI();
+                isHovered = true;
                 return;
             }
         }
 
+        isHovered = false;
         HideHoverUI();
     }
 

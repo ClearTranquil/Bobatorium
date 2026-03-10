@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class Cup : MonoBehaviour, IInteractable
 {
@@ -34,6 +36,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject cupWithTea;
     [SerializeField] private GameObject cupLid;
     [SerializeField] private GameObject straw;
+    [SerializeField] private TMP_Text teaFillText;
 
     [Header("Position Snapping")]
     private Vector3 velocity;
@@ -66,7 +69,13 @@ public class Cup : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
-        defaultCenterOfMass = rb.centerOfMass;
+        //defaultCenterOfMass = rb.centerOfMass;
+        rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
+    }
+
+    private void Update()
+    {
+        teaFillText.text = (teaFillAmount * 100f).ToString("F0") + "%";
     }
 
     /*-------------Interaction---------------*/
@@ -147,12 +156,7 @@ public class Cup : MonoBehaviour, IInteractable
         if (heldSnapPoint && heldSnapPoint.gameObject.activeSelf)
             desiredPosition = heldSnapPoint.transform.position;
 
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            desiredPosition,
-            ref velocity,
-            followSmoothTime
-        );
+        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, followSmoothTime);
     }
 
     public Rigidbody GetRb() { return rb; }
@@ -272,11 +276,11 @@ public class Cup : MonoBehaviour, IInteractable
             {
                 teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
                 UpdateVisuals();
-                UpdateCenterOfMass();
+                //UpdateCenterOfMass();
             }
             else
             {
-                UpdateCenterOfMass();
+                //UpdateCenterOfMass();
                 UpdateVisuals();
             }
         } else

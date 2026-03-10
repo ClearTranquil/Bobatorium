@@ -27,6 +27,8 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
         if(!base.TrySnap(m_cup))
             return false;
 
+        m_cup.gameObject.transform.rotation = Quaternion.identity;
+
         NotifyMachineCupInserted();
 
         m_cup.RegisterSnapPoint(this);

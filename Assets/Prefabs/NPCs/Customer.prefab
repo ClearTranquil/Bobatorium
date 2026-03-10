@@ -336,4 +336,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   baseTipChance: 0.1
   cupSlot: {fileID: 5432626475900655604}
-  moveSpeed: 12
+  moveSpeed: 20

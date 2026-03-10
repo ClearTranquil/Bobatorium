@@ -137,6 +137,9 @@ public class CupSealer : Machine
 
         yield return RotateCup(snapTransform);
 
+        // Reset the rotation to prevent cups ejecting in the wrong direction
+        snapTransform.rotation = Quaternion.identity;
+
         cup.SealCup();
 
         yield return LowerCup(snapTransform);

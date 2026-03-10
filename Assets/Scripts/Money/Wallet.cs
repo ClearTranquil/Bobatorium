@@ -12,7 +12,7 @@ public class Wallet : MonoBehaviour
     {
         if (Keyboard.current.f9Key.wasPressedThisFrame)
         {
-            Deposit(50);
+            Deposit(5000);
             Debug.Log("Debug: 50 dollars added to wallet");
         }
     }

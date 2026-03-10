@@ -100,4 +100,23 @@ public class DeliveryTray : Machine
     {
         return false;
     }
+
+    /*----------------Employee Interaction-------------------*/
+
+    public override bool CanEmployeeWork()
+    {
+        return HasAnyCup();
+    }
+
+    protected override IEnumerator EmployeeWorkLoop(Employee employee)
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => HasAnyCup());
+
+            TriggerAction();
+
+            yield return new WaitUntil(() => !HasAnyCup());
+        }
+    }
 }
