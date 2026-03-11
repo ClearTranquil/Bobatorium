@@ -13,7 +13,7 @@ public class ShopButton : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private Vector3 popTextOffset = new Vector3(0f, 1f, 0f);
 
-    private Canvas uiCanvas;
+    [SerializeField] private Canvas uiCanvas;
     private GameObject activeUI;
     private Camera cam;
     private Wallet wallet;
@@ -25,9 +25,6 @@ public class ShopButton : MonoBehaviour
 
         wallet = FindFirstObjectByType<Wallet>();
         if (!wallet) Debug.LogWarning("ShopButton: No Wallet found in scene.");
-
-        uiCanvas = FindFirstObjectByType<Canvas>();
-        if (!uiCanvas) Debug.LogWarning("ShopButton: No Canvas found in scene.");
 
         outline = GetComponent<Outline>();
         if(!outline) Debug.LogWarning("ShopButton: No Outline found on button.");
@@ -85,7 +82,13 @@ public class ShopButton : MonoBehaviour
 
     private void ShowHoverUI()
     {
-        if (activeUI || !item) return;
+        if (activeUI)
+        {
+            Debug.Log("Active UI already exists");
+            return;
+        }
+
+        if (!item) return;
 
         activeUI = Instantiate(hoverUIPrefab, uiCanvas.transform);
 

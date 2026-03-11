@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerControls : MonoBehaviour
 {
     private GameObject heldObj;
+    private Camera cam;
 
     [SerializeField] private LayerMask leftClickMask; // for things up, using triggers
     [SerializeField] private LayerMask rightClickMask; // for upgrading things
@@ -13,9 +15,17 @@ public class PlayerControls : MonoBehaviour
 
     /* The player controls script only handles the act of clicking and dragging things. It has no idea what it's actually clicking on or interacting with. 
      This is by design! Interactable objects use an interface that decides what happens when they're clicked/dragged by player controls. */
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
 
     private void Update()
     {
+        // Ignore raycasts if player is interacting with UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         HandleInteraction();
         HandleRightClick();
         HandleDrag();
@@ -24,7 +34,6 @@ public class PlayerControls : MonoBehaviour
         if (heldObj)
         {
             var interactable = heldObj.GetComponent<IInteractable>();
-            interactable?.OnHold();
         }
     }
 
@@ -33,7 +42,7 @@ public class PlayerControls : MonoBehaviour
         if (!Mouse.current.leftButton.wasPressedThisFrame)
             return;
 
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         // If object is Interactable, tell it that its being interacted with
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, leftClickMask))
@@ -58,7 +67,7 @@ public class PlayerControls : MonoBehaviour
         if (!Mouse.current.rightButton.wasPressedThisFrame)
             return;
 
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, rightClickMask))
         {

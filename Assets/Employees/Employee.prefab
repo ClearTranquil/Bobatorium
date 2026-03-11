@@ -463,7 +463,7 @@ MonoBehaviour:
   modelTransform: {fileID: 2094315624250734084}
   rotationSpeed: 360
   screenEdgeThreshold: 40
-  fatigueChanceDenominator: 8
+  fatigueChanceDenominator: 3
 --- !u!95 &7232395326876078461
 Animator:
   serializedVersion: 7
