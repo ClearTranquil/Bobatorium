@@ -20,6 +20,7 @@ public class Cup : MonoBehaviour, IInteractable
     private Collider col;
     private Vector3 defaultCenterOfMass;
     [SerializeField] private Vector3 filledCenterOfMassOffset = new Vector3(0f, -0.1f, 0f);
+    [SerializeField] private float gravityMultiplier = 2f;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -76,6 +77,7 @@ public class Cup : MonoBehaviour, IInteractable
     private void Update()
     {
         teaFillText.text = (teaFillAmount * 100f).ToString("F0") + "%";
+        rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
     }
 
     /*-------------Interaction---------------*/
