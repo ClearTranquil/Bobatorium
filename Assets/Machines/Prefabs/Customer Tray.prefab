@@ -508,7 +508,7 @@ MonoBehaviour:
   trigger: {fileID: 6316690347563290167}
   hasEjectUpgrade: 0
   ejectCheckInterval: 0.1
-  timeBetweenCups: 0.2
+  timeBetweenCups: 0.05
   slotUpgrade1: {fileID: 3137976017322902334}
   slotUpgrade2: {fileID: 7156548549479146886}
 --- !u!1 &9115578111866369822

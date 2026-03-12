@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 public class SaleProcessor : MonoBehaviour
 {
     public Wallet wallet;
-    
+    public static SaleData LastSale;
+
     // Checks all applied sale modifiers and deposits the final amount earned into the player's wallet.
     public void ProcessSale(Cup cup, Customer customer)
     {
@@ -21,6 +22,8 @@ public class SaleProcessor : MonoBehaviour
         ProcessTip(sale, customer, cup);
 
         wallet.Deposit(sale.finalValue);
+
+        LastSale = sale;
     }
 
     private void ProcessTip(SaleData saleData, Customer customer, Cup cup)

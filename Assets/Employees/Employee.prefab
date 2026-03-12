@@ -449,7 +449,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   snapMaxDistance: 100
-  reactionDelay: 0.5
+  reactionDelay: 0.2
   workSpeed: 1
   fatigueLevel: 0
   maxFatigue: 4

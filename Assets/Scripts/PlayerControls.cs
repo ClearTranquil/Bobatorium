@@ -23,8 +23,8 @@ public class PlayerControls : MonoBehaviour
     private void Update()
     {
         // Ignore raycasts if player is interacting with UI
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            return;
+        //if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        //    return;
 
         HandleInteraction();
         HandleRightClick();
