@@ -158,7 +158,7 @@ public class BobaMachine : Machine
         if (employee == null)
             yield break;
 
-        while (HasAnyCup() && !CheckCupCompletion() && employee.CurrentMachine == this)
+        while (AllCupSlotsFull() && !CheckCupCompletion() && employee.CurrentMachine == this)
         {
             TriggerAction();
 

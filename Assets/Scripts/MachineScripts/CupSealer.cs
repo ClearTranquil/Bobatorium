@@ -427,7 +427,7 @@ public class CupSealer : Machine
 
     public override bool CanEmployeeWork()
     {
-        return HasAnyCup() && !CheckCupCompletion() && !isProcessing;
+        return AllCupSlotsFull() && !CheckCupCompletion() && !isProcessing;
     }
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)

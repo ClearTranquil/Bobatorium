@@ -191,7 +191,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 
     // Removes employee when they are picked up
-    public void RemoveActiveEmployee(Employee employee)
+    public virtual void RemoveActiveEmployee(Employee employee)
     {
         if (activeEmployee == employee)
         {
@@ -214,7 +214,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     }
 
     // Scans all active cupSnapPoints to see if they're occupied
-    public bool HasAnyCup()
+    public bool AllCupSlotsFull()
     {
         bool hasActiveSlot = false;
 
@@ -232,6 +232,20 @@ public abstract class Machine : MonoBehaviour,  IInteractable
         return hasActiveSlot;
     }
 
+    public bool HasAnyCup()
+    {
+        foreach (var snap in cupSnapPoints)
+        {
+            if (!snap.gameObject.activeSelf)
+                continue;
+
+            if (snap.IsOccupied)
+                return true;
+        }
+
+        return false;
+    }
+
     // Each machine has different cup completion checks. Ex: BobaMachine checks if BobaFull == true
     public virtual bool CheckCupCompletion()
     {
@@ -246,7 +260,7 @@ public abstract class Machine : MonoBehaviour,  IInteractable
     // Tells employees if there's work to be done on this machine
     public virtual bool CanEmployeeWork()
     {
-        return HasAnyCup() && !CheckCupCompletion();
+        return AllCupSlotsFull() && !CheckCupCompletion();
     }
 
     // Reset's employee's current work loop, then kicks off a new work loop

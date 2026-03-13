@@ -9,6 +9,10 @@ public class DeliveryTray : Machine
     [SerializeField] private GameObject slotUpgrade2;
     private bool isScanning = false;
 
+    private Employee currentEmployee;
+    private int cupsSinceLastCompletion = 0;
+    [SerializeField] private int cupsPerCompletion = 3;
+
     public override void TriggerAction()
     {
         base.TriggerAction();
@@ -77,7 +81,7 @@ public class DeliveryTray : Machine
 
                     yield return new WaitForSeconds(.5f);
 
-                    // Customer is assigned later, in the NPC manager script. Thats why its null right now. 
+                    // Customer is assigned later in the NPC manager script. Thats why its null right now. 
                     SaleEvents.OnCupReady?.Invoke(cup, null);
 
                     //yield return new WaitForSeconds(.5f);
@@ -115,13 +119,44 @@ public class DeliveryTray : Machine
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
+        currentEmployee = employee;
+        SaleEvents.OnCupSold += HandleCupSold;
+
         while (true)
         {
             yield return new WaitUntil(() => HasAnyCup());
 
-            TriggerAction();
-
-            yield return new WaitUntil(() => !HasAnyCup());
+            while (HasAnyCup())
+            {
+                TriggerAction();
+                yield return new WaitForSeconds(0.25f);
+            }
         }
+    }
+
+    // Employees on this machine only increment "cups completed" every 3 cups sold.
+    // This is to keep fatigue growth rates in line with other employees on different machines.
+    private void HandleCupSold(Cup cup, Customer customer)
+    {
+        if (currentEmployee == null)
+            return;
+
+        cupsSinceLastCompletion++;
+
+        if (cupsSinceLastCompletion >= cupsPerCompletion)
+        {
+            cupsSinceLastCompletion = 0;
+            currentEmployee.OnCupCompleted();
+        }
+    }
+
+    public override void RemoveActiveEmployee(Employee employee)
+    {
+        base.RemoveActiveEmployee(employee);
+
+        SaleEvents.OnCupSold -= HandleCupSold;
+
+        currentEmployee = null;
+        cupsSinceLastCompletion = 0;
     }
 }

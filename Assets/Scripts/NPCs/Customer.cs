@@ -12,8 +12,10 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private float arrivalThreshold = 0.05f;
     private Transform target;
 
+    [Header("Animation/Visuals")]
     [SerializeField] private Transform cupSlot;
     private Animator animator;
+    private float idleOffset;
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
         // Offset idle anim so customers don't move in sync
         float randomOffset = Random.value;
-        animator.Play("idle", 0, randomOffset);
+        animator.Play("idle", 0, idleOffset);
     }
 
     /*==========Customer Data============*/
@@ -60,6 +62,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
         {
             target = null;
             animator.SetBool("walking", false);
+            animator.Play("idle", 0, idleOffset);
         }
     }
 
