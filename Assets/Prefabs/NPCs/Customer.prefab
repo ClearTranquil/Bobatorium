@@ -298,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3614093637738468580}
   - component: {fileID: 4903767999184658580}
+  - component: {fileID: 6028524187206052501}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -337,3 +338,25 @@ MonoBehaviour:
   baseTipChance: 0.1
   cupSlot: {fileID: 5432626475900655604}
   moveSpeed: 30
+--- !u!95 &6028524187206052501
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068824270809336643}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c30e532ca6c1d8409496cf1bd2cae5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
