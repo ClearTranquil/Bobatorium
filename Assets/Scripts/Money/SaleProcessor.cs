@@ -28,21 +28,19 @@ public class SaleProcessor : MonoBehaviour
 
     private void ProcessTip(SaleData saleData, Customer customer, Cup cup)
     {
-        float tipChance = 0f;
+        if (customer == null)
+            return;
 
-        if (customer != null)
-            tipChance += customer.GetTipChance();
+        // Probability of tipping = remaining tip time normalized (0 to 1)
+        float tipChance = customer.RemainingTipNormalized;
 
-        if (cup != null)
-            tipChance += cup.GetTipBonus();
-
+        // Roll random
         if (Random.value <= tipChance)
         {
             saleData.didTip = true;
 
-            // Current tip formula is 25%, we'll probably have modifiers for this later
+            // Flat tip amount (unchanged)
             saleData.tipAmount = Mathf.RoundToInt(saleData.baseValue * 0.25f);
-
             saleData.finalValue += saleData.tipAmount;
         }
     }

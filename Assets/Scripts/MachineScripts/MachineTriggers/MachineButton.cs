@@ -32,7 +32,9 @@ public class MachineButton : MachineTriggerBase
     private void AnimateButton()
     {
         if (animator)
+        {
+            animator.ResetTrigger("Trigger");
             animator.SetTrigger("Trigger");
+        }
     }
-
 }

@@ -89,6 +89,10 @@ public class BobaMachine : Machine
                 {
                     rb.angularVelocity = Vector3.zero;
                     rb.linearVelocity = Vector3.zero;
+                    
+
+                    Vector3 initialVelocity = Vector3.down * 8f;
+                    rb.linearVelocity = initialVelocity;
                 }
 
                 boba.SetActive(true);

@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 8412529969225683903}
   - component: {fileID: 982195603361999718}
   - component: {fileID: 2707589909065981045}
-  m_Layer: 6
+  m_Layer: 13
   m_Name: Ripcord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,8 +186,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 1.45, z: 0}
+  m_Size: {x: 1.315535, y: 2.0892384, z: 1}
+  m_Center: {x: 0.023382783, y: 0.90538085, z: 0}
 --- !u!120 &2707589909065981045
 LineRenderer:
   serializedVersion: 2
@@ -405,7 +405,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

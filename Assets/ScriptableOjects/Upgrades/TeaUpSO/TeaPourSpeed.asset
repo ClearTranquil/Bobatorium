@@ -16,10 +16,15 @@ MonoBehaviour:
   upgradeName: Tea Pour Speed
   description: Fills cups with tea faster
   icon: {fileID: 0}
-  baseCost: 500
-  manualCosts: f4010000dc050000b80b000088130000
+  baseCost: 250
+  manualCosts: fa000000030000005e01000004000000c20100000500000026020000060000008a020000
   stackValues:
   - 0.5
   - 0.75
   - 1
   - 1.25
+  - 1.5
+  - 1.75
+  - 2
+  - 2.25
+  - 2.5

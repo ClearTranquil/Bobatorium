@@ -16,10 +16,16 @@ MonoBehaviour:
   upgradeName: Faster Claws
   description: Grabs cups faster
   icon: {fileID: 0}
-  baseCost: 500
-  manualCosts: f4010000dc050000b80b000094110000
+  baseCost: 250
+  manualCosts: fa000000f4010000ee020000e8030000e2040000dc050000d6060000d0070000ca080000c4090000
   stackValues:
   - 1.25
   - 1.5
   - 1.75
   - 2
+  - 2.25
+  - 2.5
+  - 2.75
+  - 3
+  - 3.25
+  - 3.5

@@ -17,12 +17,20 @@ public class Customer : MonoBehaviour, ICustomerInfo
     private Animator animator;
     private float idleOffset;
 
+    [Header("Tip timer")]
+    [SerializeField] private float tipTime = 10f;
+    private float remainingTipTime;
+    private bool timerRunning;
+    public float TipTime => tipTime;
+    public bool CanTip => remainingTipTime > 0f;
+    public float RemainingTipNormalized => remainingTipTime / tipTime;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
         // Offset idle anim so customers don't move in sync
-        float randomOffset = Random.value;
+        idleOffset = Random.value;
         animator.Play("idle", 0, idleOffset);
     }
 
@@ -53,15 +61,28 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
     private void Update()
     {
+        if (timerRunning)
+        {
+            remainingTipTime -= Time.deltaTime;
+
+            if (remainingTipTime <= 0f)
+            {
+                remainingTipTime = 0f;
+                timerRunning = false;
+            }
+        }
+
         if (!target)
             return;
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
+        // Checks if customer has arrived at their destination
         if (Vector3.Distance(transform.position, target.position) <= arrivalThreshold)
         {
             target = null;
             animator.SetBool("walking", false);
+            idleOffset = Random.value;
             animator.Play("idle", 0, idleOffset);
         }
     }
@@ -70,6 +91,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
     public void ReceiveCup(Cup cup, float moveTime = 0.5f)
     {
+        StopTipTimer();
         StartCoroutine(MoveCupToHand(cup, moveTime));
     }
 
@@ -97,5 +119,28 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
         // Mark cup ready for sale after it reaches the hand
         cup.MarkReadyForSale();
+    }
+
+    /*============Tipping============*/
+    public void StartTipTimer()
+    {
+        remainingTipTime = tipTime;
+        timerRunning = true;
+    }
+
+    public void StopTipTimer()
+    {
+        timerRunning = false;
+    }
+
+    public void SetTipTime(float newTipTime)
+    {
+        tipTime = newTipTime;
+        remainingTipTime = newTipTime;
+    }
+
+    public void SetTipChance(float newChance)
+    {
+        baseTipChance = Mathf.Clamp01(newChance);
     }
 }

@@ -336,8 +336,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   baseTipChance: 0.1
-  cupSlot: {fileID: 5432626475900655604}
   moveSpeed: 30
+  arrivalThreshold: 0.05
+  cupSlot: {fileID: 5432626475900655604}
+  tipTime: 20
 --- !u!95 &6028524187206052501
 Animator:
   serializedVersion: 7

@@ -1,57 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.MPE;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCManager : MonoBehaviour
 {
+    [Header("Line Positioning")]
     [SerializeField] private List<Customer> line = new List<Customer>();
     [SerializeField] private Transform[] linePositions;
     [SerializeField] private Transform offScreenPosition;
     [SerializeField] private Transform hiddenPosition;
     [SerializeField] private Transform backOfLine;
 
+    [Header("Visual Stuff")]
     [SerializeField] private float cupToHandTime = .5f;
     [SerializeField] private float offscreenWaitTime = 3f;
+
+    [Header("UI")]
+    [SerializeField] private Slider tipTimerSlider;
 
     private Queue<Customer> returnQueue = new Queue<Customer>();
     private bool isProcessingReturn = false;
 
-    //private IEnumerator moveNPCs(Cup cup)
-    //{
-    //    if (line.Count == 0)
-    //    {
-    //        Debug.LogWarning("Cup sold but no NPCs in line.");
-    //        yield break;
-    //    }
+    private void Start()
+    {
+        UpdateLinePositions();
+    }
 
-    //    // NPC pos 1 takes cup
-    //    Customer cusToMove = line[0];
-    //    StartCoroutine(MoveCupToSlot(cusToMove, cup));
-    //    yield return new WaitForSeconds(.2f);
+    private void Update()
+    {
+        Customer firstCustomer = line[0];
 
-    //    // NPC moves off screen
-    //    line.RemoveAt(0);
-    //    cusToMove.MoveTo(offScreenPosition);
+        tipTimerSlider.value = firstCustomer.RemainingTipNormalized;
 
-    //    // Move other NPCs
-    //    UpdateLinePositions();
+        // Show/hide slider based on whether the timer is active
+        tipTimerSlider.gameObject.SetActive(firstCustomer.CanTip);
+    }
 
-    //    // Wait a sec, teleport offscreen NPC to a hidden position at the end of the line. Remove cup while offscreen. 
-    //    yield return new WaitForSeconds(1f);
-    //    Destroy(cup.gameObject);
-    //    cusToMove.TeleportTo(hiddenPosition);
-
-    //    // Queue for line return
-    //    returnQueue.Enqueue(cusToMove);
-
-    //    // Start return processor if needed
-    //    if (!isProcessingReturn)
-    //    {
-    //        StartCoroutine(ProcessReturns());
-    //    }
-    //}
-
+    // Moves an NPC to the back of the line
     private IEnumerator ProcessReturns()
     {
         isProcessingReturn = true;
@@ -92,6 +78,11 @@ public class NPCManager : MonoBehaviour
         for (int i = 0; i < max; i++)
         {
             line[i].MoveTo(linePositions[i]);
+
+            if (i == 0)
+                line[i].StartTipTimer();
+            else
+                line[i].StopTipTimer();
         }
     }
 

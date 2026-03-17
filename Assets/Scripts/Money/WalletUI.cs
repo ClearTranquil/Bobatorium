@@ -87,11 +87,12 @@ public class WalletUI : MonoBehaviour
 
         int saleAmount = sale.finalValue - sale.tipAmount;
 
-        SpawnSaleText($"+${saleAmount / 100f:F2}", Color.white);
-
         if (sale.didTip)
         {
             SpawnSaleText($"+${saleAmount / 100f:F2} <color=#00FF00>+${sale.tipAmount / 100f:F2} tip</color>", Color.white);
+        } else
+        {
+            SpawnSaleText($"+${saleAmount / 100f:F2}", Color.white);
         }
     }
 
