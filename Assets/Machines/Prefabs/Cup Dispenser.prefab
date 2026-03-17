@@ -465,7 +465,7 @@ MonoBehaviour:
   spawnInHandOffsetY: 1
   conveyorCupPosition: {fileID: 0}
   conveyor: {fileID: 0}
-  timeBetweenCups: 3.5
+  timeBetweenCups: 2
   autoDispenseLight: {fileID: 5925651553007267055}
 --- !u!95 &3189058727167843981
 Animator:

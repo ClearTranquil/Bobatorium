@@ -6333,10 +6333,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1935685615}
     - target: {fileID: 4227417747060320207, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
-      propertyPath: timeBetweenCups
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4227417747060320207, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
       propertyPath: conveyorCupPosition
       value: 
       objectReference: {fileID: 987233880}

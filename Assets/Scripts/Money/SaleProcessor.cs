@@ -31,18 +31,35 @@ public class SaleProcessor : MonoBehaviour
         if (customer == null)
             return;
 
-        // Probability of tipping = remaining tip time normalized (0 to 1)
+        // Time-based chance to tip
         float tipChance = customer.RemainingTipNormalized;
 
-        // Roll random
-        if (Random.value <= tipChance)
-        {
-            saleData.didTip = true;
+        if (Random.value > tipChance)
+            return;
 
-            // Flat tip amount (unchanged)
-            saleData.tipAmount = Mathf.RoundToInt(saleData.baseValue * 0.25f);
-            saleData.finalValue += saleData.tipAmount;
+        saleData.didTip = true;
+
+        // Jackpot chance (5%)
+        if (Random.value <= 0.05f)
+        {
+            saleData.tipAmount = 5; // flat $5
         }
+        else
+        {
+            float roll = Random.value;
+
+            float tipPercent;
+            if (roll < 0.33f)
+                tipPercent = 0.15f;
+            else if (roll < 0.66f)
+                tipPercent = 0.20f;
+            else
+                tipPercent = 0.30f;
+
+            saleData.tipAmount = Mathf.RoundToInt(saleData.baseValue * tipPercent);
+        }
+
+        saleData.finalValue += saleData.tipAmount;
     }
 
     private void OnEnable()
