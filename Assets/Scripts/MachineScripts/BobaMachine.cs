@@ -91,7 +91,7 @@ public class BobaMachine : Machine
                     rb.linearVelocity = Vector3.zero;
                     
 
-                    Vector3 initialVelocity = Vector3.down * 8f;
+                    Vector3 initialVelocity = Vector3.down * 4f;
                     rb.linearVelocity = initialVelocity;
                 }
 
