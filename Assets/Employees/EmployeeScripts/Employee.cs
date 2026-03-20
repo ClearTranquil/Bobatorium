@@ -12,6 +12,7 @@ public class Employee : MonoBehaviour, IInteractable
 
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 40f;
+    [SerializeField] private Rigidbody rb;
 
     [Header("Position Snapping")]
     [SerializeField] private LayerMask snapMask;
@@ -34,6 +35,9 @@ public class Employee : MonoBehaviour, IInteractable
     [Header("Fatigue Visuals")]
     [SerializeField] private SpriteRenderer faceRenderer;
     [SerializeField] private Sprite[] fatigueFaceSprites;
+    [SerializeField] private SpriteRenderer headRenderer;
+    [SerializeField] private Sprite headAwakeSprite;
+    [SerializeField] private Sprite headAsleepSprite;
 
     [Header("Visual Rotation")]
     [SerializeField] private Transform modelTransform;
@@ -57,6 +61,7 @@ public class Employee : MonoBehaviour, IInteractable
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         InitializeFatigue();
         FaceCamera();
@@ -98,6 +103,8 @@ public class Employee : MonoBehaviour, IInteractable
             currentSnapPoint.Clear();
             currentSnapPoint = null;
             CurrentMachine = null;
+
+            rb.isKinematic = false;
 
             StopWorkLoop();
         }
@@ -142,9 +149,12 @@ public class Employee : MonoBehaviour, IInteractable
         {
             desiredPos = heldSnapPoint.transform.position;
             targetModelRotation = heldSnapPoint.transform.rotation;
+            rb.isKinematic = true;
+
         } else
         {
             FaceCamera();
+            rb.isKinematic = false; 
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
@@ -202,6 +212,7 @@ public class Employee : MonoBehaviour, IInteractable
     {
         currentSnapPoint = snapPoint;
         CurrentMachine = snapPoint.GetComponentInParent<Machine>();
+        rb.isKinematic = true;
 
         CurrentMachine.SetActiveEmployee(this);
 
@@ -346,18 +357,34 @@ public class Employee : MonoBehaviour, IInteractable
         // Play "waking up" animation?
 
         isAsleep = false;
-        fatigueLevel = 3; // NOT fully rested
+        fatigueLevel = 3;
 
         UpdateFatigueVisuals();
     }
 
     private void UpdateFatigueVisuals()
     {
-        if (!faceRenderer || fatigueFaceSprites == null || fatigueFaceSprites.Length == 0)
+        if (!headRenderer || !faceRenderer)
             return;
 
-        int spriteIndex = Mathf.Clamp(fatigueLevel, 0, fatigueFaceSprites.Length - 1);
-        faceRenderer.sprite = fatigueFaceSprites[spriteIndex];
+        if (isAsleep)
+        {
+            // Swap head
+            headRenderer.sprite = headAsleepSprite;
+            faceRenderer.enabled = false;
+        }
+        else
+        {
+            headRenderer.sprite = headAwakeSprite;
+            faceRenderer.enabled = true;
+
+            // Match face to fatigue level
+            if (fatigueFaceSprites != null && fatigueFaceSprites.Length > 0)
+            {
+                int spriteIndex = Mathf.Clamp(fatigueLevel, 0, fatigueFaceSprites.Length - 1);
+                faceRenderer.sprite = fatigueFaceSprites[spriteIndex];
+            }
+        }
 
         if (animator)
         {

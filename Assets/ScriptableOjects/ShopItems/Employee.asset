@@ -16,4 +16,4 @@ MonoBehaviour:
   itemDescription: Employees automatically operate machines they're assigned to.
   prefabToSpawn: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
   price: 1500
-  spawnOffset: {x: 5, y: -1, z: -3}
+  spawnOffset: {x: 35, y: -4, z: -3}

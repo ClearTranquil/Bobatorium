@@ -46,7 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControls
   leftClickMask:
     serializedVersion: 2
-    m_Bits: 8264
+    m_Bits: 41032
   rightClickMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 576
+  uiBlockingLayer:
+    serializedVersion: 2
+    m_Bits: 16384

@@ -8,8 +8,9 @@ public class PlayerControls : MonoBehaviour
     private GameObject heldObj;
     private Camera cam;
 
-    [SerializeField] private LayerMask leftClickMask; // for things up, using triggers
+    [SerializeField] private LayerMask leftClickMask; // for player interaction
     [SerializeField] private LayerMask rightClickMask; // for upgrading things
+    [SerializeField] private LayerMask uiBlockingLayer; // for UI that should block 
 
     public static event Action ForceRelease;
 
@@ -23,8 +24,22 @@ public class PlayerControls : MonoBehaviour
     private void Update()
     {
         // Ignore raycasts if player is interacting with UI
-        //if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-        //    return;
+        if (EventSystem.current != null)
+        {
+            var pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Mouse.current.position.ReadValue()
+            };
+
+            var results = new System.Collections.Generic.List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            foreach (var r in results)
+            {
+                if ((uiBlockingLayer.value & (1 << r.gameObject.layer)) != 0)
+                    return;
+            }
+        }
 
         HandleInteraction();
         HandleRightClick();

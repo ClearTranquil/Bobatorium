@@ -23,8 +23,8 @@ TagManager:
   - EmployeeSnap
   - CupIntake
   - MachineTrigger
-  - 
-  - 
+  - BlockRaycast
+  - Employee
   - 
   - 
   - 

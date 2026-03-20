@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 813181227306211199}
   - component: {fileID: 359014386922175210}
   - component: {fileID: 741487510541485423}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1784960067762241651}
   - component: {fileID: 1013470420330987833}
   - component: {fileID: 8780378240697456237}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 1875971202936477550}
   - component: {fileID: 4428936039789988227}
   - component: {fileID: 7029371578758110778}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Upgrade Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 2925063826108261708}
   - component: {fileID: 873000831355676558}
   - component: {fileID: 7945243864871979250}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Price
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 9100455403632907418}
   - component: {fileID: 1953475111797359940}
   - component: {fileID: 13267520087932966}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
