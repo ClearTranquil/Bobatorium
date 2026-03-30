@@ -21,9 +21,12 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private float tipTime = 10f;
     private float remainingTipTime;
     private bool timerRunning;
+
     public float TipTime => tipTime;
     public bool CanTip => remainingTipTime > 0f;
     public float RemainingTipNormalized => remainingTipTime / tipTime;
+    public bool WasServedInTime { get; private set; }
+
 
     private void Awake()
     {
@@ -65,10 +68,13 @@ public class Customer : MonoBehaviour, ICustomerInfo
         {
             remainingTipTime -= Time.deltaTime;
 
+            // Timer ran out, penalize the customer satisfaction
             if (remainingTipTime <= 0f)
             {
                 remainingTipTime = 0f;
                 timerRunning = false;
+
+                SaleEvents.OnCustomerTimedOut?.Invoke(this);
             }
         }
 
@@ -91,6 +97,8 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
     public void ReceiveCup(Cup cup, float moveTime = 0.5f)
     {
+        WasServedInTime = remainingTipTime > 0f;
+
         StopTipTimer();
         StartCoroutine(MoveCupToHand(cup, moveTime));
     }

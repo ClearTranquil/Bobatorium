@@ -8,4 +8,7 @@ public static class SaleEvents
 
     // Fires when a cup is ready for pickup by a customer
     public static Action<Cup, Customer> OnCupReady;
+
+    // Fires when a customer's wait time runs out
+    public static Action<Customer> OnCustomerTimedOut;
 }

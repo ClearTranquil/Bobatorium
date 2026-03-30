@@ -27,6 +27,18 @@ public class NPCManager : MonoBehaviour
         UpdateLinePositions();
     }
 
+    private void OnEnable()
+    {
+        SaleEvents.OnCupReady += OnCupReady;
+        SaleEvents.OnCustomerTimedOut += OnCustomerTimedOut;
+    }
+
+    private void OnDisable()
+    {
+        SaleEvents.OnCupReady -= OnCupReady;
+        SaleEvents.OnCustomerTimedOut -= OnCustomerTimedOut;
+    }
+
     private void Update()
     {
         Customer firstCustomer = line[0];
@@ -86,47 +98,51 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-
-
-    private IEnumerator MoveCupToSlot(Customer cus, Cup cup)
+    private IEnumerator AdvanceLine(Customer cus)
     {
-        if (cus == null || cup == null)
-            yield break;
-
-        // Customer takes the cup, invoke cup sale
-        cus.ReceiveCup(cup, cupToHandTime);
-        SaleEvents.OnCupSold?.Invoke(cup, cus);
-
-        // Small buffer so customer can start receiving
-        yield return new WaitForSeconds(0.2f);
-
-        // Remove customer from front of line and move offscreen
         line.RemoveAt(0);
+
+        // Move offscreen first
         cus.MoveTo(offScreenPosition);
 
-        // Move other customers forward
         UpdateLinePositions();
-        yield return new WaitForSeconds(1f);
 
-        // Teleport customer to hidden position at end of line, remove their cup
+        // Wait before teleporting to hidden staging position
+        yield return new WaitForSeconds(offscreenWaitTime);
+
         cus.TeleportTo(hiddenPosition);
-        Destroy(cup.gameObject);
 
-        // Get back in line, chump
         returnQueue.Enqueue(cus);
 
         if (!isProcessingReturn)
             StartCoroutine(ProcessReturns());
     }
 
-    private void OnEnable()
+    private IEnumerator MoveCupToSlot(Customer cus, Cup cup)
     {
-        SaleEvents.OnCupReady += OnCupReady;
+        if (cus == null || cup == null)
+            yield break;
+
+        cus.ReceiveCup(cup, cupToHandTime);
+        SaleEvents.OnCupSold?.Invoke(cup, cus);
+
+        yield return new WaitForSeconds(0.2f);
+
+        StartCoroutine(AdvanceLine(cus));
+
+        yield return new WaitForSeconds(1f);
+
+        cus.TeleportTo(hiddenPosition);
+        Destroy(cup.gameObject);
     }
 
-    private void OnDisable()
+    private void OnCustomerTimedOut(Customer cus)
     {
-        SaleEvents.OnCupReady -= OnCupReady;
+        if (line.Count == 0 || line[0] != cus)
+            return;
+
+        // No money, just remove them like a failed sale
+        StartCoroutine(AdvanceLine(cus));
     }
 
     public void OnCupReady(Cup cup, Customer customer)

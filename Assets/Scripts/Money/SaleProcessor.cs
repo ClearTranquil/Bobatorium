@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class SaleProcessor : MonoBehaviour
 {
     public Wallet wallet;
+    public CustomerSatisfaction satisfaction;
     public static SaleData LastSale;
 
     // Checks all applied sale modifiers and deposits the final amount earned into the player's wallet.
@@ -31,8 +32,9 @@ public class SaleProcessor : MonoBehaviour
         if (customer == null)
             return;
 
-        // Time-based chance to tip
-        float tipChance = customer.RemainingTipNormalized;
+        float satisfactionNormalized = satisfaction.CurrentNormalized;
+
+        float tipChance = Mathf.Lerp(0.2f, 0.95f, satisfactionNormalized);
 
         if (Random.value > tipChance)
             return;
