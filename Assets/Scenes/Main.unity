@@ -4128,8 +4128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac492615d38dfa469afdad6eee508dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerSatisfaction
-  currentSatisfaction: 50
-  maxSatisfaction: 65
+  currentSatisfaction: 20
+  satisfactionSoftCap: 45
+  maxSatisfaction: 100
   gainChance: 0.35
   gainAmountRange: {x: 0.5, y: 1}
   failPenalty: 2

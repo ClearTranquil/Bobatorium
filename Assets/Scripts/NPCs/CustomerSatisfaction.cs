@@ -128,25 +128,9 @@ public class CustomerSatisfaction : MonoBehaviour
 
     //================= Upgrades =================
 
-    public void IncreaseMaxSatisfaction(float amount)
+    public void IncreaseSoftcap(float amount)
     {
-        maxSatisfaction += amount;
-        maxSatisfaction = Mathf.Clamp(maxSatisfaction, 0f, 100f);
-
-        ClampSatisfaction();
+        satisfactionSoftCap = amount;
         NotifyUI();
-    }
-
-    public void SetMaxSatisfaction(float value)
-    {
-        maxSatisfaction = Mathf.Clamp(value, 0f, 100f);
-
-        ClampSatisfaction();
-        NotifyUI();
-    }
-
-    public void AddFlatSatisfaction(float amount)
-    {
-        ModifySatisfaction(amount);
     }
 }

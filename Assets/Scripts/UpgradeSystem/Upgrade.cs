@@ -20,6 +20,12 @@ public class Upgrade : ScriptableObject
     public string description;
     public Sprite icon;
 
+    [Tooltip("Optional per-level names")]
+    public string[] levelNames;
+
+    [Tooltip("Optional per-level descriptions")]
+    [TextArea] public string[] levelDescriptions;
+
     //public MachineType machineType;
 
     public int baseCost = 10;
@@ -34,5 +40,21 @@ public class Upgrade : ScriptableObject
     public int GetCost(int currentLevel)
     {
         return baseCost * (currentLevel + 1);
+    }
+
+    public string GetName(int currentLevel)
+    {
+        if (levelNames != null && currentLevel < levelNames.Length)
+            return levelNames[currentLevel];
+
+        return upgradeName;
+    }
+
+    public string GetDescription(int currentLevel)
+    {
+        if (levelDescriptions != null && currentLevel < levelDescriptions.Length)
+            return levelDescriptions[currentLevel];
+
+        return description;
     }
 }

@@ -59,6 +59,12 @@ public class CupSealer : Machine
             ActivateSealer(Mathf.RoundToInt(m_upgrade.stackValues[m_newLevel - 1]));
             return true;
         }
+
+        if (m_upgrade.upgradeID == "SatisfactionUp")
+        {
+            SatisfactionUpgrade(m_upgrade.stackValues[m_newLevel - 1]);
+            return true;
+        }
         return true;
     }
 
@@ -77,6 +83,13 @@ public class CupSealer : Machine
                 Debug.Log("Activating cup slot 2");
                 return;
         }
+    }
+
+    private void SatisfactionUpgrade(float upgradeAmount)
+    {
+        CustomerSatisfaction satisfaction = FindFirstObjectByType<CustomerSatisfaction>();
+
+        satisfaction.IncreaseSoftcap(upgradeAmount);
     }
 
     public override bool CheckCupCompletion()
