@@ -7,6 +7,7 @@ public class CustomerSatisfaction : MonoBehaviour
     [Header("Core Values")]
     [Range(0f, 100f)]
     [SerializeField] private float currentSatisfaction = 50f;
+    [SerializeField] private float satisfactionSoftCap = 65f;
     [SerializeField] private float maxSatisfaction = 65f;
 
     [Header("Gain Chance")]
@@ -85,8 +86,27 @@ public class CustomerSatisfaction : MonoBehaviour
 
     private void GainSatisfaction()
     {
-        float gain = Random.Range(gainAmountRange.x, gainAmountRange.y);
-        ModifySatisfaction(gain);
+        float baseGain = Random.Range(gainAmountRange.x, gainAmountRange.y);
+
+        float multiplier = GetSoftCapMultiplier();
+
+        float finalGain = baseGain * multiplier;
+
+        ModifySatisfaction(finalGain);
+    }
+
+    // Satisfaction has a softcap. Gains have diminishing returns the closer you get to the softcap.
+    private float GetSoftCapMultiplier()
+    {
+        if (currentSatisfaction <= satisfactionSoftCap)
+            return 1f;
+
+        float overAmount = currentSatisfaction - satisfactionSoftCap;
+        float range = 100f - satisfactionSoftCap;
+
+        float t = overAmount / range;
+
+        return 1f - (t * t);
     }
 
     private void ModifySatisfaction(float amount)
