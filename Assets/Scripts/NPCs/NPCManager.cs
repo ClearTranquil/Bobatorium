@@ -19,8 +19,15 @@ public class NPCManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Slider tipTimerSlider;
 
+    private RegCustomerManager regularManager;
+
     private Queue<Customer> returnQueue = new Queue<Customer>();
     private bool isProcessingReturn = false;
+
+    private void Awake()
+    {
+        regularManager = FindFirstObjectByType<RegCustomerManager>();
+    }
 
     private void Start()
     {
@@ -49,7 +56,7 @@ public class NPCManager : MonoBehaviour
         tipTimerSlider.gameObject.SetActive(firstCustomer.CanTip);
     }
 
-    // Moves an NPC to the back of the line
+    // Move NPC to back of line, replace with regular if possible
     private IEnumerator ProcessReturns()
     {
         isProcessingReturn = true;
@@ -58,6 +65,7 @@ public class NPCManager : MonoBehaviour
         {
             Customer cus = returnQueue.Dequeue();
 
+            // Normal customer return flow
             cus.MoveTo(backOfLine);
 
             // Wait while they are offscreen
@@ -77,6 +85,27 @@ public class NPCManager : MonoBehaviour
                 cus.MoveTo(backOfLine);
                 Debug.LogWarning("NPC returned but no line position available.");
             }
+
+            if (regularManager != null && regularManager.TryGetRegular(out Customer regular))
+            {
+                // Prevent duplicates in line
+                if (!line.Contains(regular))
+                {
+                    line.Add(regular);
+
+                    int regIndex = line.Count - 1;
+
+                    if (regIndex < linePositions.Length)
+                    {
+                        regular.MoveTo(linePositions[regIndex]);
+                    }
+                    else
+                    {
+                        regular.MoveTo(backOfLine);
+                    }
+                }
+            }
+
             yield return new WaitForSeconds(0.3f);
         }
 
@@ -100,6 +129,8 @@ public class NPCManager : MonoBehaviour
 
     private IEnumerator AdvanceLine(Customer cus)
     {
+        cus.SetBusy(true);
+
         line.RemoveAt(0);
 
         // Move offscreen first

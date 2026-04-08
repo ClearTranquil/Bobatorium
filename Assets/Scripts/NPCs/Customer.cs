@@ -11,6 +11,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float arrivalThreshold = 0.05f;
     private Transform target;
+    public bool IsBusy { get; private set; }
 
     [Header("Animation/Visuals")]
     [SerializeField] private Transform cupSlot;
@@ -22,10 +23,14 @@ public class Customer : MonoBehaviour, ICustomerInfo
     private float remainingTipTime;
     private bool timerRunning;
 
+    [Header("Regulars")]
+    [SerializeField] private bool isRegular = false;
+
     public float TipTime => tipTime;
     public bool CanTip => remainingTipTime > 0f;
     public float RemainingTipNormalized => remainingTipTime / tipTime;
     public bool WasServedInTime { get; private set; }
+    public bool IsRegular => isRegular;
 
 
     private void Awake()
@@ -35,6 +40,8 @@ public class Customer : MonoBehaviour, ICustomerInfo
         // Offset idle anim so customers don't move in sync
         idleOffset = Random.value;
         animator.Play("idle", 0, idleOffset);
+
+        IsBusy = false;
     }
 
     /*==========Customer Data============*/
@@ -47,6 +54,12 @@ public class Customer : MonoBehaviour, ICustomerInfo
     }
 
     /*===========Movement===========*/
+
+    public void SetBusy(bool value)
+    {
+        IsBusy = value;
+    }
+
     public void MoveTo(Transform newTarget)
     {
         target = newTarget;
@@ -150,5 +163,19 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public void SetTipChance(float newChance)
     {
         baseTipChance = Mathf.Clamp01(newChance);
+    }
+
+    /*=================Regulars===================*/
+    public void SetRegular(bool value)
+    {
+        isRegular = value;
+
+        if (isRegular)
+        {
+            // TEMP visual for testing
+            var renderer = GetComponentInChildren<Renderer>();
+            if (renderer != null)
+                renderer.material.color = Color.blue;
+        }
     }
 }
