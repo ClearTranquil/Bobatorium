@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Customer : MonoBehaviour, ICustomerInfo
 {
@@ -28,6 +29,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
     [Header("Regulars")]
     [SerializeField] private bool isRegular = false;
+    [SerializeField] private GameObject regularStar;
 
     public float TipTime => tipTime;
     public bool CanTip => remainingTipTime > 0f;
@@ -193,10 +195,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
         if (isRegular)
         {
-            // TEMP visual for testing
-            var renderer = GetComponentInChildren<Renderer>();
-            if (renderer != null)
-                renderer.material.color = Color.blue;
+            regularStar.SetActive(true);
         }
     }
 

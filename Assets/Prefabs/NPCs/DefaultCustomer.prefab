@@ -33,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7346184332729920849}
+  - {fileID: 7546801049253737460}
   m_Father: {fileID: 2094315624250734084}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4138817663987411019
@@ -437,7 +438,6 @@ Transform:
   m_Children:
   - {fileID: 1661080909323841402}
   - {fileID: 7699077052163110699}
-  - {fileID: 7546801049253737460}
   m_Father: {fileID: 3614093637738468580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5832174034923841599
@@ -482,12 +482,12 @@ GameObject:
   - component: {fileID: 7546801049253737460}
   - component: {fileID: 4946626784573068578}
   m_Layer: 0
-  m_Name: Acessory
+  m_Name: Regular Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7546801049253737460
 Transform:
   m_ObjectHideFlags: 0
@@ -496,12 +496,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5933087544987383060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.18160206, y: 0.37499997, z: -0.6}
+  m_LocalScale: {x: 0.056590877, y: 0.08569556, z: 0.08569556}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2094315624250734084}
+  m_Father: {fileID: 1661080909323841402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4946626784573068578
 SpriteRenderer:
@@ -550,15 +550,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4beb3966861974149ab3169da5e53489, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.8, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7068824270809336643
@@ -616,6 +616,7 @@ MonoBehaviour:
   bodyRenderer: {fileID: 2985858093331848449}
   tipTime: 20
   isRegular: 0
+  regularStar: {fileID: 5933087544987383060}
 --- !u!95 &6028524187206052501
 Animator:
   serializedVersion: 7
