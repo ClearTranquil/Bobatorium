@@ -22,6 +22,7 @@ public class NPCManager : MonoBehaviour
     private RegCustomerManager regularManager;
 
     private Queue<Customer> returnQueue = new Queue<Customer>();
+    [SerializeField] private List<CustomerProfile> allProfiles;
     private bool isProcessingReturn = false;
 
     private void Awake()
@@ -31,7 +32,22 @@ public class NPCManager : MonoBehaviour
 
     private void Start()
     {
+        InitializeCustomers();
         UpdateLinePositions();
+    }
+
+    private void InitializeCustomers()
+    {
+        for (int i = 0; i < line.Count; i++)
+        {
+            CustomerProfile profile = GetRandomProfile();
+            line[i].Initialize(profile);
+        }
+    }
+
+    private CustomerProfile GetRandomProfile()
+    {
+        return allProfiles[Random.Range(0, allProfiles.Count)];
     }
 
     private void OnEnable()
@@ -48,11 +64,15 @@ public class NPCManager : MonoBehaviour
 
     private void Update()
     {
+        if (line.Count == 0)
+            return;
+
         Customer firstCustomer = line[0];
 
-        tipTimerSlider.value = firstCustomer.RemainingTipNormalized;
+        if (!firstCustomer.IsInitialized())
+            return;
 
-        // Show/hide slider based on whether the timer is active
+        tipTimerSlider.value = firstCustomer.RemainingTipNormalized;
         tipTimerSlider.gameObject.SetActive(firstCustomer.CanTip);
     }
 
@@ -65,46 +85,18 @@ public class NPCManager : MonoBehaviour
         {
             Customer cus = returnQueue.Dequeue();
 
-            // Normal customer return flow
             cus.MoveTo(backOfLine);
 
-            // Wait while they are offscreen
             yield return new WaitForSeconds(offscreenWaitTime);
 
-            // Add NPC back into the line
             line.Add(cus);
 
             int index = line.Count - 1;
 
             if (index < linePositions.Length)
-            {
                 cus.MoveTo(linePositions[index]);
-            }
             else
-            {
                 cus.MoveTo(backOfLine);
-                Debug.LogWarning("NPC returned but no line position available.");
-            }
-
-            if (regularManager != null && regularManager.TryGetRegular(out Customer regular))
-            {
-                // Prevent duplicates in line
-                if (!line.Contains(regular))
-                {
-                    line.Add(regular);
-
-                    int regIndex = line.Count - 1;
-
-                    if (regIndex < linePositions.Length)
-                    {
-                        regular.MoveTo(linePositions[regIndex]);
-                    }
-                    else
-                    {
-                        regular.MoveTo(backOfLine);
-                    }
-                }
-            }
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -118,12 +110,17 @@ public class NPCManager : MonoBehaviour
 
         for (int i = 0; i < max; i++)
         {
-            line[i].MoveTo(linePositions[i]);
+            Customer c = line[i];
+
+            if (!c.IsInitialized())
+                continue;
+
+            c.MoveTo(linePositions[i]);
 
             if (i == 0)
-                line[i].StartTipTimer();
+                c.StartTipTimer();
             else
-                line[i].StopTipTimer();
+                c.StopTipTimer();
         }
     }
 
@@ -189,5 +186,25 @@ public class NPCManager : MonoBehaviour
 
         Customer firstCustomer = line[0];
         StartCoroutine(MoveCupToSlot(firstCustomer, cup));
+    }
+
+    private IEnumerator RefreshBeforeReturn(Customer cus)
+    {
+        yield return new WaitForSeconds(offscreenWaitTime);
+
+        if (regularManager != null &&
+            regularManager.TryGetRegular(out CustomerProfile regularProfile))
+        {
+            cus.SetRegular(true);
+            cus.Initialize(regularProfile);
+        }
+        else
+        {
+            cus.SetRegular(false);
+            cus.Initialize(GetRandomProfile());
+        }
+
+        cus.TeleportTo(hiddenPosition);
+        returnQueue.Enqueue(cus);
     }
 }

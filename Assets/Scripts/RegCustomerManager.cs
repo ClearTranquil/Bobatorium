@@ -9,7 +9,6 @@ public class RegCustomerManager : MonoBehaviour
     [SerializeField] private float minimumSatisfaction = 50f;
 
     [Header("Conversion Scaling")]
-    // Should max out at 8% with full upgrades and 100% satisfaction
     [SerializeField] private float maxConversionChance = 0.08f;
 
     [Header("Spawn Scaling")]
@@ -17,7 +16,8 @@ public class RegCustomerManager : MonoBehaviour
     [SerializeField] private float perRegularBonus = 0.005f;
     [SerializeField] private float maxSpawnChance = 0.10f;
 
-    private List<Customer> regulars = new List<Customer>();
+    [Header("Regular Profiles")]
+    [SerializeField] private List<CustomerProfile> regularProfiles = new();
 
     private CustomerSatisfaction satisfaction;
 
@@ -44,51 +44,43 @@ public class RegCustomerManager : MonoBehaviour
 
         if (!customer.IsRegular)
         {
-            TryConvert(customer);
+            TryConvert(customer.Profile);
         }
     }
 
-    private void TryConvert(Customer customer)
+    private void TryConvert(CustomerProfile profile)
     {
-        // Only try converting if enough cups have been sold since the last conversion
-        // This prevents back to back conversions, making it rarer
         if (cupsSinceLastConversion < cupSoldBeforeConversion) return;
 
         float sat = satisfaction.Current;
-
         if (sat <= minimumSatisfaction) return;
 
-        // Scale from 50% satisfaction to 100% satisfaction
         float t = Mathf.InverseLerp(50f, 100f, sat);
         float chance = t * maxConversionChance;
 
-        if(Random.value  < chance)
+        if (Random.value < chance)
         {
-            ConvertToRegular(customer);
+            if (!regularProfiles.Contains(profile))
+                regularProfiles.Add(profile);
+
             cupsSinceLastConversion = 0;
         }
     }
 
-    private void ConvertToRegular(Customer customer)
+    public bool TryGetRegular(out CustomerProfile profile)
     {
-        regulars.Add(customer);
-        customer.SetRegular(true);
+        profile = null;
 
-        Debug.Log("Converted to regular. Total: " + regulars.Count);
-    }
+        if (regularProfiles.Count == 0)
+            return false;
 
-    public bool TryGetRegular(out Customer regular)
-    {
-        regular = null;
-
-        if (regulars.Count == 0) return false;
-
-        float spawnChance = baseSpawnChance + (regulars.Count * perRegularBonus);
+        float spawnChance = baseSpawnChance + (regularProfiles.Count * perRegularBonus);
         spawnChance = Mathf.Min(spawnChance, maxSpawnChance);
 
-        if (Random.value > spawnChance) return false;
+        if (Random.value > spawnChance)
+            return false;
 
-        regular = regulars[Random.Range(0, regulars.Count)];
+        profile = regularProfiles[Random.Range(0, regularProfiles.Count)];
         return true;
     }
 }

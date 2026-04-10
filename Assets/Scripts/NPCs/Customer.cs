@@ -17,6 +17,9 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private Transform cupSlot;
     private Animator animator;
     private float idleOffset;
+    [SerializeField] private SpriteRenderer headRenderer;
+    [SerializeField] private SpriteRenderer bodyRenderer;
+    private bool initialized = false;
 
     [Header("Tip timer")]
     [SerializeField] private float tipTime = 10f;
@@ -31,6 +34,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public float RemainingTipNormalized => remainingTipTime / tipTime;
     public bool WasServedInTime { get; private set; }
     public bool IsRegular => isRegular;
+    public CustomerProfile Profile { get; private set; }
 
 
     private void Awake()
@@ -42,6 +46,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
         animator.Play("idle", 0, idleOffset);
 
         IsBusy = false;
+
     }
 
     /*==========Customer Data============*/
@@ -51,6 +56,19 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public float GetTipChance()
     {
         return BaseTipChance;
+    }
+
+    public void Initialize(CustomerProfile profile)
+    {
+        Profile = profile;
+
+        ApplyProfile(profile);
+        initialized = true;
+    }
+
+    public bool IsInitialized()
+    {
+        return Profile != null;
     }
 
     /*===========Movement===========*/
@@ -77,6 +95,9 @@ public class Customer : MonoBehaviour, ICustomerInfo
 
     private void Update()
     {
+        if (!initialized)
+            return;
+
         if (timerRunning)
         {
             remainingTipTime -= Time.deltaTime;
@@ -177,5 +198,15 @@ public class Customer : MonoBehaviour, ICustomerInfo
             if (renderer != null)
                 renderer.material.color = Color.blue;
         }
+    }
+
+    /*=============Visuals=====================*/
+    public void ApplyProfile(CustomerProfile profile)
+    {
+        headRenderer.sprite = profile.head;
+        bodyRenderer.sprite = profile.body;
+
+        SetTipChance(profile.baseTipChance);
+        SetTipTime(profile.tipTime);
     }
 }
