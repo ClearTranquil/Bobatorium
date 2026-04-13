@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Petey
   head: {fileID: 21300000, guid: c827f7ab0dee01b4f9354185c7b94860, type: 3}
-  body: {fileID: 21300000, guid: 6e7f3c089255e7b42b8e09d49f8d8862, type: 3}
+  body: {fileID: 21300000, guid: 0a2a402e7e39de44287f230134a7e013, type: 3}
   baseTipChance: 0.1
   tipTime: 10

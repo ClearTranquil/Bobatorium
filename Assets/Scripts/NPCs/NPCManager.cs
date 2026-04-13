@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,51 @@ public class NPCManager : MonoBehaviour
 
     private CustomerProfile GetRandomProfile()
     {
-        return allProfiles[Random.Range(0, allProfiles.Count)];
+        // Build a list of profiles not currently in line
+        List<CustomerProfile> available = new List<CustomerProfile>();
+
+        foreach (var profile in allProfiles)
+        {
+            bool alreadyInLine = false;
+
+            foreach (var customer in line)
+            {
+                if (!customer.IsInitialized())
+                    continue;
+
+                if (customer.Profile == profile)
+                {
+                    alreadyInLine = true;
+                    break;
+                }
+            }
+
+            if (!alreadyInLine)
+            {
+                available.Add(profile);
+            }
+        }
+
+        // if everything is already in line, allow duplicates. This shouldn't happen though.
+        if (available.Count == 0)
+        {
+            available = allProfiles;
+        }
+
+        return available[Random.Range(0, available.Count)];
+    }
+
+    private bool IsProfileInLine(CustomerProfile profile)
+    {
+        foreach (var c in line)
+        {
+            if (!c.IsInitialized()) continue;
+
+            if (c.Profile == profile)
+                return true;
+        }
+
+        return false;
     }
 
     private void OnEnable()

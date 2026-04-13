@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63f9480c6fa97a64e8fdcc8ef2248036, type: 3}
-  m_Name: Tommy
+  m_Name: Grammy
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Tommy
-  head: {fileID: 21300000, guid: 0b80d0f2c2aa5fb48968ff24cd82d668, type: 3}
-  body: {fileID: 21300000, guid: ed8e21163c526c743b4633d9ba4dbd02, type: 3}
+  head: {fileID: 21300000, guid: 96585a64532512849934f4412fb9d705, type: 3}
+  body: {fileID: 21300000, guid: 6a15ca815755b9446b2e936b1289c91f, type: 3}
   baseTipChance: 0.1
   tipTime: 10
