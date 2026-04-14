@@ -614,7 +614,7 @@ MonoBehaviour:
   cupSlot: {fileID: 5432626475900655604}
   headRenderer: {fileID: 2280420990761086099}
   bodyRenderer: {fileID: 2985858093331848449}
-  tipTime: 20
+  tipTime: 50
   isRegular: 0
   regularStar: {fileID: 5933087544987383060}
 --- !u!95 &6028524187206052501

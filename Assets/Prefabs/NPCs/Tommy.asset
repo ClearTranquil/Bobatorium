@@ -16,4 +16,4 @@ MonoBehaviour:
   head: {fileID: 21300000, guid: 0b80d0f2c2aa5fb48968ff24cd82d668, type: 3}
   body: {fileID: 21300000, guid: ed8e21163c526c743b4633d9ba4dbd02, type: 3}
   baseTipChance: 0.1
-  tipTime: 10
+  tipTime: 30

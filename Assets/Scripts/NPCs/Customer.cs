@@ -4,9 +4,6 @@ using Unity.VisualScripting;
 
 public class Customer : MonoBehaviour, ICustomerInfo
 {
-    [Header("Data")]
-    [Range(0f, 1f)]
-    [SerializeField] private float baseTipChance = 0.1f;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 2f;
@@ -23,7 +20,6 @@ public class Customer : MonoBehaviour, ICustomerInfo
     private bool initialized = false;
 
     [Header("Tip timer")]
-    [SerializeField] private float tipTime = 10f;
     private float remainingTipTime;
     private bool timerRunning;
 
@@ -31,9 +27,9 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private bool isRegular = false;
     [SerializeField] private GameObject regularStar;
 
-    public float TipTime => tipTime;
+    public float TipTime => Profile != null ? Profile.tipTime : 0f;
     public bool CanTip => remainingTipTime > 0f;
-    public float RemainingTipNormalized => remainingTipTime / tipTime;
+    public float RemainingTipNormalized => remainingTipTime / TipTime;
     public bool WasServedInTime { get; private set; }
     public bool IsRegular => isRegular;
     public CustomerProfile Profile { get; private set; }
@@ -52,7 +48,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
     }
 
     /*==========Customer Data============*/
-    public float BaseTipChance => baseTipChance;
+    public float BaseTipChance => Profile != null ? Profile.baseTipChance : 0f;
     public Transform CupSlot => cupSlot;
 
     public float GetTipChance()
@@ -168,24 +164,13 @@ public class Customer : MonoBehaviour, ICustomerInfo
     /*============Tipping============*/
     public void StartTipTimer()
     {
-        remainingTipTime = tipTime;
+        remainingTipTime = TipTime;
         timerRunning = true;
     }
 
     public void StopTipTimer()
     {
         timerRunning = false;
-    }
-
-    public void SetTipTime(float newTipTime)
-    {
-        tipTime = newTipTime;
-        remainingTipTime = newTipTime;
-    }
-
-    public void SetTipChance(float newChance)
-    {
-        baseTipChance = Mathf.Clamp01(newChance);
     }
 
     /*=================Regulars===================*/
@@ -204,8 +189,5 @@ public class Customer : MonoBehaviour, ICustomerInfo
     {
         headRenderer.sprite = profile.head;
         bodyRenderer.sprite = profile.body;
-
-        SetTipChance(profile.baseTipChance);
-        SetTipTime(profile.tipTime);
     }
 }
