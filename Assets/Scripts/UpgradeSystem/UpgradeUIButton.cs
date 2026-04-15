@@ -39,7 +39,7 @@ public class UpgradeUIButton : MonoBehaviour
             descriptionText.text = upgrade.GetDescription(state.level);
         }
 
-        if (state.IsMaxed)
+        if (!state.IsMaxed)
         {
             titleText.text = upgrade.GetName(upgrade.maxLevel - 1);
             levelText.text = "MAX";

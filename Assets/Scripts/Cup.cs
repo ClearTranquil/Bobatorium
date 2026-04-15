@@ -21,6 +21,8 @@ public class Cup : MonoBehaviour, IInteractable
     private Vector3 defaultCenterOfMass;
     [SerializeField] private Vector3 filledCenterOfMassOffset = new Vector3(0f, -0.1f, 0f);
     [SerializeField] private float gravityMultiplier = 2f;
+    [SerializeField] private float heldGravityMultiplier = 0;
+    private bool isHeld = false;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -77,7 +79,14 @@ public class Cup : MonoBehaviour, IInteractable
     private void Update()
     {
         teaFillText.text = (teaFillAmount * 100f).ToString("F0") + "%";
-        rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
+
+        if (isHeld)
+        {
+            rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
+        } else
+        {
+            rb.AddForce(Physics.gravity * heldGravityMultiplier, ForceMode.Acceleration);
+        }
     }
 
     /*-------------Interaction---------------*/
@@ -130,10 +139,14 @@ public class Cup : MonoBehaviour, IInteractable
         {
             TogglePhysics(true);
         }
+
+        isHeld = false;
     }
 
     public void OnHold()
     {
+        isHeld = true;
+        
         // Reset rotation, pause physics
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
         TogglePhysics(false);

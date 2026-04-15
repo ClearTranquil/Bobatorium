@@ -13,6 +13,7 @@ public class Conveyor : Machine
     [SerializeField] LayerMask intakeLayerMask;
 
     private readonly List<Cup> cupsOnBelt = new();
+    public float NormalizedSpeed => speed / baseSpeed;
 
     protected override void Awake()
     {

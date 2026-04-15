@@ -2476,6 +2476,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 91d6f69840ed3f24b9bad74c21b44407, type: 2}
   - {fileID: 11400000, guid: bd21368bcc2d3a94182bf60bab7ce8ea, type: 2}
   - {fileID: 11400000, guid: ba3d134d24b5fb94494793b4de2c07bc, type: 2}
+  - {fileID: 11400000, guid: cc9ff962968e1fb4eb326b892624a927, type: 2}
+  - {fileID: 11400000, guid: 7ce3d88df6a9b214b83badf18680fc98, type: 2}
+  - {fileID: 11400000, guid: 91d6f69840ed3f24b9bad74c21b44407, type: 2}
+  - {fileID: 11400000, guid: a52e6587b9cb57349b02ec7835a575fb, type: 2}
+  - {fileID: 11400000, guid: 4a0b59b30d1a1bb45bac945e99525598, type: 2}
 --- !u!4 &688995577
 Transform:
   m_ObjectHideFlags: 0
@@ -6798,6 +6803,10 @@ PrefabInstance:
       propertyPath: conveyorCupPosition
       value: 
       objectReference: {fileID: 987233880}
+    - target: {fileID: 4227417747060320207, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
+      propertyPath: availableUpgrades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8944420958396118488, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
       propertyPath: m_Name
       value: Cup Dispenser

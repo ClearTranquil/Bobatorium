@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 5180877874222006289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.78, z: 1.66}
+  m_LocalPosition: {x: 0.21, y: 1.09, z: -1.29}
   m_LocalScale: {x: 0.58163, y: 0.58163, z: 0.58163}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -301,8 +301,8 @@ Transform:
   m_GameObject: {fileID: 8749983089507956994}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.67, z: 0}
-  m_LocalScale: {x: 0.59265, y: 4.2921023, z: 5.6902}
+  m_LocalPosition: {x: 0.19, y: 0.22, z: -0.25}
+  m_LocalScale: {x: 0.59265, y: 3.4666882, z: 3.6306322}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4034425888992826188}
@@ -419,7 +419,6 @@ Transform:
   - {fileID: 7975801322602354529}
   - {fileID: 2243757010130341839}
   - {fileID: 4651501245843575033}
-  - {fileID: 6269022607308392015}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1546017163495729186
@@ -458,15 +457,15 @@ MonoBehaviour:
   availableUpgrades:
   - {fileID: 11400000, guid: 185fb5ce235e396419d6673d01c65d5d, type: 2}
   - {fileID: 11400000, guid: 34cfb0623de14f5469c1aed087a3214b, type: 2}
-  trigger: {fileID: 6482978875132570288}
+  trigger: {fileID: 0}
   hasEjectUpgrade: 0
   ejectCheckInterval: 0.1
   cupPrefab: {fileID: 713439645255764439, guid: 3fe5cff695e97d9408fc6b30e93d6315, type: 3}
   spawnInHandOffsetY: 1
   conveyorCupPosition: {fileID: 0}
   conveyor: {fileID: 0}
-  timeBetweenCups: 2
   autoDispenseLight: {fileID: 5925651553007267055}
+  maxCupsPerSecond: 2
 --- !u!95 &3189058727167843981
 Animator:
   serializedVersion: 7
@@ -489,103 +488,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1001 &773223173809321467
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4034425888992826188}
-    m_Modifications:
-    - target: {fileID: 825858785202452008, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Name
-      value: Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189347550445952100, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Height
-      value: 4.538416
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189347550445952100, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Radius
-      value: 0.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189347550445952100, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Center.x
-      value: 0.000000059589034
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189347550445952100, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Center.y
-      value: 0.56134367
-      objectReference: {fileID: 0}
-    - target: {fileID: 5189347550445952100, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_Center.z
-      value: -0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: 5999674937703554891, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: machine
-      value: 
-      objectReference: {fileID: 4227417747060320207}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7036771
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.71051997
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90.554
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
---- !u!4 &6269022607308392015 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6753992862930809780, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-  m_PrefabInstance: {fileID: 773223173809321467}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6482978875132570288 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5999674937703554891, guid: b917fd092f6a44f42a8c457f6399fc72, type: 3}
-  m_PrefabInstance: {fileID: 773223173809321467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383d70d69ccd9b748951599d49fa1663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MachineButton
 --- !u!1001 &6709865519619162510
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -82,19 +82,6 @@ public class NPCManager : MonoBehaviour
         return available[Random.Range(0, available.Count)];
     }
 
-    private bool IsProfileInLine(CustomerProfile profile)
-    {
-        foreach (var c in line)
-        {
-            if (!c.IsInitialized()) continue;
-
-            if (c.Profile == profile)
-                return true;
-        }
-
-        return false;
-    }
-
     private void OnEnable()
     {
         SaleEvents.OnCupReady += OnCupReady;
@@ -132,7 +119,7 @@ public class NPCManager : MonoBehaviour
 
             cus.MoveTo(backOfLine);
 
-            yield return new WaitForSeconds(offscreenWaitTime);
+            StartCoroutine(RefreshBeforeReturn(cus));
 
             line.Add(cus);
 
@@ -248,8 +235,5 @@ public class NPCManager : MonoBehaviour
             cus.SetRegular(false);
             cus.Initialize(GetRandomProfile());
         }
-
-        cus.TeleportTo(hiddenPosition);
-        returnQueue.Enqueue(cus);
     }
 }

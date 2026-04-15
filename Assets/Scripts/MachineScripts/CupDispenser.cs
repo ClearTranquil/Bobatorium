@@ -10,11 +10,10 @@ public class CupDispenser : Machine
     [SerializeField] private GameObject conveyor;
 
     [Header("Auto Cup Dispense")]
-    private bool dispenseTriggerActive = false;
-    private bool autoDispenseActive = false;
-    [SerializeField] private float timeBetweenCups = 5;
     [SerializeField] private GameObject autoDispenseLight;
-    private Coroutine cupDispense;
+
+    [SerializeField] private float maxCupsPerSecond = 2f;
+    private float spawnTimer = 0f;
 
     private Animator animator;
 
@@ -23,15 +22,35 @@ public class CupDispenser : Machine
         base.Awake();
 
         animator = GetComponent<Animator>();
+    }
 
-        if (dispenseTriggerActive)
+    // Cup dispense interval is tied to the speed of the conveyor belt
+    private void Update()
+    {
+        if (conveyor == null)
+            return;
+
+        Conveyor c = conveyor.GetComponentInChildren<Conveyor>();
+        float speed = c.NormalizedSpeed;
+
+        if (speed <= 0.01f)
         {
-            trigger.gameObject.SetActive(true);
-            autoDispenseLight.SetActive(true);
+            spawnTimer = 0f;
+            autoDispenseLight.SetActive(false);
+            return;
         } else
         {
-            trigger.gameObject.SetActive(false);
-            autoDispenseLight.SetActive(false);
+            autoDispenseLight.SetActive(true);
+        }
+
+        float cupsPerSecond = (speed * maxCupsPerSecond) / 3.5f;
+
+        spawnTimer += Time.deltaTime * cupsPerSecond;
+
+        while (spawnTimer >= 1f)
+        {
+            SpawnCupOnBelt();
+            spawnTimer -= 1f;
         }
     }
 
@@ -69,47 +88,12 @@ public class CupDispenser : Machine
             return true;
         }
 
-        if(m_upgrade.upgradeID == "AutoCupDispense")
-        {
-            Debug.Log($"Upgrade event received. newLevel={m_newLevel}, stackValues={string.Join(",", m_upgrade.stackValues)}");
-            SpawnTrigger();
-            return true;
-        }
-
         return false;
     }
 
     private void SpawnConveyor()
     {
         conveyor.SetActive(true);
-    }
-
-    private void SpawnTrigger()
-    {
-        trigger.gameObject.SetActive(true);
-    }
-
-    // Triggering the machine just turns auto cup dispensing on/off. This button is hidden by default, you have to purchase the upgrade to see it. 
-    public override void TriggerAction()
-    {
-        base.TriggerAction();
-
-        ToggleAutoCupDispense();
-    }
-
-    private void ToggleAutoCupDispense()
-    {
-        autoDispenseActive = !autoDispenseActive;
-        
-        if (autoDispenseActive)
-        {
-            autoDispenseLight.SetActive(true);
-            cupDispense = StartCoroutine(CupSpawnLoop());
-        } else
-        {
-            autoDispenseLight.SetActive(false);
-            StopCoroutine(cupDispense);
-        }
     }
 
     private void SpawnCupOnBelt()
@@ -119,14 +103,5 @@ public class CupDispenser : Machine
         cup.TogglePhysics(true);
         cup.gameObject.transform.rotation = Quaternion.identity;
         animator.SetTrigger("removeCup");
-    }
-
-    private IEnumerator CupSpawnLoop()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(timeBetweenCups);
-            SpawnCupOnBelt();
-        }
     }
 }
