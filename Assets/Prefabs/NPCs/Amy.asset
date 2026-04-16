@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63f9480c6fa97a64e8fdcc8ef2248036, type: 3}
-  m_Name: Linney
+  m_Name: Amy
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
-  customerName: Linney
-  head: {fileID: 21300000, guid: 2083d6b3058d18444b668f70c4b470d8, type: 3}
-  body: {fileID: 21300000, guid: 0ec66e6c71b1d2b4cb9c1f587d903336, type: 3}
-  baseTipChance: 0.1
+  customerName: Amy
+  head: {fileID: 21300000, guid: 4fdfe38ae4050b14788b9c11de36a7d9, type: 3}
+  body: {fileID: 21300000, guid: 4ae70b43e8c53ea4798024c1e94159be, type: 3}
+  baseTipChance: 0.33
   tipTime: 30
