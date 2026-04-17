@@ -2635,10 +2635,11 @@ MonoBehaviour:
   cupSoldBeforeConversion: 4
   minimumSatisfaction: 50
   maxConversionChance: 0.08
-  baseSpawnChance: 0.02
+  baseSpawnChance: 0.08
   perRegularBonus: 0.005
   maxSpawnChance: 0.1
   regularProfiles: []
+  regularModifierSet: {fileID: 11400000, guid: 2c36d7cd6d650b342b2a61f3a47d163a, type: 2}
 --- !u!1 &663482474
 GameObject:
   m_ObjectHideFlags: 0

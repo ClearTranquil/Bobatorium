@@ -1,6 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class Customer : MonoBehaviour, ICustomerInfo
 {
@@ -27,10 +28,15 @@ public class Customer : MonoBehaviour, ICustomerInfo
     [SerializeField] private bool isRegular = false;
     [SerializeField] private GameObject regularStar;
 
+    [Header("Sale Modifiers")]
+    [SerializeField] private List<SaleModifier> saleModifiers = new();
+
+
     public float TipTime => Profile != null ? Profile.tipTime : 0f;
     public bool CanTip => remainingTipTime > 0f;
     public float RemainingTipNormalized => remainingTipTime / TipTime;
     public bool WasServedInTime { get; private set; }
+    public List<SaleModifier> SaleModifiers => saleModifiers;
     public bool IsRegular => isRegular;
     public Animator Animator => animator;
     public CustomerProfile Profile { get; private set; }
@@ -205,5 +211,11 @@ public class Customer : MonoBehaviour, ICustomerInfo
     {
         headRenderer.sprite = profile.head;
         bodyRenderer.sprite = profile.body;
+    }
+
+    /*============Sale Modifiers===============*/
+    public void AddModifierSet(List<SaleModifier> mods)
+    {
+        saleModifiers.AddRange(mods);
     }
 }

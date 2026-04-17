@@ -95,6 +95,11 @@ public class CustomerSatisfaction : MonoBehaviour
         ModifySatisfaction(finalGain);
     }
 
+    public void GainFixedSatisfaction(float gainAmount)
+    {
+        ModifySatisfaction(gainAmount);
+    }
+
     // Satisfaction has a softcap. Gains have diminishing returns the closer you get to the softcap.
     private float GetSoftCapMultiplier()
     {

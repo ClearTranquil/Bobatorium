@@ -15,19 +15,32 @@ public class SaleProcessor : MonoBehaviour
     {
         SaleData sale = new SaleData(cup.GetBasePrice());
 
-        foreach(var mod in cup.saleModifiers)
+        bool isRegular = customer != null && customer.IsRegular;
+
+        // Gather all modifiers
+        List<SaleModifier> allMods = new List<SaleModifier>();
+
+        if (cup != null)
+            allMods.AddRange(cup.saleModifiers);
+
+        if (customer != null)
+            allMods.AddRange(customer.SaleModifiers);
+
+        // Apply all modifiers
+        for (int i = 0; i < allMods.Count; i++)
         {
-            mod.Apply(sale);
+            allMods[i].Apply(sale, customer);
         }
 
-        ProcessTip(sale, customer, cup);
+        // Tip logic happens AFTER modifiers
+        ProcessTip(sale, customer, cup, isRegular);
 
         wallet.Deposit(sale.finalValue);
 
         LastSale = sale;
     }
 
-    private void ProcessTip(SaleData saleData, Customer customer, Cup cup)
+    private void ProcessTip(SaleData saleData, Customer customer, Cup cup, bool isRegular)
     {
         if (customer == null)
             return;
@@ -36,15 +49,27 @@ public class SaleProcessor : MonoBehaviour
 
         float tipChance = Mathf.Lerp(0.2f, 0.95f, satisfactionNormalized);
 
-        if (Random.value > tipChance)
-            return;
+        // If a modifier already forced a tip (regulars, buffs, etc.), skip roll
+        bool guaranteedTip = customer != null && customer.IsRegular;
 
-        saleData.didTip = true;
+        if (guaranteedTip)
+        {
+            saleData.didTip = true;
+        }
+        else
+        {
+            if (Random.value > tipChance)
+                return;
+
+            saleData.didTip = true;
+        }
+
+        float multiplier = saleData.tipMultiplier;
 
         // Jackpot chance (5%)
         if (Random.value <= 0.05f)
         {
-            saleData.tipAmount = 5; // flat $5
+            saleData.tipAmount = Mathf.RoundToInt(5f * multiplier);
         }
         else
         {
@@ -58,7 +83,7 @@ public class SaleProcessor : MonoBehaviour
             else
                 tipPercent = 0.30f;
 
-            saleData.tipAmount = Mathf.RoundToInt(saleData.baseValue * tipPercent);
+            saleData.tipAmount = Mathf.RoundToInt(saleData.baseValue * tipPercent * multiplier);
         }
 
         saleData.finalValue += saleData.tipAmount;

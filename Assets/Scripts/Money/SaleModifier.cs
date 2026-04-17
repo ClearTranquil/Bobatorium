@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class SaleModifier : ScriptableObject
 {
-    public abstract void Apply(SaleData sale);
+    public abstract void Apply(SaleData sale, Customer customer);
 }

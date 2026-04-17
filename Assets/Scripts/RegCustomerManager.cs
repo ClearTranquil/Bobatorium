@@ -22,6 +22,9 @@ public class RegCustomerManager : MonoBehaviour
     [Header("Regular Profiles")]
     [SerializeField] private List<CustomerProfile> regularProfiles = new();
 
+    [Header("Regular sale modifiers")]
+    [SerializeField] private SaleModifierSet regularModifierSet;
+
     private CustomerSatisfaction satisfaction;
 
     private void Awake()
@@ -79,9 +82,10 @@ public class RegCustomerManager : MonoBehaviour
         if (!regularProfiles.Contains(profile))
             regularProfiles.Add(profile);
 
-        Debug.Log($"FINALIZE: {customer.name}");
-
         customer.SetRegular(true);
+
+        // attach regular modifier set here (IMPORTANT PART)
+        customer.AddModifierSet(regularModifierSet.modifiers);
 
         cupsSinceLastConversion = 0;
     }
