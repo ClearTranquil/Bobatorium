@@ -103,6 +103,11 @@ public class RegCustomerManager : MonoBehaviour
         return true;
     }
 
+    public bool IsRegularProfile(CustomerProfile profile)
+    {
+        return regularProfiles.Contains(profile);
+    }
+
     // For testing
     public void StartForceConversion(Customer customer)
     {

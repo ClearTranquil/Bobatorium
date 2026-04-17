@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
     [Header("References")]
-    private Transform cameraTransform;
+    [SerializeField] private CinemachineCamera mainCam;
+    [SerializeField] private CinemachineCamera breakRoomCam;
     [SerializeField] private Button toggleButton;
     [SerializeField] private Image buttonImage;
 
@@ -12,22 +14,11 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Sprite leftArrowSprite;
     [SerializeField] private Sprite rightArrowSprite;
 
-    [Header("Rotation Settings")]
-    [SerializeField] private float rotationSpeed = 180f;
-
-    private Quaternion mainRotation;
-    private Quaternion breakRoomRotation;
-    private Quaternion targetRotation;
 
     private bool isInBreakRoom = false;
 
     private void Start()
     {
-        cameraTransform = Camera.main.transform;
-        mainRotation = Quaternion.Euler(10f, 0f, 0f);
-        breakRoomRotation = Quaternion.Euler(10f, -90f, 0f);
-
-        targetRotation = mainRotation;
         buttonImage.sprite = leftArrowSprite;
 
         toggleButton.onClick.AddListener(ToggleCamera);
@@ -43,23 +34,22 @@ public class CameraManager : MonoBehaviour
         Employee.OnEdgeScreenSwitchRequest -= HandleEdgeSwitch;
     }
 
-    private void Update()
-    {
-        cameraTransform.rotation = Quaternion.RotateTowards(cameraTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
-
     private void ToggleCamera()
     {
-        // Toggle between the two states 
         isInBreakRoom = !isInBreakRoom;
 
         if (isInBreakRoom)
         {
-            targetRotation = breakRoomRotation;
+            mainCam.Priority = 0;
+            breakRoomCam.Priority = 10;
+
             buttonImage.sprite = rightArrowSprite;
-        } else
+        }
+        else
         {
-            targetRotation = mainRotation;
+            mainCam.Priority = 10;
+            breakRoomCam.Priority = 0;
+
             buttonImage.sprite = leftArrowSprite;
         }
     }

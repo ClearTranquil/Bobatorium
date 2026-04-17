@@ -192,6 +192,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public void SetRegular(bool value)
     {
         isRegular = value;
+        regularStar.SetActive(value);
     }
 
     public void ActivateStar()

@@ -53,6 +53,9 @@ public class NPCManager : MonoBehaviour
 
         foreach (var profile in allProfiles)
         {
+            if (regularManager != null && regularManager.IsRegularProfile(profile))
+                continue;
+
             bool alreadyInLine = false;
 
             foreach (var customer in line)
@@ -247,11 +250,10 @@ public class NPCManager : MonoBehaviour
     {
         yield return new WaitForSeconds(offscreenWaitTime);
 
-        if (regularManager != null &&
-            regularManager.TryGetRegular(out CustomerProfile regularProfile))
+        if (regularManager != null && regularManager.TryGetRegular(out CustomerProfile regularProfile))
         {
-            cus.SetRegular(true);
             cus.Initialize(regularProfile);
+            cus.SetRegular(true);
         }
         else
         {
