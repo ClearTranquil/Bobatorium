@@ -32,6 +32,7 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public float RemainingTipNormalized => remainingTipTime / TipTime;
     public bool WasServedInTime { get; private set; }
     public bool IsRegular => isRegular;
+    public Animator Animator => animator;
     public CustomerProfile Profile { get; private set; }
 
 
@@ -125,6 +126,20 @@ public class Customer : MonoBehaviour, ICustomerInfo
         }
     }
 
+    private void LateUpdate()
+    {
+        Transform cam = Camera.main.transform;
+
+        Vector3 dir = cam.position - transform.position;
+        dir.y = 0f;
+
+        Quaternion rot = Quaternion.LookRotation(dir);
+
+        headRenderer.transform.rotation = rot;
+        bodyRenderer.transform.rotation = rot;
+        regularStar.transform.rotation = rot;
+    }
+
     /*============Customer Logic============*/
 
     public void ReceiveCup(Cup cup, float moveTime = 0.5f)
@@ -177,11 +192,11 @@ public class Customer : MonoBehaviour, ICustomerInfo
     public void SetRegular(bool value)
     {
         isRegular = value;
+    }
 
-        if (isRegular)
-        {
-            regularStar.SetActive(true);
-        }
+    public void ActivateStar()
+    {
+        regularStar.SetActive(true);
     }
 
     /*=============Visuals=====================*/

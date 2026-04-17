@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Orb
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Orb
+  bark: "MmMmmMmmMm\u2026BObA\u2026 "
   head: {fileID: 21300000, guid: 49a0e3794f5e53c43a937a255e9f90c7, type: 3}
   body: {fileID: 21300000, guid: ef19039473a5e0d4782ba7d5b61160ae, type: 3}
   baseTipChance: 0.1

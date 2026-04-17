@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Laila
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Laila
+  bark: I don't need a crystal ball to tell me of your future, it is as clear as
+    day that it is bright.
   head: {fileID: 21300000, guid: 22e17600ec7ea954b8832dc0982c0841, type: 3}
   body: {fileID: 21300000, guid: 8b4c2db46d368ce449cff8682b7eab1c, type: 3}
   baseTipChance: 0.1

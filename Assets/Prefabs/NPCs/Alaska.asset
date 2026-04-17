@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Alaska
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Alaska
+  bark: '[INSERT FUNNY AND/OR ICONIC DIALOG HERE]'
   head: {fileID: 21300000, guid: d3b56dfe60c9fa746a567a67ac25877d, type: 3}
   body: {fileID: 21300000, guid: 3284793bb6846a542866ef33d978bd5f, type: 3}
   baseTipChance: 0.33

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class RegCustomerManager : MonoBehaviour
 {
+    [Header("Convert Cutscene")]
+    [SerializeField] private CustomerCutsceneController cutsceneController;
+
     [Header("Conversion")]
     [SerializeField] private int cupSoldBeforeConversion = 4;
     private int cupsSinceLastConversion = 0;
@@ -44,11 +47,11 @@ public class RegCustomerManager : MonoBehaviour
 
         if (!customer.IsRegular)
         {
-            TryConvert(customer.Profile);
+            TryConvert(customer, customer.Profile);
         }
     }
 
-    private void TryConvert(CustomerProfile profile)
+    private void TryConvert(Customer customer,CustomerProfile profile)
     {
         if (cupsSinceLastConversion < cupSoldBeforeConversion) return;
 
@@ -60,11 +63,27 @@ public class RegCustomerManager : MonoBehaviour
 
         if (Random.value < chance)
         {
-            if (!regularProfiles.Contains(profile))
-                regularProfiles.Add(profile);
-
-            cupsSinceLastConversion = 0;
+            StartConversionCutscene(customer, profile);
         }
+    }
+
+    private void StartConversionCutscene(Customer customer, CustomerProfile profile)
+    {
+        if (customer == null) return;
+
+        cutsceneController.PlayCutscene(customer, () =>{FinalizeConversion(customer, profile);});
+    }
+
+    private void FinalizeConversion(Customer customer, CustomerProfile profile)
+    {
+        if (!regularProfiles.Contains(profile))
+            regularProfiles.Add(profile);
+
+        Debug.Log($"FINALIZE: {customer.name}");
+
+        customer.SetRegular(true);
+
+        cupsSinceLastConversion = 0;
     }
 
     public bool TryGetRegular(out CustomerProfile profile)
@@ -82,5 +101,21 @@ public class RegCustomerManager : MonoBehaviour
 
         profile = regularProfiles[Random.Range(0, regularProfiles.Count)];
         return true;
+    }
+
+    // For testing
+    public void StartForceConversion(Customer customer)
+    {
+        if (customer == null)
+            return;
+
+        Debug.Log($"Customer: {customer}");
+        Debug.Log($"Profile: {customer?.Profile}");
+        Debug.Log($"CutsceneController: {cutsceneController}");
+
+        cutsceneController.PlayCutscene(customer, () =>
+        {
+            FinalizeConversion(customer, customer.Profile);
+        });
     }
 }

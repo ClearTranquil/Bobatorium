@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -106,6 +106,29 @@ public class NPCManager : MonoBehaviour
 
         tipTimerSlider.value = firstCustomer.RemainingTipNormalized;
         tipTimerSlider.gameObject.SetActive(firstCustomer.CanTip);
+
+        // For testing
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            ForceConvertFirstCustomer();
+        }
+    }
+
+    // For testing
+    private void ForceConvertFirstCustomer()
+    {
+        if (line.Count == 0)
+            return;
+
+        Customer firstCustomer = line[0];
+
+        if (firstCustomer == null || !firstCustomer.IsInitialized())
+            return;
+
+        if (firstCustomer.IsRegular)
+            return;
+
+        regularManager.StartForceConversion(firstCustomer);
     }
 
     // Move NPC to back of line, replace with regular if possible

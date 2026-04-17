@@ -29,6 +29,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Backup pause method specifically 
+    public void PauseForCutscene()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void UnpauseCutscene()
+    {
+        Time.timeScale = 1;
+    }
+
     private void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)

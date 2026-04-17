@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Wendlilton
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Wendilton
+  bark: 'What jubilant vibes you provide at this humble establishment! I think I
+    may like to return often!  '
   head: {fileID: 21300000, guid: 7bf59606466531447bd157e3441e00b1, type: 3}
   body: {fileID: 21300000, guid: 3680729c823eae548b47549f2af73d16, type: 3}
   baseTipChance: 0.33

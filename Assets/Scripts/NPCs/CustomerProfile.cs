@@ -4,6 +4,7 @@ using UnityEngine;
 public class CustomerProfile : ScriptableObject
 {
     public string customerName;
+    public string bark;
 
     [Header("Visuals")]
     public Sprite head;

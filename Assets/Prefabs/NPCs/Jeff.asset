@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Jeff
   m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
   customerName: Jeff
+  bark: 'Let''s keep how often I''m here between you and me- I''m supposed to be
+    watchin'' my sugar.  '
   head: {fileID: 21300000, guid: 9e35f055c10775d4083a23bd672902f4, type: 3}
   body: {fileID: 21300000, guid: 32e46c1efbe33ed42abfc5d05c7184ed, type: 3}
   baseTipChance: 0.1
