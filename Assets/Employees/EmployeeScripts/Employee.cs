@@ -12,7 +12,10 @@ public class Employee : MonoBehaviour, IInteractable
 
     [Header("Physics")]
     [SerializeField] private float heldZDistance = 40f;
+    [SerializeField] private float heldYOffset = 0f;
     [SerializeField] private Rigidbody rb;
+    private Vector3 lastPosition;
+    private Vector3 heldVelocity;
 
     [Header("Position Snapping")]
     [SerializeField] private LayerMask snapMask;
@@ -43,6 +46,7 @@ public class Employee : MonoBehaviour, IInteractable
     [SerializeField] private Transform modelTransform;
     [SerializeField] private float rotationSpeed = 360f;
     private Quaternion targetModelRotation;
+    private CarryDangle carryDangle;
 
     [Header("Screen Edge Switch")]
     [SerializeField] private float screenEdgeThreshold = 40f;
@@ -62,6 +66,7 @@ public class Employee : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        carryDangle = GetComponent<CarryDangle>(); 
 
         InitializeFatigue();
         FaceCamera();
@@ -112,6 +117,8 @@ public class Employee : MonoBehaviour, IInteractable
 
         FaceCamera();
 
+        carryDangle.SetHeld(true);
+
         player.PickUp(gameObject);
     }
 
@@ -128,11 +135,17 @@ public class Employee : MonoBehaviour, IInteractable
                 currentSnapPoint = heldSnapPoint;
                 transform.position = currentSnapPoint.transform.position;
                 velocity = Vector3.zero;
+                rb.isKinematic = true;
             }
             heldSnapPoint = null;
+        } else
+        {
+            rb.isKinematic = false;
         }
 
-        rb.isKinematic = false;
+        animator.enabled = true;
+
+        carryDangle.SetHeld(false);
     }
 
     public void OnHold()
@@ -140,6 +153,12 @@ public class Employee : MonoBehaviour, IInteractable
         // Follow mouse
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPos = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
+
+        Vector3 worldPos = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
+
+        worldPos.y += heldYOffset;
+
+        desiredPos = worldPos;
 
         // Check for employee snap points
         Ray ray = mainCam.ScreenPointToRay(mousePos);
@@ -155,8 +174,13 @@ public class Employee : MonoBehaviour, IInteractable
             FaceCamera();
         }
 
+        Vector3 moveDir = (desiredPos - transform.position);
+        carryDangle.ApplyMotion(moveDir);
+
         transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
         rb.isKinematic = true;
+
+        animator.enabled = false;
 
         HandleScreenEdgeSwitch(mousePos);
     }

@@ -2205,6 +2205,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede75f847962f1143963637b7dd6fd91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customer
+--- !u!1 &570850634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+  m_PrefabInstance: {fileID: 786313675}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &570850640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570850634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c58bc16eeccec04d95fb093672a2eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryDangle
+  model: {fileID: 1292594428}
+  strength: 20
+  damping: 6
 --- !u!1001 &573771282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3045,8 +3065,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: heldYOffset
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448413557060356442, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: fatigueLevel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3429995307662640216, guid: 361acd42ccf6f304f893568656856f40, type: 3}
       propertyPath: m_Constraints
@@ -3103,7 +3127,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 570850640}
   m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
 --- !u!1 &786435430
 GameObject:
@@ -5135,6 +5162,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
+--- !u!4 &1292594428 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2094315624250734084, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+  m_PrefabInstance: {fileID: 786313675}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1302016254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c20db7d6ce6421b4c8fcbf369f30a00b, type: 3}
