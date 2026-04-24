@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEditor.UI;
 
 public class WalletUI : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class WalletUI : MonoBehaviour
 
     [SerializeField] private TMP_Text saleTextPrefab;
     [SerializeField] private RectTransform saleTextSpawnPoint;
+    [SerializeField] private Transform saleTextRoot;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -102,37 +104,35 @@ public class WalletUI : MonoBehaviour
 
         popup.text = text;
         popup.color = color;
-
-        StartCoroutine(AnimateSaleText(popup));
     }
 
-    private IEnumerator AnimateSaleText(TMP_Text text)
-    {
-        float duration = 1.5f;
-        float timer = 0f;
+    //private IEnumerator AnimateSaleText(TMP_Text text)
+    //{
+    //    float duration = 1.5f;
+    //    float timer = 0f;
 
-        RectTransform rect = text.rectTransform;
-        Color startColor = text.color;
+    //    RectTransform rect = text.rectTransform;
+    //    Color startColor = text.color;
 
-        Vector3 startPos = rect.anchoredPosition;
-        Vector3 endPos = startPos + new Vector3(0, 60f, 0);
+    //    Vector3 startPos = rect.anchoredPosition;
+    //    Vector3 endPos = startPos + new Vector3(0, 60f, 0);
 
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            float t = timer / duration;
+    //    while (timer < duration)
+    //    {
+    //        timer += Time.deltaTime;
+    //        float t = timer / duration;
 
-            // Move upward
-            rect.anchoredPosition = Vector3.Lerp(startPos, endPos, t);
+    //        // Move upward
+    //        rect.anchoredPosition = Vector3.Lerp(startPos, endPos, t);
 
-            // Fade out
-            Color c = startColor;
-            c.a = Mathf.Lerp(1f, 0f, t);
-            text.color = c;
+    //        // Fade out
+    //        Color c = startColor;
+    //        c.a = Mathf.Lerp(1f, 0f, t);
+    //        text.color = c;
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        Destroy(text.gameObject);
-    }
+    //    Destroy(text.gameObject);
+    //}
 }

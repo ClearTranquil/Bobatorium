@@ -2632,8 +2632,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegularConversion
   cutsceneController: {fileID: 1515201468}
-  cupSoldBeforeConversion: 4
-  minimumSatisfaction: 50
+  cupSoldBeforeConversion: 15
+  minimumSatisfaction: 35
   maxConversionChance: 0.08
   baseSpawnChance: 0.08
   perRegularBonus: 0.005
@@ -2738,6 +2738,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73063cfe2fe206e4091b57f0a31a8c2a, type: 2}
   - {fileID: 11400000, guid: 0afe58fcdcc613343a2b5d7a15d37d84, type: 2}
   - {fileID: 11400000, guid: 8a093fd4b62b11548865f5f8a9aafbfc, type: 2}
+  - {fileID: 11400000, guid: 648f337a625442642ae80caca3a633b3, type: 2}
+  - {fileID: 11400000, guid: beebe6907ba6b0346b7a799b1a0e49eb, type: 2}
+  - {fileID: 11400000, guid: f8420be2dcf9cc647b2edb3c1fda3049, type: 2}
+  - {fileID: 11400000, guid: 6e57f73c5490a8345b161f9487249a82, type: 2}
+  - {fileID: 11400000, guid: d1dc771995c71a345b1bd9250c9aa0f3, type: 2}
+  - {fileID: 11400000, guid: 11813854373d1784c9c5f927836ced67, type: 2}
+  - {fileID: 11400000, guid: 053e1c097a61f2645aea091ef842950d, type: 2}
+  - {fileID: 11400000, guid: cbec82b7c93d43248a6aaeb832826478, type: 2}
+  - {fileID: 11400000, guid: 214129c233faca34e9d7fb59c00bea27, type: 2}
 --- !u!4 &688995577
 Transform:
   m_ObjectHideFlags: 0
@@ -3027,6 +3036,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3544667253882170660, guid: e86d1fe04d3a33e4f80a7958838ef78f, type: 3}
   m_PrefabInstance: {fileID: 773777426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &786313675
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.184058
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.0301094
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614093637738468580, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068824270809336643, guid: 361acd42ccf6f304f893568656856f40, type: 3}
+      propertyPath: m_Name
+      value: Employee
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 361acd42ccf6f304f893568656856f40, type: 3}
 --- !u!1 &786435430
 GameObject:
   m_ObjectHideFlags: 0
@@ -6517,6 +6583,7 @@ MonoBehaviour:
   rollSpeed: 3000
   saleTextPrefab: {fileID: 7168327850995194266, guid: b31314ebbe4a1a040987126f5726dc81, type: 3}
   saleTextSpawnPoint: {fileID: 57719155}
+  saleTextRoot: {fileID: 6819577775573080764, guid: b31314ebbe4a1a040987126f5726dc81, type: 3}
 --- !u!114 &1899981246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8002,3 +8069,4 @@ SceneRoots:
   - {fileID: 1978287902}
   - {fileID: 1987638227}
   - {fileID: 2116072684}
+  - {fileID: 786313675}
