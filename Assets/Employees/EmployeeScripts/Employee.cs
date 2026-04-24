@@ -72,7 +72,7 @@ public class Employee : MonoBehaviour, IInteractable
         //if (!modelTransform) return;
 
         //modelTransform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
-        gameObject.transform.rotation = Quaternion.RotateTowards(modelTransform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
+        gameObject.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetModelRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void InitializeFatigue()
@@ -104,8 +104,6 @@ public class Employee : MonoBehaviour, IInteractable
             currentSnapPoint = null;
             CurrentMachine = null;
 
-            rb.isKinematic = false;
-
             StopWorkLoop();
         }
 
@@ -133,6 +131,8 @@ public class Employee : MonoBehaviour, IInteractable
             }
             heldSnapPoint = null;
         }
+
+        rb.isKinematic = false;
     }
 
     public void OnHold()
@@ -149,15 +149,14 @@ public class Employee : MonoBehaviour, IInteractable
         {
             desiredPos = heldSnapPoint.transform.position;
             targetModelRotation = heldSnapPoint.transform.rotation;
-            rb.isKinematic = true;
 
         } else
         {
             FaceCamera();
-            rb.isKinematic = false; 
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+        rb.isKinematic = true;
 
         HandleScreenEdgeSwitch(mousePos);
     }
