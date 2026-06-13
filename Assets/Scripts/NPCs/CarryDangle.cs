@@ -22,14 +22,26 @@ public class CarryDangle : MonoBehaviour
         }
     }
 
-    public void ApplyMotion(Vector3 movementDelta)
+    public void ApplyMotion(Vector3 velocity)
     {
         if (!isHeld || !model) return;
 
-        Vector3 input = Vector3.ClampMagnitude(movementDelta, 1f);
+        Vector3 localVelocity =
+            transform.InverseTransformDirection(velocity);
 
-        swingOffset = Vector3.SmoothDamp(swingOffset, input * strength, ref swingVelocity, 1f / damping);
+        Vector3 targetRotation = new Vector3(
+            localVelocity.z,
+            0f,
+            -localVelocity.x
+        ) * strength;
 
-        model.localRotation = Quaternion.Euler(-swingOffset.y, -swingOffset.x, -swingOffset.x);
+        swingOffset = Vector3.SmoothDamp(
+            swingOffset,
+            targetRotation,
+            ref swingVelocity,
+            1f / damping
+        );
+
+        model.localRotation = Quaternion.Euler(swingOffset);
     }
 }

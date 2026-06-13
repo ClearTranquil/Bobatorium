@@ -22,11 +22,14 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private Vector3 filledCenterOfMassOffset = new Vector3(0f, -0.1f, 0f);
     [SerializeField] private float gravityMultiplier = 2f;
     [SerializeField] private float heldGravityMultiplier = 0;
+    private CarryDangle carryDangle;
     private bool isHeld = false;
+    private Vector3 lastPosition;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
     [SerializeField] private float teaFillAmount;
+
 
     [Header("Current fill (debug only)")]
     [SerializeField] private int maxBoba;
@@ -40,6 +43,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject cupLid;
     [SerializeField] private GameObject straw;
     [SerializeField] private TMP_Text teaFillText;
+    [SerializeField] private Renderer teaRenderer;
 
     [Header("Position Snapping")]
     private Vector3 velocity;
@@ -72,6 +76,7 @@ public class Cup : MonoBehaviour, IInteractable
         originalLayer = gameObject.layer;
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        carryDangle = GetComponent<CarryDangle>();
         //defaultCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
     }
@@ -106,6 +111,8 @@ public class Cup : MonoBehaviour, IInteractable
         snapBlockTimer = snapBlockDuration;
 
         player.PickUp(gameObject);
+
+        carryDangle.SetHeld(true);
     }
 
     // Change whether the cup can be picked up or not. Typically cups can't be picked up if a machine is currently working on them. 
@@ -141,6 +148,7 @@ public class Cup : MonoBehaviour, IInteractable
         }
 
         isHeld = false;
+        carryDangle.SetHeld(false);
     }
 
     public void OnHold()
@@ -153,6 +161,8 @@ public class Cup : MonoBehaviour, IInteractable
 
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPosition = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
+
+        Vector3 moveDir = (desiredPosition - transform.position);
 
         Ray ray = mainCam.ScreenPointToRay(mousePos);
 
@@ -172,6 +182,13 @@ public class Cup : MonoBehaviour, IInteractable
             desiredPosition = heldSnapPoint.transform.position;
 
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, followSmoothTime);
+
+
+        Vector3 worldVelocity = (transform.position - lastPosition) / Time.deltaTime;
+
+        carryDangle.ApplyMotion(worldVelocity);
+
+        lastPosition = transform.position;
     }
 
     public Rigidbody GetRb() { return rb; }
@@ -362,7 +379,8 @@ public class Cup : MonoBehaviour, IInteractable
 
     private void UpdateVisuals()
     {
-        // This is where we'll make it look like liquid is being added to the cup
+        teaRenderer.material.SetFloat("_Fill", TeaFillAmount);
+
         if (IsTeaFull())
         {
             cupWithTea.SetActive(true);

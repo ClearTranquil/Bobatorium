@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 3744532976212134739}
   - component: {fileID: 1448413557060356442}
   - component: {fileID: 7232395326876078461}
+  - component: {fileID: 8237425031670748618}
   m_Layer: 15
   m_Name: Employee
   m_TagString: Untagged
@@ -536,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Employee
   heldZDistance: 40
+  heldYOffset: 0
   rb: {fileID: 0}
   snapMask:
     serializedVersion: 2
@@ -580,3 +582,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8237425031670748618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068824270809336643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c58bc16eeccec04d95fb093672a2eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarryDangle
+  model: {fileID: 2094315624250734084}
+  strength: 20
+  damping: 6
