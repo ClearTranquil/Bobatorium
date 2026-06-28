@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f9480c6fa97a64e8fdcc8ef2248036, type: 3}
+  m_Name: Perro
+  m_EditorClassIdentifier: Assembly-CSharp::CustomerProfile
+  customerName: Perro
+  bark: '[INSERT FUNNY AND/OR ICONIC DIALOG HERE]'
+  head: {fileID: 21300000, guid: 183f99bb14f365948958ac907ae13d77, type: 3}
+  body: {fileID: 21300000, guid: 89be4f939dcbb8b428a1e066da7f8861, type: 3}
+  baseTipChance: 0.33
+  tipTime: 30
