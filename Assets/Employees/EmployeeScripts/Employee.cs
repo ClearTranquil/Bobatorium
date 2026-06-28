@@ -143,9 +143,10 @@ public class Employee : MonoBehaviour, IInteractable
             rb.isKinematic = false;
         }
 
-        animator.enabled = true;
+        //animator.enabled = true;
 
         carryDangle.SetHeld(false);
+        carryDangle.ResetDangleRotation();
     }
 
     public void OnHold()
@@ -175,12 +176,19 @@ public class Employee : MonoBehaviour, IInteractable
         }
 
         Vector3 moveDir = (desiredPos - transform.position);
-        carryDangle.ApplyMotion(moveDir);
 
-        transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
+        if (heldSnapPoint == null)
+        {
+            carryDangle.ApplyMotion(moveDir);
+        } else
+        {
+            carryDangle.ResetDangleRotation();
+        }
+
+            transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, 0.05f);
         rb.isKinematic = true;
 
-        animator.enabled = false;
+        //animator.enabled = false;
 
         HandleScreenEdgeSwitch(mousePos);
     }

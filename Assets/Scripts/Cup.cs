@@ -25,6 +25,7 @@ public class Cup : MonoBehaviour, IInteractable
     private CarryDangle carryDangle;
     private bool isHeld = false;
     private Vector3 lastPosition;
+    [SerializeField] private float heldYOffset = -0.5f;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -38,7 +39,7 @@ public class Cup : MonoBehaviour, IInteractable
 
     [Header("Placeholder visuals")]
     [SerializeField] private GameObject emptyCup;
-    [SerializeField] private GameObject cupWithBoba;
+    [SerializeField] private List<GameObject> bobaInCup;
     [SerializeField] private GameObject cupWithTea;
     [SerializeField] private GameObject cupLid;
     [SerializeField] private GameObject straw;
@@ -139,6 +140,9 @@ public class Cup : MonoBehaviour, IInteractable
 
                 transform.position = currentSnapPoint.transform.position;
                 velocity = Vector3.zero;
+
+                // Reset rotation from being held
+                //transform.rotation = Quaternion.identity;
             }
 
             heldSnapPoint = null;
@@ -149,18 +153,20 @@ public class Cup : MonoBehaviour, IInteractable
 
         isHeld = false;
         carryDangle.SetHeld(false);
+        carryDangle.ResetDangleRotation();
     }
 
     public void OnHold()
     {
         isHeld = true;
-        
+
         // Reset rotation, pause physics
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
         TogglePhysics(false);
 
         Vector3 mousePos = Mouse.current.position.ReadValue();
         desiredPosition = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, heldZDistance));
+        desiredPosition.y += heldYOffset;
 
         Vector3 moveDir = (desiredPosition - transform.position);
 
@@ -179,14 +185,19 @@ public class Cup : MonoBehaviour, IInteractable
         }
 
         if (heldSnapPoint && heldSnapPoint.gameObject.activeSelf)
+        {
             desiredPosition = heldSnapPoint.transform.position;
+            carryDangle.ResetDangleRotation();
+        }
 
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, followSmoothTime);
 
-
         Vector3 worldVelocity = (transform.position - lastPosition) / Time.deltaTime;
 
-        carryDangle.ApplyMotion(worldVelocity);
+        if(heldSnapPoint == null)
+        {
+            carryDangle.ApplyMotion(worldVelocity);
+        }
 
         lastPosition = transform.position;
     }
@@ -268,11 +279,7 @@ public class Cup : MonoBehaviour, IInteractable
     {
         bobaCount++;
 
-        if(bobaCount >= maxBoba)
-        {
-            UpdateVisuals();
-            UpdateCenterOfMass();
-        }
+        UpdateBobaVisual();
     }
 
     public bool IsBobaFull()
@@ -307,13 +314,15 @@ public class Cup : MonoBehaviour, IInteractable
             if (!IsTeaFull())
             {
                 teaFillAmount = Mathf.Clamp(teaFillAmount + amount, 0f, maxTeaFill);
-                UpdateVisuals();
+                //UpdateVisuals();
                 //UpdateCenterOfMass();
+
+                UpdateLiquidVisual();
             }
             else
             {
                 //UpdateCenterOfMass();
-                UpdateVisuals();
+                UpdateLiquidVisual();
             }
         } else
         {
@@ -349,7 +358,8 @@ public class Cup : MonoBehaviour, IInteractable
     {
         isSealed = true;
 
-        UpdateVisuals();
+        UpdateLidVisual();
+        //UpdateVisuals();
     }
 
     public bool GetIsSealed()
@@ -376,30 +386,46 @@ public class Cup : MonoBehaviour, IInteractable
 
     /*==============Visuals=================*/
     // These will be replaced during the art pass
-
-    private void UpdateVisuals()
+    private void UpdateLiquidVisual()
     {
+        // Increases the liquid level in the cup
         teaRenderer.material.SetFloat("_Fill", TeaFillAmount);
+    }
 
-        if (IsTeaFull())
-        {
-            cupWithTea.SetActive(true);
-            emptyCup.SetActive(false);
-            cupWithBoba.SetActive(false);
+    private void UpdateBobaVisual()
+    {
+        if (bobaCount >= maxBoba)
+            return;
 
-        } else if (IsBobaFull())
-        {
-            cupWithBoba.SetActive(true);
-            emptyCup.SetActive(false);
-        }
-        else
-        {
-            emptyCup.SetActive(true);
-        }
+        bobaInCup[bobaCount - 1].SetActive(true);
+    }
 
+    private void UpdateLidVisual()
+    {
         if (isSealed)
         {
             cupLid.SetActive(true);
         }
     }
+
+    //private void UpdateVisuals()
+    //{
+    //    //if (IsTeaFull())
+    //    //{
+    //    //    cupWithTea.SetActive(true);
+    //    //    emptyCup.SetActive(false);
+    //    //    cupWithBoba.SetActive(false);
+
+    //    //} else if (IsBobaFull())
+    //    //{
+    //    //    cupWithBoba.SetActive(true);
+    //    //    emptyCup.SetActive(false);
+    //    //}
+    //    //else
+    //    //{
+    //    //    emptyCup.SetActive(true);
+    //    //}
+
+
+    //}
 }
