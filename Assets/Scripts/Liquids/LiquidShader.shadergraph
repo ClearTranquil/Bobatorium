@@ -2234,10 +2234,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 3602.0,
+            "y": 258.0,
+            "width": 200.0,
+            "height": 41.0
         }
     },
     "m_Slots": [
@@ -2431,8 +2431,8 @@
     "m_ObjectId": "be007762ed264e009bc65e9dd842e42d",
     "m_Title": "Wobble",
     "m_Position": {
-        "x": 1120.0001220703125,
-        "y": -807.0000610351563
+        "x": 1120.0,
+        "y": -807.0
     }
 }
 
@@ -2686,7 +2686,7 @@
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
-    "m_RenderFace": 0,
+    "m_RenderFace": 2,
     "m_AlphaClip": true,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
