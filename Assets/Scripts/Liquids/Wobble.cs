@@ -20,11 +20,15 @@ public class Wobble : MonoBehaviour
     float time = 0.5f;
 
     public Transform cupTransform;
-    
+
+    private MaterialPropertyBlock propertyBlock;
+
     // Use this for initialization
     void Start()
     {
         rend = GetComponent<Renderer>();
+
+        propertyBlock = new MaterialPropertyBlock();
     }
     private void LateUpdate()
     {
@@ -39,8 +43,10 @@ public class Wobble : MonoBehaviour
         wobbleAmountZ = wobbleAmountToAddZ * Mathf.Sin(pulse * time);
 
         // send it to the shader
-        rend.material.SetFloat("_WobbleX", wobbleAmountX);
-        rend.material.SetFloat("_WobbleZ", wobbleAmountZ);
+        propertyBlock.SetFloat("_WobbleX", wobbleAmountX);
+        propertyBlock.SetFloat("_WobbleZ", wobbleAmountZ);
+
+        rend.SetPropertyBlock(propertyBlock);
 
         // velocity
         //velocity = (lastPos - transform.position) / Time.deltaTime;
