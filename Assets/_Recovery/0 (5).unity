@@ -511,6 +511,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 2c2f73f44ec5ad64e890163d2c14e7b8, type: 2}
   hoverUIPrefab: {fileID: 2517471466692721757, guid: 0b03874f57c88864080388d6bf328ad3, type: 3}
   popTextOffset: {x: 0, y: 1, z: 10}
+  uiCanvas: {fileID: 0}
 --- !u!114 &91679675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,7 +574,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1001,11 +1003,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009cb8fea318809488c1f67df928ecff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
+  mainCam: {fileID: 0}
+  breakRoomCam: {fileID: 0}
   toggleButton: {fileID: 127010594}
   buttonImage: {fileID: 127010595}
   leftArrowSprite: {fileID: 21300000, guid: 67bd4626c937cc747b3b339bc435c3af, type: 3}
   rightArrowSprite: {fileID: 21300000, guid: e942ccd281cbd20429681e57d7ef679b, type: 3}
-  rotationSpeed: 720
 --- !u!4 &205345113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4034425888992826188, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
@@ -2113,6 +2116,8 @@ MonoBehaviour:
   backOfLine: {fileID: 867336526}
   cupToHandTime: 0.3
   offscreenWaitTime: 0.5
+  tipTimerSlider: {fileID: 0}
+  allProfiles: []
 --- !u!4 &688995577
 Transform:
   m_ObjectHideFlags: 0
@@ -3188,6 +3193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaleProcessor
   wallet: {fileID: 70318010}
+  satisfaction: {fileID: 0}
 --- !u!4 &987233880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1344609081995714011, guid: 27ba0b5e281fe1d4d97d1a2f2ef31fb3, type: 3}
@@ -4577,6 +4583,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WalletUI
   wallet: {fileID: 70318010}
   balanceText: {fileID: 102490327}
+  rollSpeed: 200
+  saleTextPrefab: {fileID: 0}
+  saleTextSpawnPoint: {fileID: 0}
+  saleTextRoot: {fileID: 0}
 --- !u!114 &1899981246
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class MachineLever : MachineTriggerBase
     private float currentAngle;
     private float startAngle;
 
+    public float PullAmount => Mathf.InverseLerp(0f, maxPullAngle, currentAngle);
+
     private void Awake()
     {
         startAngle = handle.transform.localEulerAngles.z;

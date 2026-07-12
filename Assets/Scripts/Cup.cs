@@ -37,7 +37,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private int bobaCount = 0;
     [SerializeField] private bool isSealed = false;
 
-    [Header("Placeholder visuals")]
+    [Header("Visuals")]
     [SerializeField] private GameObject emptyCup;
     [SerializeField] private List<GameObject> bobaInCup;
     [SerializeField] private GameObject cupWithTea;
@@ -45,6 +45,9 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject straw;
     [SerializeField] private TMP_Text teaFillText;
     [SerializeField] private Renderer teaRenderer;
+    [SerializeField] private GameObject teaSplashFX;
+    [SerializeField] private float teaSplashMaxHeight = 1.2f;
+    private Vector3 teaSplashStartPos;
 
     [Header("Position Snapping")]
     private Vector3 velocity;
@@ -80,6 +83,11 @@ public class Cup : MonoBehaviour, IInteractable
         carryDangle = GetComponent<CarryDangle>();
         //defaultCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
+
+        if (teaSplashFX)
+        {
+            teaSplashStartPos = teaSplashFX.transform.localPosition;
+        }
     }
 
     private void Update()
@@ -301,10 +309,24 @@ public class Cup : MonoBehaviour, IInteractable
     public void OnTriggerStay(Collider other)
     {
         TeaMachine machine = other.GetComponentInParent<TeaMachine>();
-        if (machine && machine.IsPouring)
+        if (machine)
         {
-            AddTea(machine.PourRate * Time.deltaTime);
-        }
+            if (machine.IsPouring)
+            {
+                // prevents tea from being visible until tea has been poured into the cup
+                if(teaRenderer.gameObject.activeSelf == false)
+                    teaRenderer.gameObject.SetActive(true);
+                
+                AddTea(machine.PourRate * Time.deltaTime);
+
+                ToggleTeaSplash(true);
+            }
+            else
+            {
+                ToggleTeaSplash(false);
+            }
+           
+        } 
     }
 
     private void AddTea(float amount)
@@ -342,16 +364,16 @@ public class Cup : MonoBehaviour, IInteractable
         }
     }
 
-    private void UpdateCenterOfMass()
-    {
-        if(BobaFull || TeaFill)
-        {
-            rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
-        } else
-        {
-            rb.centerOfMass = defaultCenterOfMass;
-        }
-    }
+    //private void UpdateCenterOfMass()
+    //{
+    //    if(BobaFull || TeaFill)
+    //    {
+    //        rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
+    //    } else
+    //    {
+    //        rb.centerOfMass = defaultCenterOfMass;
+    //    }
+    //}
 
     /*-----------------LID-------------------*/
     public void SealCup()
@@ -390,6 +412,35 @@ public class Cup : MonoBehaviour, IInteractable
     {
         // Increases the liquid level in the cup
         teaRenderer.material.SetFloat("_Fill", TeaFillAmount);
+
+        // Raises the position of the splashFX
+        if (!teaSplashFX)
+            return;
+
+        float fillPercent = Mathf.InverseLerp(0f, maxTeaFill, teaFillAmount);
+
+        Vector3 newPosition = teaSplashStartPos;
+        newPosition.y += teaSplashMaxHeight * fillPercent;
+
+        teaSplashFX.transform.localPosition = newPosition;
+    }
+
+    private void ToggleTeaSplash(bool toggle)
+    {
+        if (teaSplashFX)
+        {
+            if (toggle && !IsTeaFull())
+            {
+                teaSplashFX.SetActive(true);
+            }
+            else
+            {
+                teaSplashFX.SetActive(false);
+            }
+        } else
+        {
+            Debug.LogError("Slash FX object not found");
+        }
     }
 
     private void UpdateBobaVisual()

@@ -207,7 +207,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -444,17 +445,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3614093637738468580, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
   m_PrefabInstance: {fileID: 2071369071}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &330048573 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5657674414037930811, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
-  m_PrefabInstance: {fileID: 2071369071}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac30721cc4a4f3143911179e12613180, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCMover
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,17 +923,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3614093637738468580, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
   m_PrefabInstance: {fileID: 4689745998490519667}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &601772784 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5657674414037930811, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
-  m_PrefabInstance: {fileID: 4689745998490519667}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac30721cc4a4f3143911179e12613180, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCMover
 --- !u!4 &633875577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8935905591170097521, guid: b2770d52ba8c2ca4483e8e3686c53c24, type: 3}
@@ -979,9 +958,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCManager
   line:
-  - {fileID: 601772784}
-  - {fileID: 1573359413}
-  - {fileID: 330048573}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   linePositions:
   - {fileID: 2131585610}
   - {fileID: 1599804370}
@@ -991,6 +970,8 @@ MonoBehaviour:
   backOfLine: {fileID: 867336526}
   cupToHandTime: 0.3
   offscreenWaitTime: 0.5
+  tipTimerSlider: {fileID: 0}
+  allProfiles: []
 --- !u!4 &688995577
 Transform:
   m_ObjectHideFlags: 0
@@ -1655,6 +1636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaleProcessor
   wallet: {fileID: 70318010}
+  satisfaction: {fileID: 0}
 --- !u!4 &1010818462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4034425888992826188, guid: 3fbf530f9b985bb40a72f7046077ca3a, type: 3}
@@ -1926,17 +1908,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3614093637738468580, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
   m_PrefabInstance: {fileID: 796818313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1573359413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5657674414037930811, guid: d89bdd871577d1f4ca5411ef9d9bbe94, type: 3}
-  m_PrefabInstance: {fileID: 796818313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac30721cc4a4f3143911179e12613180, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCMover
 --- !u!1 &1599804369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,6 +2034,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WalletUI
   wallet: {fileID: 70318010}
   balanceText: {fileID: 102490327}
+  rollSpeed: 200
+  saleTextPrefab: {fileID: 0}
+  saleTextSpawnPoint: {fileID: 0}
+  saleTextRoot: {fileID: 0}
 --- !u!114 &1899981246
 MonoBehaviour:
   m_ObjectHideFlags: 0

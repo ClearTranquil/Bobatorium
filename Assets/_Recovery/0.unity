@@ -1244,6 +1244,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb11348b17df0354691a3edb8152c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryTray
+  availableUpgrades: []
+  trigger: {fileID: 0}
+  hasEjectUpgrade: 0
+  ejectCheckInterval: 0.1
+  timeBetweenCups: 0.5
+  slotUpgrade1: {fileID: 0}
+  slotUpgrade2: {fileID: 0}
+  cupsPerCompletion: 3
 --- !u!1 &1871817236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,9 +1837,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5a339cf07026d448fbabc250843a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CupDispenser
+  availableUpgrades: []
+  trigger: {fileID: 0}
+  hasEjectUpgrade: 0
+  ejectCheckInterval: 0.1
   cupPrefab: {fileID: 713439645255764439, guid: 3fe5cff695e97d9408fc6b30e93d6315, type: 3}
-  spawnOffsetY: 1
-  heldCupZpos: 15
+  spawnInHandOffsetY: 1
+  conveyorCupPosition: {fileID: 0}
+  conveyor: {fileID: 0}
+  autoDispenseLight: {fileID: 0}
+  maxCupsPerSecond: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

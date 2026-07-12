@@ -571,7 +571,10 @@ MonoBehaviour:
   offScreenPosition: {fileID: 505336692}
   hiddenPosition: {fileID: 140897144}
   backOfLine: {fileID: 867336526}
+  cupToHandTime: 0.5
   offscreenWaitTime: 1
+  tipTimerSlider: {fileID: 0}
+  allProfiles: []
 --- !u!4 &688995577
 Transform:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class TeaMachine : Machine
     [SerializeField] private GameObject slotUpgrade1;
     [SerializeField] private GameObject slotUpgrade2;
 
+    [Header("Liquid VFX")]
+    [SerializeField] private GameObject slotUpgrade3;
+
     protected override void Awake()
     {
         base.Awake();
