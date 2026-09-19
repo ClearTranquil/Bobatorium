@@ -69,6 +69,7 @@ public class CupDispenser : Machine
     {
         Vector3 spawnPos = transform.position + Vector3.up * spawnInHandOffsetY;
         Cup cup = Instantiate(cupPrefab, spawnPos, Quaternion.identity);
+        cup.Interact(player);
 
         player.PickUp(cup.gameObject);
         animator.SetTrigger("removeCup");

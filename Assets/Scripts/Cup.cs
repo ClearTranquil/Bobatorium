@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Splines;
 using UnityEngine.UI;
-using TMPro;
 
 public class Cup : MonoBehaviour, IInteractable
 {
@@ -33,7 +34,7 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private float teaFillAmount;
 
 
-    [Header("Current fill (debug only)")]
+    [Header("Current fill")]
     [SerializeField] private int maxBoba;
     [SerializeField] private int bobaCount = 0;
     [SerializeField] private bool isSealed = false;
@@ -46,8 +47,11 @@ public class Cup : MonoBehaviour, IInteractable
     [SerializeField] private GameObject straw;
     [SerializeField] private TMP_Text teaFillText;
     [SerializeField] private Renderer teaRenderer;
+
+    [Header("VFX")]
     [SerializeField] private GameObject teaSplashFX;
     [SerializeField] private float teaSplashMaxHeight = 1.2f;
+    [SerializeField] private Transform sealedSplashPos;
     private Vector3 teaSplashStartPos;
 
     [Header("Position Snapping")]
@@ -203,7 +207,10 @@ public class Cup : MonoBehaviour, IInteractable
             carryDangle.ResetDangleRotation();
         }
 
-        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, followSmoothTime);
+        // if there's a snapPoint nearby, smoothly snap to it using a fraction of the speed the cup uses to follow the player cursor
+        float smoothTime = heldSnapPoint != null ? 0.05f : followSmoothTime;
+
+        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothTime);
 
         Vector3 worldVelocity = (transform.position - lastPosition) / Time.deltaTime;
 
@@ -388,7 +395,8 @@ public class Cup : MonoBehaviour, IInteractable
         isSealed = true;
 
         UpdateLidVisual();
-        //UpdateVisuals();
+
+        teaSplashFX.transform.position = sealedSplashPos.position;
     }
 
     public bool GetIsSealed()
