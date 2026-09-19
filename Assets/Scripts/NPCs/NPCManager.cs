@@ -9,9 +9,9 @@ public class NPCManager : MonoBehaviour
     [Header("Line Positioning")]
     [SerializeField] private List<Customer> line = new List<Customer>();
     [SerializeField] private Transform[] linePositions;
-    [SerializeField] private Transform offScreenPosition;
-    [SerializeField] private Transform hiddenPosition;
-    [SerializeField] private Transform backOfLine;
+    [SerializeField] private Transform offScreenPosition; // Where customers go after getting their drink
+    [SerializeField] private Transform hiddenPosition; // Where new customers are staged before entering the line
+    [SerializeField] private Transform lineStartPos; // Entry point for the line
 
     [Header("Visual Stuff")]
     [SerializeField] private float cupToHandTime = .5f;
@@ -48,7 +48,7 @@ public class NPCManager : MonoBehaviour
 
     private CustomerProfile GetRandomProfile()
     {
-        // Build a list of profiles not currently in line
+        // Build a list of customer profiles not currently in line
         List<CustomerProfile> available = new List<CustomerProfile>();
 
         foreach (var profile in allProfiles)
@@ -117,7 +117,7 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    // For testing
+    // For testing, forces the current customer to become a regular.
     private void ForceConvertFirstCustomer()
     {
         if (line.Count == 0)
@@ -143,7 +143,7 @@ public class NPCManager : MonoBehaviour
         {
             Customer cus = returnQueue.Dequeue();
 
-            cus.MoveTo(backOfLine);
+            cus.MoveTo(lineStartPos);
 
             StartCoroutine(RefreshBeforeReturn(cus));
 
@@ -154,7 +154,7 @@ public class NPCManager : MonoBehaviour
             if (index < linePositions.Length)
                 cus.MoveTo(linePositions[index]);
             else
-                cus.MoveTo(backOfLine);
+                cus.MoveTo(lineStartPos);
 
             yield return new WaitForSeconds(0.3f);
         }

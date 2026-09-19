@@ -19,8 +19,8 @@ public class CarryDangle : MonoBehaviour
 
     private void Awake()
     {
-        if (model)
-            initialLocalRotation = model.localRotation;
+        //if (model)
+        //    initialLocalRotation = model.localRotation;
 
         if (pivot)
             lastPivotRotation = pivot.rotation;
@@ -35,8 +35,8 @@ public class CarryDangle : MonoBehaviour
             rotationOffset = Vector3.zero;
             angularVelocity = Vector3.zero;
 
-            if (model)
-                model.localRotation = initialLocalRotation;
+            if (pivot)
+                pivot.localRotation = Quaternion.identity;
         }
     }
 

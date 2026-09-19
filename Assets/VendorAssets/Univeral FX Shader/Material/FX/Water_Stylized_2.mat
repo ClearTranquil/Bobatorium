@@ -154,8 +154,8 @@ Material:
     - _InvFade: 1
     - _MainTexBrightness: 1
     - _MainTexContrast: 0.71
-    - _MainTexSpeedX: 0
-    - _MainTexSpeedY: 1
+    - _MainTexSpeedX: 0.86
+    - _MainTexSpeedY: 3.09
     - _MaskFlowSmoothness: 0.1
     - _MaskFlowStrength: 0.5
     - _MaskNoiseIntensity: 0.25

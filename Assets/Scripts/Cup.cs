@@ -13,11 +13,11 @@ public class Cup : MonoBehaviour, IInteractable
     public List<SaleModifier> saleModifiers;
 
     [Header("Physics")]
+    [SerializeField] private Collider col;
     [SerializeField] private float followSmoothTime = 0.05f;
     [SerializeField] private float heldZDistance = 15f;
     private bool canBeGrabbed = true;
     private Rigidbody rb;
-    private Collider col;
     private Vector3 defaultCenterOfMass;
     [SerializeField] private Vector3 filledCenterOfMassOffset = new Vector3(0f, -0.1f, 0f);
     [SerializeField] private float gravityMultiplier = 2f;
@@ -26,6 +26,7 @@ public class Cup : MonoBehaviour, IInteractable
     private bool isHeld = false;
     private Vector3 lastPosition;
     [SerializeField] private float heldYOffset = -0.5f;
+    private Vector3 heldVelocity;
 
     [Header("Cup fill settings")]
     [SerializeField] private float maxTeaFill;
@@ -79,10 +80,9 @@ public class Cup : MonoBehaviour, IInteractable
         mainCam = Camera.main;
         originalLayer = gameObject.layer;
         rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
         carryDangle = GetComponent<CarryDangle>();
         //defaultCenterOfMass = rb.centerOfMass;
-        rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
+        //rb.centerOfMass = defaultCenterOfMass + filledCenterOfMassOffset;
 
         if (teaSplashFX)
         {
@@ -96,10 +96,10 @@ public class Cup : MonoBehaviour, IInteractable
 
         if (isHeld)
         {
-            rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
+            rb.AddForce(Physics.gravity * heldGravityMultiplier, ForceMode.Acceleration);
         } else
         {
-            rb.AddForce(Physics.gravity * heldGravityMultiplier, ForceMode.Acceleration);
+            rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
         }
     }
 
@@ -140,6 +140,8 @@ public class Cup : MonoBehaviour, IInteractable
         // Revert to original layer so it can be interacted with again
         gameObject.layer = originalLayer;
 
+        Vector3 releaseAngularVelocity = carryDangle.GetAngularVelocity();
+
         if (heldSnapPoint != null)
         {
             if (heldSnapPoint.TrySnap(this))
@@ -154,14 +156,17 @@ public class Cup : MonoBehaviour, IInteractable
             }
 
             heldSnapPoint = null;
-        } else
+        }
+        else
         {
             TogglePhysics(true);
+            rb.linearVelocity = heldVelocity / 2;
+            rb.angularVelocity = releaseAngularVelocity;
         }
 
         isHeld = false;
         carryDangle.SetHeld(false);
-        carryDangle.ResetDangleRotation();
+        //carryDangle.ResetDangleRotation();
     }
 
     public void OnHold()
@@ -202,7 +207,9 @@ public class Cup : MonoBehaviour, IInteractable
 
         Vector3 worldVelocity = (transform.position - lastPosition) / Time.deltaTime;
 
-        if(heldSnapPoint == null)
+        heldVelocity = worldVelocity;
+
+        if (heldSnapPoint == null)
         {
             carryDangle.ApplyMotion(worldVelocity);
         }

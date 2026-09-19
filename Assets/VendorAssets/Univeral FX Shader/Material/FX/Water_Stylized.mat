@@ -202,7 +202,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorA: {r: 0.7075472, g: 0.3281406, b: 0.036712356, a: 1}
-    - _ColorB: {r: 0.4056604, g: 0.15762006, b: 0, a: 1}
+    - _ColorB: {r: 0.8113208, g: 0.35486928, b: 0.06505875, a: 1}
     - _DissloveOutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveOutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _DistortionSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}

@@ -74,8 +74,14 @@ public class CupSnapPoint : SnapPointBase<Cup>, ICupInfo
         Machine parentMachine = GetComponentInParent<Machine>();
         rb.transform.rotation = Quaternion.LookRotation(parentMachine.transform.forward, Vector3.up);
 
-        // Apply impulse in machine forward direction
-        rb.AddForce(parentMachine.transform.forward * ejectForce, ForceMode.Impulse);
+        Vector3 direction = ejectPoint.position - rb.position;
+        direction.y = 0f;
+        direction.Normalize();
+
+        rb.AddForce(
+            direction * ejectForce + Vector3.up * 1.5f,
+            ForceMode.Impulse
+        );
 
         return true;
     }

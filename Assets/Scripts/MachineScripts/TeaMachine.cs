@@ -14,7 +14,7 @@ public class TeaMachine : Machine
     [SerializeField] private GameObject slotUpgrade2;
 
     [Header("Liquid VFX")]
-    [SerializeField] private GameObject slotUpgrade3;
+    [SerializeField] private GameObject splashVFX;
 
     protected override void Awake()
     {
@@ -115,12 +115,11 @@ public class TeaMachine : Machine
 
     protected override IEnumerator EmployeeWorkLoop(Employee employee)
     {
-        
         MachineLever lever = trigger as MachineLever;
         if (lever == null || !HasAnyIncompleteCup() || employee == null)
             yield break;
 
-        // Exaggerate the difference in workspeed for this specific machine
+        // This machine's workspeed is faster than other machines
         float effectiveSpeed = Mathf.Clamp(employee.GetEffectiveWorkSpeed(), 0.25f, 1f);
         lever.RemoteActivate(effectiveSpeed / 0.5f);
 
